@@ -39,6 +39,6 @@ class RoleService
                 $i++;
             }
         }
-        return json_encode($req_record);
+        return $req_record;
     }
 }

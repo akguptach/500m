@@ -24,7 +24,7 @@ class RoleController extends Controller
     public function index()
     {
         if (isset($_GET) && !empty($_GET['columns'])) {
-            echo $this->roleService->getRoles();
+            return response($this->roleService->getRoles());
         } else {
             return view('role/view');
         }

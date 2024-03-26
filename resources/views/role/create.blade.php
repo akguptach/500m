@@ -17,7 +17,7 @@
 
               </div>
               @error('role_name')
-              <div class="alert alert-danger">{{ $message }}</div>
+              <small class="text-danger">{{ $message }}</small>
               @enderror
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -32,26 +32,25 @@
 <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 <script>
-  /*
-    $(function () {
-  $('#quickForm').validate({
-    rules: {
-      role_name: {
-        required: true,
+  $(function() {
+    $('#quickForm').validate({
+      rules: {
+        role_name: {
+          required: true,
+        },
       },
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
   });
-});*/
 </script>
 @endsection
