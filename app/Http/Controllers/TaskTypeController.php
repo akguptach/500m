@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Validator;
+
+
 use App\Models\TaskType;
 use App\Http\Requests\TaskTypeRequest;
 use App\Services\TaskTypeService;
@@ -58,7 +57,7 @@ class TaskTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TaskTypeRequest $request, string $id)
     {
         $this->taskTypeService->saveTaskType($request, $id);
         return redirect('/tasktype')->with('status', 'Task Type Updated Successfully');

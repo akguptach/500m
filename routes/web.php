@@ -15,7 +15,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\Referencing_styleController;
+use App\Http\Controllers\ReferencingStyleController;
 use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/level_study', level::class);
     Route::resource('/grade', GradesController::class);
     Route::resource('/blog', BlogController::class);
-    Route::resource('/referencing', Referencing_styleController::class);
+    Route::resource('/referencing', ReferencingStyleController::class);
 
     Route::get('/pages', [PageController::class, 'index'])->name('pages');
     Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
