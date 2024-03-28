@@ -44,15 +44,29 @@ class OrderService
         $i = 0;
         if (!empty($req_record['data'])) {
             foreach ($req_record['data'] as $page) {
-                $edit_page = 'orders/' . $page['id'] . '/view';
-
-                $req_page_id = '"' . $page['id'] . '"';
-
-                $req_record['data'][$i]['action'] = "<a href='" . url($edit_page) . "' ><i class='fas fa-eye' title='View'></i></a>";
+                $req_record['data'][$i]['action'] = $this->generateActionLinks($page);
                 $i++;
             }
         }
         return $req_record;
+    }
+
+
+    public function generateActionLinks($page)
+    {
+
+        $edit_page = 'orders/' . $page['id'] . '/view';
+        $req_page_id = '"' . $page['id'] . '"';
+
+        $actionsLinks = '<a class="btn btn-primary btn-xs" href="' . url($edit_page) . '">
+        <i class="fas fa-eye"></i></a>
+        <a class="btn btn-info btn-xs" href="#" data-toggle="modal" data-target="#modal-default">
+        <i class="fa fa-user"></i></a>  
+        <a class="btn btn-info btn-xs" href="#" data-toggle="modal" data-target="#modal-default1">
+        <i class="fa fa-check"></i></a>  
+        <a class="btn btn-danger btn-xs" href="#">
+        <i class="fas fa-trash"></i></a>';
+        return $actionsLinks;
     }
 
     public function saveOrder($request, $id = null)

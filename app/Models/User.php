@@ -42,4 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /*public function messageSent()
+    {
+        return $this->morphMany('App\Models\StudentOrderMessage', 'sendertable');
+    }
+
+    public function messageReceived()
+    {
+        return $this->morphMany('App\Models\StudentOrderMessage', 'receivertable');
+    }*/
 }

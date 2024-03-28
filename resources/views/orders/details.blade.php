@@ -2,245 +2,351 @@
 
 @section('content')
 
-    <section class="content">
-
-        <div class="container-fluid">
-
-            <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="card card-primary">
-
-                        <div class="card-header">
-
-                            <h3 class="card-title">Edit <small>Price Master</small></h3>
-
-                        </div>
-
-                       <form id="quickForm" method="POST" action="">
-
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-							
-							    <div class="form-group">
-
-                                    <label >Website</label>
-
-                                    <select class="form-control select2" style="width: 100%;" name="website_id">
-
-                                      <option selected="selected" value="">Please Select Website</option>
-
-                                      @if(!empty($websites))
-
-                                        @foreach ($websites as $website)
-
-                                          <option value="{{$website->id}}" @if($website->id == $data->website_id) selected
-
-                                            @endif >{{$website->website_name}}</option>
-
-                                        @endforeach
-
-                                      @endif
-
-                                    </select>
-
-                                </div>
-								
-								<div class="form-group">
-
-                                    <label >Subject</label>
-
-                                    <select class="form-control select2" style="width: 100%;" name="subject_id">
-
-                                      <option selected="selected" value="">Please Select Subject</option>
-
-                                      @if(!empty($subjects))
-
-                                        @foreach ($subjects as $subject)
-
-                                          <option value="{{$subject->id}}" @if($subject->id == $data->subject_id) selected
-
-                                            @endif >{{$subject->subject_name}}</option>
-
-                                        @endforeach
-
-                                      @endif
-									  
-									  
-									  
-
-                                    </select>
-
-                                </div>
-								
-								<div class="form-group">
-
-                                    <label >Task type</label>
-
-                                    <select class="form-control select2" style="width: 100%;" name="task_type_id">
-
-                                      <option selected="selected" value="">Please Select Task type</option>
-
-                                      @if(!empty($tasktypes))
-
-                                        @foreach ($tasktypes as $arrTasktype)
-
-                                          <option value="{{$arrTasktype->id}}" @if($arrTasktype->id == $data->task_type_id) selected @endif>{{$arrTasktype->type_name}}</option>
-
-                                        @endforeach
-
-                                      @endif
-
-                                    </select>
-
-                                </div>
-								<div class="form-group">
-                                    <label>Lebel of study</label>
-										<select class="form-control select2" style="width: 100%;" name="studylabel_id">
-											<option selected="selected" value="">Please Select Lebel of study</option>
-										    @if(!empty($levelstudy))
-												@foreach ($levelstudy as $arrLevelstudy)
-												  <option value="{{$arrLevelstudy->id}}" @if($arrLevelstudy->id == $data->studylabel_id) selected @endif >{{$arrLevelstudy->level_name}}</option>
-												@endforeach
-										    @endif
-
-										</select>
-                                </div>
-								<div class="form-group">
-                                    <label>Grade</label> 
-										<select class="form-control select2" style="width: 100%;" name="grade_id">
-											<option selected="selected" value="">Please Select Grade</option>
-										    @if(!empty($grades))
-												@foreach ($grades as $arrGrades)
-												  <option value="{{$arrGrades->id}}" @if($arrGrades->id == $data->grade_id) selected @endif>{{$arrGrades->grade_name}}</option>
-												@endforeach
-										    @endif
-
-										</select>
-                                </div>
-								<div class="form-group">
-                                    <label>Referencing Style</label> 
-										<select class="form-control select2" style="width: 100%;" name="referencing_style_id">
-											<option selected="selected" value="">Please Select Referencing Style</option>
-										    @if(!empty($referencing))
-												@foreach ($referencing as $arrReferencing)
-												  <option value="{{$arrReferencing->id}}" @if($arrReferencing->id == $data->referencing_style_id) selected @endif>{{$arrReferencing->style}}</option>
-												@endforeach
-										    @endif
-
-										</select>
-                                </div>
-								
-								
-                                
-								
-								
-								
-								
-								
-                                <div class="form-group">
-
-                                    <label for="exampleInputEmail1">Number of words </label>
-
-                                    <input type="text" name="no_of_words" class="form-control" id="exampleInputEmail1" placeholder="Enter Words Count" value="{{$data->no_of_words}}">
-
-                                    
-
-                                </div>
-								
-								<div class="form-group">
-
-                                    <label for="exampleInputEmail1">Rate</label>
-
-                                    <input type="text" name="rate" class="form-control" id="exampleInputEmail1" placeholder="Enter Rate" value="{{$data->rate}}">
-
-                                    
-
-                                </div>
-								<div class="form-group">
-
-                                    <label for="exampleInputEmail1">Additional word rate</label>
-
-                                    <input type="text" name="additional_word_rate" class="form-control" id="exampleInputEmail1" placeholder="Enter Additional word rate" value="{{$data->additional_word_rate}}">
-
-                                    
-
-                                </div>
-
-                                @error('no_of_words')
-
-                                  <div class="alert alert-danger">{{ $message }}</div>
-
-                                @enderror
-
-                            <div class="card-footer">
-
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                                
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Orders Details</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Orders</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+          <div class="card-body box-profile">
+
+
+            <h3 class="profile-username text-center">Order Details</h3>
+
+            <p class="text-muted text-center">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                <b>Website</b> <a class="float-right">{{$data['website']['website_name']}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Subject</b> <a class="float-right">{{$data['subject']['subject_name']}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>No Of Words</b> <a class="float-right">{{$data['no_of_words']}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Amount</b> <a class="float-right">{{$data['price']}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Currency</b> <a class="float-right">{{$data['currency_code']}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Delivery Date</b> <a class="float-right">{{date('m-d-Y', strtotime($data['delivery_date']))}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Attachment</b> <a class="float-right">{{$data['fileupload']}}</a>
+              </li>
+            </ul>
+
+            <a href="#" class="btn btn-block btn-success btn-lg"><b>Approved</b></a>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+
+      <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline direct-chat direct-chat-primary">
+          <div class="card-header">
+            <h3 class="card-title">Student Chat</h3></br>
+            <p class="text-muted text-left">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}</p>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+
+              @foreach ($studentMessages as $item)
+
+              @if ($item['sendertable_type']== 'App\Models\Student')
+
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-right">{{$item['sendertable']['first_name']}}</span>
+                  <span class="direct-chat-timestamp float-left">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                 </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="{{ asset('images/avatar5.png') }}" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  {{$item['message']}}
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+              @else
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-left">{{$item['sendertable']['name']}}</span>
+                  <span class="direct-chat-timestamp float-right">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img style="border: 1px solid;" class="direct-chat-img" src="{{ asset('images/AdminLTELogo.png') }}" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  {{$item['message']}}
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+
+              @endif
+
+
+              @endforeach
+
 
             </div>
+            <!--/.direct-chat-messages-->
 
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
+
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date float-right">2/28/2015</small>
+                      </span>
+                      <span class="contacts-list-msg">How have you been? I was...</span>
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <span class="input-group-append">
+                  <a class="btn btn-info btn-sm" href="#">
+                    <i class="fas fa-paperclip"></i>
+                  </a>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.card-footer-->
         </div>
+        <!-- /.card -->
 
-    </section>
+      </div>
 
-    <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+      <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline direct-chat direct-chat-primary">
+          <div class="card-header">
+            <h3 class="card-title">Teachers Chat</h3>
+            </br>
+            <p class="text-muted text-left">Bharat Modi</p>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-left">Alexander Pierce</span>
+                  <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  Is this template really for free? That's unbelievable!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
 
-<script src="{{ asset('js/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-right">Sarah Bullock</span>
+                  <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  You better believe it!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
 
-<script>
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
 
-    $(function () {
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date float-right">2/28/2015</small>
+                      </span>
+                      <span class="contacts-list-msg">How have you been? I was...</span>
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <span class="input-group-append">
+                  <a class="btn btn-info btn-sm" href="#">
+                    <i class="fas fa-paperclip"></i>
+                  </a>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
 
-  $('#quickForm').validate({
+      </div>
 
-    rules: {
+      <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline direct-chat direct-chat-primary">
+          <div class="card-header">
+            <h3 class="card-title">QC Chat</h3>
+            </br>
+            <p class="text-muted text-left">Devendra</p>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-left">Alexander Pierce</span>
+                  <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  Is this template really for free? That's unbelievable!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
 
-      type_name: {
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-right">Sarah Bullock</span>
+                  <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  You better believe it!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
 
-        required: true,
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
 
-      },
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date float-right">2/28/2015</small>
+                      </span>
+                      <span class="contacts-list-msg">How have you been? I was...</span>
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <span class="input-group-append">
+                  <a class="btn btn-info btn-sm" href="#">
+                    <i class="fas fa-paperclip"></i>
+                  </a>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
 
-    },
+      </div>
 
-    errorElement: 'span',
-
-    errorPlacement: function (error, element) {
-
-      error.addClass('invalid-feedback');
-
-      element.closest('.form-group').append(error);
-
-    },
-
-    highlight: function (element, errorClass, validClass) {
-
-      $(element).addClass('is-invalid');
-
-    },
-
-    unhighlight: function (element, errorClass, validClass) {
-
-      $(element).removeClass('is-invalid');
-
-    }
-
-  });
-
-});
-
-</script>
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>
 
 @endsection
