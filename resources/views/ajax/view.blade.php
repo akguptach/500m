@@ -60,14 +60,8 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-assign-teacher">
-    <div class="modal-dialog">
-        <div class="modal-content" id="teachers-modal-body">
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+@include('orders.asssign_tutor')
+@include('orders.asssign_qc')
 
 
 <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -84,50 +78,29 @@
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
 <script>
-    $(document).on("click", '.assign-teacher', function(event) {
-        var dataModelBody = $('#' + $(this).attr('data-model-body'));
-        $('#' + $(this).attr('data-modal-id')).modal('show');
-        dataModelBody.html('<div class="loader"></div>');
+    $(document).on("click", '.assign-tutor', function(event) {
         $.ajax({
             type: "GET",
-            url: $(this).attr('data-ajax-url'),
+            url: "/api/something",
             success: function(data) {
-                dataModelBody.html(data);
-            },
-            error: function() {
-                dataModelBody.html('');
+                $('.targeted').html(data);
             }
         });
+        $('#modal-asign-tutor').modal('show');
     });
-    $(document).on("submit", '#assign-qc-form', function(e) {
 
-        $('.text-danger').html('');
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-        var form = $(this);
-        var actionUrl = form.attr('action');
-        var formData = form.serialize();
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: formData, // serializes the form's elements.
-            success: function(data) {
-                alert(data); // show response from the php script.
-                $('#modal-assign-teacher').modal('hide');
-            },
-            error: function(e) {
-                const eResponse = e.responseJSON
-                $('#delivery_date_error').html((eResponse.errors && eResponse.errors.delivery_date) ? eResponse.errors.delivery_date[0] : '');
-                $('#teacher_id_error').html((eResponse.errors && eResponse.errors.teacher_id) ? eResponse.errors.teacher_id[0] : '');
-                console.log(e.responseJSON)
-            }
-        });
+    $(document).on("click", '.assign-qc', function(event) {
+
+        $('#modal-assign-qc').modal('show');
     });
 
 
 
     $(function() {
         $('#example1').DataTable({
-            "columns": [{
+            "columns": [
+
+                {
                     data: "first_name"
                 },
                 {

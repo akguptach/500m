@@ -172,43 +172,59 @@
           <div class="card-header">
             <h3 class="card-title">Teachers Chat</h3>
             </br>
-            <p class="text-muted text-left">Bharat Modi</p>
+            <p class="text-muted text-left">{{@$data->teacherAssigned->teacher->tutor_first_name.' '.@$data->teacherAssigned->teacher->tutor_last_name}}</p>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <!-- Conversations are loaded here -->
             <div class="direct-chat-messages">
               <!-- Message. Default to the left -->
-              <div class="direct-chat-msg">
+
+              @foreach ($teacherOrderMessage as $item)
+
+              @if ($item['sendertable_type']== 'App\Models\Tutor')
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
                 <div class="direct-chat-infos clearfix">
-                  <span class="direct-chat-name float-left">Alexander Pierce</span>
-                  <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                  <span class="direct-chat-name float-right">{{$item['sendertable']['tutor_first_name']}}</span>
+                  <span class="direct-chat-timestamp float-left">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
-                <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                <img class="direct-chat-img" src="{{ asset('images/avatar.png') }}" alt="Message User Image">
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
-                  Is this template really for free? That's unbelievable!
+                  {{$item['message']}}
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
 
-              <!-- Message to the right -->
-              <div class="direct-chat-msg right">
+              @else
+
+
+              <div class="direct-chat-msg">
                 <div class="direct-chat-infos clearfix">
-                  <span class="direct-chat-name float-right">Sarah Bullock</span>
-                  <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                  <span class="direct-chat-name float-left">{{$item['sendertable']['name']}}</span>
+                  <span class="direct-chat-timestamp float-right">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
-                <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">
+                <img style="border: 1px solid;" class="direct-chat-img" src="{{ asset('images/AdminLTELogo.png') }}" alt="Message User Image">
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
-                  You better believe it!
+                  {{$item['message']}}
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
+
+
+
+
+              @endif
+              @endforeach
+
+
+
             </div>
             <!--/.direct-chat-messages-->
 
@@ -255,49 +271,73 @@
 
       </div>
 
+
+
+
+
+
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="card card-primary card-outline direct-chat direct-chat-primary">
           <div class="card-header">
             <h3 class="card-title">QC Chat</h3>
             </br>
-            <p class="text-muted text-left">Devendra</p>
+            <p class="text-muted text-left">{{@$data->qcAssigned->qc->tutor_first_name.' '.@$data->qcAssigned->qc->tutor_last_name}}</p>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <!-- Conversations are loaded here -->
             <div class="direct-chat-messages">
-              <!-- Message. Default to the left -->
-              <div class="direct-chat-msg">
+
+
+              @foreach ($qcOrderMessage as $item)
+
+              @if ($item['sendertable_type']== 'App\Models\Tutor')
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
                 <div class="direct-chat-infos clearfix">
-                  <span class="direct-chat-name float-left">Alexander Pierce</span>
-                  <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                  <span class="direct-chat-name float-right">{{$item['sendertable']['tutor_first_name']}}</span>
+                  <span class="direct-chat-timestamp float-left">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
-                <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                <img class="direct-chat-img" src="{{ asset('images/avatar.png') }}" alt="Message User Image">
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
-                  Is this template really for free? That's unbelievable!
+                  {{$item['message']}}
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
 
-              <!-- Message to the right -->
-              <div class="direct-chat-msg right">
+              @else
+
+
+              <div class="direct-chat-msg">
                 <div class="direct-chat-infos clearfix">
-                  <span class="direct-chat-name float-right">Sarah Bullock</span>
-                  <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                  <span class="direct-chat-name float-left">{{$item['sendertable']['name']}}</span>
+                  <span class="direct-chat-timestamp float-right">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
-                <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">
+                <img style="border: 1px solid;" class="direct-chat-img" src="{{ asset('images/AdminLTELogo.png') }}" alt="Message User Image">
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
-                  You better believe it!
+                  {{$item['message']}}
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
+
+
+
+
+              @endif
+              @endforeach
+
+
+
+
+
+
             </div>
             <!--/.direct-chat-messages-->
 
@@ -348,5 +388,7 @@
     <!-- /.row -->
   </div><!-- /.container-fluid -->
 </section>
+
+
 
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Orders;
 use App\Models\StudentOrderMessage;
+use App\Models\TeacherOrderMessage;
+use App\Models\QcOrderMessage;
 use App\Services\OrderService;
 use App\Http\Requests\OrdersRequest;
 
@@ -31,11 +33,12 @@ class OrdersController extends Controller
      */
     public function view(string $id)
     {
-        $data = Orders::with(['website', 'student', 'subject'])->where('id', $id)->first();
-
+        $data = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
         $studentMessages = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
-
-        return view('orders/details', compact('data', 'studentMessages'));
+        $teacherOrderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        $qcOrderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        //dd($data);
+        return view('orders/details', compact('data', 'studentMessages', 'teacherOrderMessage', 'qcOrderMessage'));
     }
 
     /**

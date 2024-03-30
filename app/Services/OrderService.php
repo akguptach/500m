@@ -60,9 +60,9 @@ class OrderService
 
         $actionsLinks = '<a class="btn btn-primary btn-xs" href="' . url($edit_page) . '">
         <i class="fas fa-eye"></i></a>
-        <a class="btn btn-info btn-xs" href="#" data-toggle="modal" data-target="#modal-default">
+        <a class="btn btn-info btn-xs assign-teacher" href="#" data-toggle="modal" data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'tutor']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">
         <i class="fa fa-user"></i></a>  
-        <a class="btn btn-info btn-xs" href="#" data-toggle="modal" data-target="#modal-default1">
+        <a class="btn btn-info btn-xs assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">
         <i class="fa fa-check"></i></a>  
         <a class="btn btn-danger btn-xs" href="#">
         <i class="fas fa-trash"></i></a>';

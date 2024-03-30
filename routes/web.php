@@ -18,6 +18,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ReferencingStyleController;
 use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\AjaxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/kyc/{tutor}', [TutorViewController::class, 'kyc'])->name('kyc');
     Route::get('/education/{tutor}', [TutorViewController::class, 'education'])->name('education');
     Route::get('/tutor_view/{profile_status}', [TutorViewController::class, 'profile_status'])->name('tutor_view.profile_status');
+
+
+
+    Route::get('/get-teacher-list/{order_id}/{student_id}/{type}', [AjaxController::class, 'getTeacherList'])->name('get_teachers');
+
+    Route::post('/tutor-assign-request', [AjaxController::class, 'tutorAssignRequest'])->name('tutor_assign_request');
+    Route::post('/qc-assign-request', [AjaxController::class, 'qcAssignRequest'])->name('qc_assign_request');
 });
 
 require __DIR__ . '/auth.php';

@@ -27,4 +27,14 @@ class Orders extends Model
 	{
 		return $this->belongsTo('App\Models\Subject', 'subject_id');
 	}
+
+	public function teacherAssigned()
+	{
+		return $this->hasOne('App\Models\OrderAssign', 'order_id');
+	}
+
+	public function qcAssigned()
+	{
+		return $this->hasOne('App\Models\QcAssign', 'order_id');
+	}
 }
