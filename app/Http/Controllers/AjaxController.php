@@ -12,14 +12,13 @@ use App\Models\Tutor;
 
 use App\Http\Requests\QcAssignRequest;
 use App\Http\Requests\TutorAssignRequest;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use App\Services\OrderRequestService;
 
 class AjaxController extends Controller
 {
 
 
-    public function __construct()
+    public function __construct(protected OrderRequestService $orderRequestService)
     {
     }
 
@@ -36,15 +35,7 @@ class AjaxController extends Controller
     public function tutorAssignRequest(TutorAssignRequest $request)
     {
         try {
-            OrderRequest::Create([
-                'order_id' => $request->order_id,
-                'student_id' => $request->student_id,
-                'tutor_id' => $request->teacher_id,
-                'admin_id' => Auth::user()->id,
-                'message' => '',
-                'delivery_date' => $request->delivery_date
-            ]);
-            return response(['Request send successfully']);
+            return response($this->orderRequestService->sendRequest($request, 'tutor'));
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
@@ -53,15 +44,7 @@ class AjaxController extends Controller
     public function qcAssignRequest(QcAssignRequest $request)
     {
         try {
-            QcOrderRequest::Create([
-                'order_id' => $request->order_id,
-                'student_id' => $request->student_id,
-                'qc_id' => $request->teacher_id,
-                'admin_id' => Auth::user()->id,
-                'message' => '',
-                'delivery_date' => $request->delivery_date
-            ]);
-            return response(['Request send successfully']);
+            return response($this->orderRequestService->sendRequest($request, 'qc'));
         } catch (\Exception $e) {
             return response($e->getMessage());
         }

@@ -111,7 +111,8 @@
             url: actionUrl,
             data: formData, // serializes the form's elements.
             success: function(data) {
-                alert(data); // show response from the php script.
+                alert(data)
+                //$('#teachers-modal-body').html('<div class="alert alert-success" role="alert">' + data + '</div>');
                 $('#modal-assign-teacher').modal('hide');
             },
             error: function(e) {
