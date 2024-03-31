@@ -106,16 +106,19 @@
         var form = $(this);
         var actionUrl = form.attr('action');
         var formData = form.serialize();
+        $('#loadingoverlay').show();
         $.ajax({
             type: "POST",
             url: actionUrl,
             data: formData, // serializes the form's elements.
             success: function(data) {
+                $('#loadingoverlay').hide();
                 alert(data)
                 //$('#teachers-modal-body').html('<div class="alert alert-success" role="alert">' + data + '</div>');
                 $('#modal-assign-teacher').modal('hide');
             },
             error: function(e) {
+                $('#loadingoverlay').hide();
                 const eResponse = e.responseJSON
                 $('#delivery_date_error').html((eResponse.errors && eResponse.errors.delivery_date) ? eResponse.errors.delivery_date[0] : '');
                 $('#teacher_id_error').html((eResponse.errors && eResponse.errors.teacher_id) ? eResponse.errors.teacher_id[0] : '');

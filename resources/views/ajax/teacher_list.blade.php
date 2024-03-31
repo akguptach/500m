@@ -1,3 +1,8 @@
+<div id="loadingoverlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
 <form id="assign-qc-form" action="{{$actionUrl}}">
     @csrf
     <div class="modal-header">
@@ -7,6 +12,7 @@
         </button>
     </div>
     <div class="modal-body">
+
         <div class="table-responsive mailbox-messages">
             <table class="table table-hover table-striped">
                 <tbody>
@@ -36,6 +42,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Assign</button>
