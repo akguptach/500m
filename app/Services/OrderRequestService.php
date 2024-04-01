@@ -17,22 +17,31 @@ class OrderRequestService
     public function sendRequest($request, $type = 'tutor')
     {
         if ($type == 'tutor') {
+            if (OrderRequest::where('order_id', $request->order_id)->where('type', 'TUTOR')->count() > 0) {
+                return ['Already Sent'];
+            }
+
             OrderRequest::Create([
                 'order_id' => $request->order_id,
                 'student_id' => $request->student_id,
                 'tutor_id' => $request->teacher_id,
                 'admin_id' => Auth::user()->id,
                 'message' => '',
-                'delivery_date' => $request->delivery_date
+                'delivery_date' => $request->delivery_date,
+                'type' => 'TUTOR'
             ]);
         } else {
-            QcOrderRequest::Create([
+            if (OrderRequest::where('order_id', $request->order_id)->where('type', 'QC')->count() > 0) {
+                return ['Already Sent'];
+            }
+            OrderRequest::Create([
                 'order_id' => $request->order_id,
                 'student_id' => $request->student_id,
-                'qc_id' => $request->teacher_id,
+                'tutor_id' => $request->teacher_id,
                 'admin_id' => Auth::user()->id,
                 'message' => '',
-                'delivery_date' => $request->delivery_date
+                'delivery_date' => $request->delivery_date,
+                'type' => 'QC'
             ]);
         }
         $tutor = Tutor::find($request->teacher_id);
