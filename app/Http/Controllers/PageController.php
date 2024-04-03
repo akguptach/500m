@@ -62,9 +62,13 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, string $id)
     {
-
-        $this->pageService->savePage($request, $id);
-        return redirect('/pages')->with('status', 'Page Updated Successfully');
+        try {
+            $this->pageService->savePage($request, $id);
+            return redirect('/pages')->with('status', 'Page Updated Successfully');
+        } catch (\Exception $e) {
+            echo $e;
+            die;
+        }
     }
 
     /**

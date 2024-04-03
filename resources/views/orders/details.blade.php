@@ -2,8 +2,25 @@
 
 @section('content')
 
+
+
+
+
 <div class="content-header">
   <div class="container-fluid">
+
+    @if (Session::has('success'))
+    <div class="alert alert-success">
+      {{ Session::get('success') }}
+    </div>
+    @endif
+
+    @if (Session::has('error'))
+    <div class="alert alert-danger">
+      {{ Session::get('error') }}
+    </div>
+    @endif
+
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1 class="m-0">Orders Details</h1>
@@ -28,12 +45,8 @@
         <!-- Profile Image -->
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
-
-
             <h3 class="profile-username text-center">Order Details</h3>
-
             <p class="text-muted text-center">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}</p>
-
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
                 <b>Website</b> <a class="float-right">{{$data['website']['website_name']}}</a>
@@ -65,7 +78,7 @@
         <!-- /.card -->
 
       </div>
-
+      @if($orderAssign > 0)
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="card card-primary card-outline direct-chat direct-chat-primary">
@@ -109,50 +122,31 @@
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                   {{$item['message']}}
+                  <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
 
               @endif
-
-
               @endforeach
-
-
             </div>
-            <!--/.direct-chat-messages-->
-
-            <!-- Contacts are loaded here -->
-            <div class="direct-chat-contacts">
-              <ul class="contacts-list">
-                <li>
-                  <a href="#">
-                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                    <div class="contacts-list-info">
-                      <span class="contacts-list-name">
-                        Count Dracula
-                        <small class="contacts-list-date float-right">2/28/2015</small>
-                      </span>
-                      <span class="contacts-list-msg">How have you been? I was...</span>
-                    </div>
-                    <!-- /.contacts-list-info -->
-                  </a>
-                </li>
-                <!-- End Contact Item -->
-              </ul>
-              <!-- /.contatcts-list -->
-            </div>
-            <!-- /.direct-chat-pane -->
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <form action="#" method="post">
+            <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+              @csrf
+              @error('message')
+              <small class="text-danger">{{ $message }}</small>
+              @enderror
               <div class="input-group">
+                <input type="file" name="attachment" id="attachment" style="display: none;" />
                 <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <input type="hidden" name="receiver_id" value="{{$data->student->id}}">
+                <input type="hidden" name="order_id" value="{{$data->id}}">
+                <input type="hidden" name="type" value="STUDENT">
                 <span class="input-group-append">
-                  <a class="btn btn-info btn-sm" href="#">
+                  <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('attachment').click()">
                     <i class="fas fa-paperclip"></i>
                   </a>
                   <button type="submit" class="btn btn-primary">Send</button>
@@ -160,10 +154,7 @@
               </div>
             </form>
           </div>
-          <!-- /.card-footer-->
         </div>
-        <!-- /.card -->
-
       </div>
 
       <div class="col-md-3">
@@ -179,9 +170,7 @@
             <!-- Conversations are loaded here -->
             <div class="direct-chat-messages">
               <!-- Message. Default to the left -->
-
               @foreach ($teacherOrderMessage as $item)
-
               @if ($item['sendertable_type']== 'App\Models\Tutor')
               <!-- Message to the right -->
               <div class="direct-chat-msg right">
@@ -194,14 +183,12 @@
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                   {{$item['message']}}
+                  <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
-
               @else
-
-
               <div class="direct-chat-msg">
                 <div class="direct-chat-infos clearfix">
                   <span class="direct-chat-name float-left">{{$item['sendertable']['name']}}</span>
@@ -212,52 +199,30 @@
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                   {{$item['message']}}
+                  <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
-
-
-
-
               @endif
               @endforeach
-
-
-
             </div>
-            <!--/.direct-chat-messages-->
-
-            <!-- Contacts are loaded here -->
-            <div class="direct-chat-contacts">
-              <ul class="contacts-list">
-                <li>
-                  <a href="#">
-                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                    <div class="contacts-list-info">
-                      <span class="contacts-list-name">
-                        Count Dracula
-                        <small class="contacts-list-date float-right">2/28/2015</small>
-                      </span>
-                      <span class="contacts-list-msg">How have you been? I was...</span>
-                    </div>
-                    <!-- /.contacts-list-info -->
-                  </a>
-                </li>
-                <!-- End Contact Item -->
-              </ul>
-              <!-- /.contatcts-list -->
-            </div>
-            <!-- /.direct-chat-pane -->
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <form action="#" method="post">
+            <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+              @csrf
+              @error('message')
+              <small class="text-danger">{{ $message }}</small>
+              @enderror
               <div class="input-group">
+                <input type="file" name="attachment" id="tutorattachment" style="display: none;" />
                 <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <input type="hidden" name="receiver_id" value="{{$data->teacherAssigned->teacher->id}}">
+                <input type="hidden" name="order_id" value="{{$data->id}}">
+                <input type="hidden" name="type" value="TUTOR">
                 <span class="input-group-append">
-                  <a class="btn btn-info btn-sm" href="#">
+                  <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('tutorattachment').click()" value="Select a File">
                     <i class="fas fa-paperclip"></i>
                   </a>
                   <button type="submit" class="btn btn-primary">Send</button>
@@ -265,17 +230,15 @@
               </div>
             </form>
           </div>
-          <!-- /.card-footer-->
         </div>
-        <!-- /.card -->
-
       </div>
+      @endif
 
 
 
 
 
-
+      @if($qcAssign > 0)
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="card card-primary card-outline direct-chat direct-chat-primary">
@@ -288,10 +251,7 @@
           <div class="card-body">
             <!-- Conversations are loaded here -->
             <div class="direct-chat-messages">
-
-
               @foreach ($qcOrderMessage as $item)
-
               @if ($item['sendertable_type']== 'App\Models\Tutor')
               <!-- Message to the right -->
               <div class="direct-chat-msg right">
@@ -308,10 +268,7 @@
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
-
               @else
-
-
               <div class="direct-chat-msg">
                 <div class="direct-chat-infos clearfix">
                   <span class="direct-chat-name float-left">{{$item['sendertable']['name']}}</span>
@@ -322,68 +279,43 @@
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                   {{$item['message']}}
+                  <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
               <!-- /.direct-chat-msg -->
-
-
-
-
               @endif
               @endforeach
-
-
-
-
-
-
             </div>
-            <!--/.direct-chat-messages-->
-
-            <!-- Contacts are loaded here -->
-            <div class="direct-chat-contacts">
-              <ul class="contacts-list">
-                <li>
-                  <a href="#">
-                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                    <div class="contacts-list-info">
-                      <span class="contacts-list-name">
-                        Count Dracula
-                        <small class="contacts-list-date float-right">2/28/2015</small>
-                      </span>
-                      <span class="contacts-list-msg">How have you been? I was...</span>
-                    </div>
-                    <!-- /.contacts-list-info -->
-                  </a>
-                </li>
-                <!-- End Contact Item -->
-              </ul>
-              <!-- /.contatcts-list -->
-            </div>
-            <!-- /.direct-chat-pane -->
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <form action="#" method="post">
+            <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+              @csrf
+              @error('message')
+              <small class="text-danger">{{ $message }}</small>
+              @enderror
               <div class="input-group">
+                <input type="file" name="attachment" id="qcattachment" style="display: none;" />
                 <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+
+                <input type="hidden" name="receiver_id" value="{{$data->qcAssigned->qc->id}}">
+                <input type="hidden" name="order_id" value="{{$data->id}}">
+                <input type="hidden" name="type" value="QC">
                 <span class="input-group-append">
-                  <a class="btn btn-info btn-sm" href="#">
+                  <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('qcattachment').click()" value="Select a File">
                     <i class="fas fa-paperclip"></i>
                   </a>
+
+
                   <button type="submit" class="btn btn-primary">Send</button>
                 </span>
               </div>
             </form>
           </div>
-          <!-- /.card-footer-->
         </div>
-        <!-- /.card -->
-
       </div>
-
+      @endif
     </div>
     <!-- /.row -->
   </div><!-- /.container-fluid -->

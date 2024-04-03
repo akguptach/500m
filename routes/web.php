@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/tutor-assign-request', [AjaxController::class, 'tutorAssignRequest'])->name('tutor_assign_request');
     Route::post('/qc-assign-request', [AjaxController::class, 'qcAssignRequest'])->name('qc_assign_request');
+
+    Route::post('/order/message', [OrdersController::class, 'sendMessage'])->name('send_message');
 });
 
 require __DIR__ . '/auth.php';

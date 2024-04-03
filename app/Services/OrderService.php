@@ -4,6 +4,13 @@ namespace App\Services;
 
 use App\Models\Orders;
 use Illuminate\Support\Facades\DB;
+use App\Models\Student;
+use App\Models\User;
+use App\Models\Tutor;
+use App\Models\StudentOrderMessage;
+use App\Models\TeacherOrderMessage;
+use App\Models\QcOrderMessage;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OrderService.
@@ -82,5 +89,54 @@ class OrderService
         $Orders->rate                  = $request->rate;
         $Orders->additional_word_rate  = $request->additional_word_rate;
         $Orders->save();
+    }
+
+    public function saveOrderMessages($request)
+    {
+
+        try {
+            $attachment = '';
+            if ($request->has("attachment")) {
+
+                $attachment = request()->file('attachment');
+                $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
+                $attachment = 'images/uploads/attachment/' . $attachmentName;
+            }
+            if ($request->type == 'STUDENT') {
+                StudentOrderMessage::Create([
+                    'order_id' => $request->order_id,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => User::class,
+                    'receivertable_id' => $request->receiver_id,
+                    'receivertable_type' => Student::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment
+                ]);
+            } else if ($request->type == 'TUTOR') {
+                TeacherOrderMessage::Create([
+                    'order_id' => $request->order_id,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => User::class,
+                    'receivertable_id' => $request->receiver_id,
+                    'receivertable_type' => Tutor::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment
+                ]);
+            } else if ($request->type == 'QC') {
+                QcOrderMessage::Create([
+                    'order_id' => $request->order_id,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => User::class,
+                    'receivertable_id' => $request->receiver_id,
+                    'receivertable_type' => Tutor::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment
+                ]);
+            }
+            return ['message' => 'Message sent', 'status' => 'success'];
+        } catch (\Exception $e) {
+            return ['message' => 'There is an error', 'status' => 'error'];
+        }
     }
 }
