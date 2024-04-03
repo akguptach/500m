@@ -21,12 +21,15 @@ class PageRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
+
         return [
-            'page_title' => 'required|min:2|unique:pages,page_title,' . $this->page,
+            'page_title' => 'required|min:2|unique:pages,page_title,' . $this->pages,
             'page_desc' => 'required|min:2',
             'website_type' => 'required',
-            'seo_title' => 'required|max:191|unique:pages,seo_title,' . $this->page,
-            'seo_url_slug' => 'required|max:191|unique:pages,seo_url_slug,' . $this->page,
+            'seo_title' => 'required|max:191|unique:pages,seo_title,' . $this->pages,
+            'seo_url_slug' => 'required|max:191|unique:pages,seo_url_slug,' . $this->pages,
         ];
     }
 }

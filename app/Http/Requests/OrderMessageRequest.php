@@ -21,9 +21,18 @@ class OrderMessageRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        /*return $this->validateWithBag('checkin', [
+            'message' => 'required',
+            'attachment' => 'required_without:message',
+            'receiver_id' => 'required',
+            'type' => 'required',
+            'order_id' => 'required',
+        ]);*/
+
         return [
             'message' => 'required',
-            //'attachment' => 'required_without:message',
+            'attachment' => 'required_without:message',
             'receiver_id' => 'required',
             'type' => 'required',
             'order_id' => 'required',

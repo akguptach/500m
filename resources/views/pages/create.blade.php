@@ -22,7 +22,7 @@
 
           </div>
 
-          <form id="quickForm" method="POST" action="{{route('pages.store')}}">
+          <form id="quickForm" method="POST" action="{{route('pages.store')}}" enctype="multipart/form-data">
 
             @csrf
 
@@ -102,6 +102,11 @@
                 <textarea id="seo_meta" name="seo_meta" class="form-control"></textarea>
                 <p class="help-block">ex. &lt;meta name="description" content="We sell products that help you" /&gt;</p>
 
+              </div>
+
+              <div class="form-group">
+                <label>Og Image</label>
+                <input type="file" name="og_image">
               </div>
             </div>
 

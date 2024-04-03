@@ -54,6 +54,12 @@ class PageService
         $pages->seo_meta        = $request->seo_meta;
         $pages->status          = $request->status;
         $pages->website_type          = $request->website_type;
+        if ($request->has("og_image")) {
+            $picture = request()->file('og_image');
+            $imageName = "og_image" . time() . '.' . $picture->getClientOriginalExtension();
+            $picture->move(public_path('images/uploads/pages/'), $imageName);
+            $pages->og_image = 'images/uploads/pages/' . $imageName;
+        }
         $pages->save();
     }
 }

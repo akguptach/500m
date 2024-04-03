@@ -9,7 +9,7 @@
 					<div class="card-header">
 						<h3 class="card-title">Edit <small>Page</small></h3>
 					</div>
-					<form id="quickForm" method="POST" action="{{$formAction}}">
+					<form id="quickForm" method="POST" action="{{$formAction}}" enctype="multipart/form-data">
 						@csrf
 						@method('PUT')
 						<div class="card-body">
@@ -77,6 +77,12 @@
 								<textarea id="seo_meta" name="seo_meta" class="form-control">{{$data->seo_meta}}</textarea>
 								<p class="help-block">ex. &lt;meta name="description" content="We sell products that help you" /&gt;</p>
 							</div>
+
+							<div class="form-group">
+								<label>Og Image</label>
+								<input type="file" name="og_image">
+							</div>
+
 						</div>
 						<div class="card-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>

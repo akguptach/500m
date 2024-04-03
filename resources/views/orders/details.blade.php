@@ -136,9 +136,10 @@
           <div class="card-footer">
             <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
               @csrf
-              @error('message')
-              <small class="text-danger">{{ $message }}</small>
-              @enderror
+
+
+
+
               <div class="input-group">
                 <input type="file" name="attachment" id="attachment" style="display: none;" />
                 <input type="text" name="message" placeholder="Type Message ..." class="form-control">
