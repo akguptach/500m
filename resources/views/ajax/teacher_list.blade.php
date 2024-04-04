@@ -13,7 +13,7 @@
     </div>
     <div class="modal-body">
 
-        <div class="table-responsive mailbox-messages">
+        <div class="table-responsive mailbox-messages" style="overflow: scroll;height: 400px;">
             <table class="table table-hover table-striped">
                 <tbody>
                     @foreach($teachers as $qc)
@@ -33,14 +33,15 @@
             </table>
             <small class="text-danger" id="teacher_id_error"></small>
             <!-- /.table -->
-            <div class="form-group">
-                <input type="hidden" name="order_id" value="{{$order_id}}">
-                <input type="hidden" name="student_id" value="{{$student_id}}">
-                <label for="inputProjectLeader">Delivery Date</label>
-                <input type="date" id="inputProjectLeader" class="form-control" name="delivery_date">
-                <small class="text-danger" id="delivery_date_error"></small>
-            </div>
         </div>
+        <div class="form-group">
+            <input type="hidden" name="order_id" value="{{$order_id}}">
+            <input type="hidden" name="student_id" value="{{$student_id}}">
+            <label for="inputProjectLeader">Delivery Date</label>
+            <input type="date" id="inputProjectLeader" class="form-control" name="delivery_date">
+            <small class="text-danger" id="delivery_date_error"></small>
+        </div>
+
     </div>
 
     <div class="modal-footer justify-content-between">
