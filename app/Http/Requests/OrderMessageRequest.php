@@ -31,7 +31,7 @@ class OrderMessageRequest extends FormRequest
         ]);*/
 
         return [
-            'message' => 'required',
+            'message' => 'required_without:attachment',
             'attachment' => 'required_without:message',
             'receiver_id' => 'required',
             'type' => 'required',
