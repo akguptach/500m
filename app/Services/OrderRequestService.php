@@ -17,7 +17,7 @@ class OrderRequestService
     public function sendRequest($request, $type = 'tutor')
     {
         if ($type == 'tutor') {
-            if (OrderRequest::where('order_id', $request->order_id)->where('type', 'TUTOR')->count() > 0) {
+            if (OrderRequest::where('order_id', $request->order_id)->where('type', 'TUTOR')->whereIn('status', ['PENDING', 'ACCEPTED'])->count() > 0) {
                 return ['Already Sent'];
             }
 
@@ -46,11 +46,14 @@ class OrderRequestService
         }
         $tutor = Tutor::find($request->teacher_id);
         $data = ['name' => $tutor->tutor_first_name];
-        Mail::send('emails.tutor_request', $data, function ($message) use ($data, $tutor) {
-            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-            $message->subject("Order Request");
-            $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
-        });
+        try {
+            Mail::send('emails.tutor_request', $data, function ($message) use ($data, $tutor) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->subject("Order Request");
+                $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+            });
+        } catch (\Exception $e) {
+        }
         return ['Request send successfully'];
     }
 }
