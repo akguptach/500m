@@ -10,6 +10,11 @@ use App\Models\Tutor;
 use App\Models\StudentOrderMessage;
 use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
+use App\Models\OrderAssign;
+use App\Models\QcAssign;
+use App\Models\OrderRequest;
+use App\Models\OrderRequestMessage;
+
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -75,6 +80,45 @@ class OrderService
         <i class="fas fa-trash"></i></a>';
         return $actionsLinks;
     }
+
+
+    public function orderDetails($id)
+    {
+        $result = [];
+        $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
+
+        $result['orderAssign'] = OrderAssign::where('order_id', $id)->count();
+        $result['qcAssign'] = QcAssign::where('order_id', $id)->count();
+        if ($result['orderAssign'] > 0) {
+            $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+            $result['teacherOrderMessage'] = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        }
+        if ($result['qcAssign'] > 0) {
+            $result['qcOrderMessage'] = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        }
+
+
+
+        $result['tutorRequestAccepted'] = OrderRequest::where('order_id', $id)
+            ->where('type', 'TUTOR')
+            ->where('status', 'ACCEPTED')
+            ->first();
+        $result['qcRequestAccepted'] = OrderRequest::where('order_id', $id)
+            ->where('status', 'ACCEPTED')
+            ->where('type', 'QC')->first();
+
+
+
+        if ($result['tutorRequestAccepted']) {
+            $result['teacherRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['tutorRequestAccepted']->id)->get();
+        }
+        if ($result['qcRequestAccepted']) {
+            $result['qcRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['qcRequestAccepted']->id)->get();
+        }
+
+        return $result;
+    }
+
 
     public function saveOrder($request, $id = null)
     {
