@@ -1,15 +1,15 @@
-<div class="col-md-3">
+<div class="col-md-9">
     <!-- Profile Image -->
-    <div class="card card-primary card-outline direct-chat direct-chat-primary">
+    <div class="card card-primary card-outline direct-chat direct-chat-primary" style="height: 97%;">
         <div class="card-header">
             <h3 class="card-title">Teachers Chat</h3>
             </br>
-            <p class="text-muted text-left">{{@$data->teacherAssigned->teacher->tutor_first_name.' '.@$data->teacherAssigned->teacher->tutor_last_name}}</p>
+            <p class="text-muted text-left">{{$tutorRequestAccepted->tutor->tutor_first_name.' '.$tutorRequestAccepted->tutor->tutor_last_name}}</p>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <!-- Conversations are loaded here -->
-            <div class="direct-chat-messages">
+            <div class="direct-chat-messages" style="height: 400px;">
                 <!-- Message. Default to the left -->
                 @foreach ($teacherRequestMessage as $item)
                 @if ($item['sendertable_type']== 'App\Models\Tutor')
@@ -51,7 +51,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('send_request_message')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @error('message')
                 <small class="text-danger">{{ $message }}</small>
@@ -59,8 +59,8 @@
                 <div class="input-group">
                     <input type="file" name="attachment" id="tutorattachment" style="display: none;" />
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                    <input type="hidden" name="receiver_id" value="{{@$data->teacherAssigned->teacher->id}}">
-                    <input type="hidden" name="order_id" value="{{$data->id}}">
+                    <input type="hidden" name="receiver_id" value="{{$tutorRequestAccepted->tutor->id}}">
+                    <input type="hidden" name="request_id" value="{{$tutorRequestAccepted->id}}">
                     <input type="hidden" name="type" value="TUTOR">
                     <span class="input-group-append">
                         <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('tutorattachment').click()" value="Select a File">
@@ -69,6 +69,7 @@
                         <button type="submit" class="btn btn-primary">Send</button>
                     </span>
                 </div>
+
             </form>
         </div>
     </div>

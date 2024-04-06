@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use App\Http\Requests\OrdersRequest;
 use App\Http\Requests\OrderMessageRequest;
-
+use App\Http\Requests\OrderRequestMessageRequest;
+use App\Http\Requests\FinalBudgetRequest;
 
 
 class OrdersController extends Controller
@@ -63,7 +64,6 @@ class OrdersController extends Controller
     public function sendMessage(OrderMessageRequest $request)
     {
         try {
-
             $result = $this->orderService->saveOrderMessages($request);
             return redirect()->back()->with($result['status'], $result['message']);
         } catch (\Exception $e) {
@@ -71,5 +71,24 @@ class OrdersController extends Controller
             echo $e;
             die;
         }
+    }
+
+    public function sendRequestMessage(OrderRequestMessageRequest $request)
+    {
+
+        try {
+            $result = $this->orderService->sendRequestMessage($request);
+            return redirect()->back()->with($result['status'], $result['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'error');
+            echo $e;
+            die;
+        }
+    }
+
+    public function submitFinalBudget(FinalBudgetRequest $request, $id)
+    {
+        $result = $this->orderService->submitFinalBudget($request);
+        return redirect()->back()->with($result['status'], $result['message']);
     }
 }

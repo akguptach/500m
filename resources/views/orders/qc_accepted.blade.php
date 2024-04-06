@@ -2,9 +2,9 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
         <div class="card-header">
-            <h3 class="card-title">QC Chat</h3>
+            <h3 class="card-title">QC Chat--</h3>
             </br>
-            <p class="text-muted text-left">{{@$data->qcAssigned->qc->tutor_first_name.' '.@$data->qcAssigned->qc->tutor_last_name}}</p>
+            <p class="text-muted text-left">{{$qcRequestAccepted->tutor->tutor_first_name.' '.$qcRequestAccepted->tutor->tutor_last_name}}</p>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -49,7 +49,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('send_request_message')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @error('message')
                 <small class="text-danger">{{ $message }}</small>
@@ -58,9 +58,13 @@
                     <input type="file" name="attachment" id="qcattachment" style="display: none;" />
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
 
-                    <input type="hidden" name="receiver_id" value="{{@$data->qcAssigned->qc->id}}">
+                    <input type="hidden" name="receiver_id" value="{{$qcRequestAccepted->tutor->id}}">
+                    <input type="hidden" name="request_id" value="{{$qcRequestAccepted->id}}">
                     <input type="hidden" name="order_id" value="{{$data->id}}">
                     <input type="hidden" name="type" value="QC">
+                    @if($errors->any())
+                    {{ implode('', $errors->all('<div>:message</div>')) }}
+                    @endif
                     <span class="input-group-append">
                         <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('qcattachment').click()" value="Select a File">
                             <i class="fas fa-paperclip"></i>

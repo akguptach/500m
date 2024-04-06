@@ -26,9 +26,47 @@
                 <li class="list-group-item">
                     <b>Attachment</b> <a class="float-right">{{$data['fileupload']}}</a>
                 </li>
+                @if($orderAssign)
+                <li class="list-group-item">
+                    <b>Tutor Budget</b> <a class="float-right">{{$orderAssign->tutor_price}} {{$data['currency_code']}}</a>
+                </li>
+                @endif
+                @if($qcAssign)
+                <li class="list-group-item">
+                    <b>Qc Budget</b> <a class="float-right">{{$qcAssign->qc_price}} {{$data['currency_code']}}</a>
+                </li>
+                @endif
+
             </ul>
 
-            <a href="#" class="btn btn-block btn-success btn-lg"><b>Approved</b></a>
+            @if(!$orderAssign && $tutorRequestAccepted)
+            <form method="POST" action="{{route('submit_budget',['id'=>$tutorRequestAccepted->id])}}">
+                @csrf
+                <div class="form-group">
+                    <label for="inputEstimatedBudget">Tutor Final budget</label>
+                    <input type="number" id="inputEstimatedBudget" class="form-control" name="final_budget_amount">
+                    @error('final_budget_amount')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <input type="submit" name="final_budget" value="Approved" class="btn btn-success float-right">
+            </form>
+            @endif
+
+            @if(!$qcAssign && $qcRequestAccepted)
+            <form method="POST" action="{{route('submit_budget',['id'=>$qcRequestAccepted->id])}}">
+                @csrf
+                <div class="form-group">
+                    <label for="inputEstimatedBudget">Qc Final budget</label>
+                    <input type="number" id="inputEstimatedBudget" class="form-control" name="final_budget_amount">
+                    @error('final_budget_amount')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <input type="submit" name="final_budget" value="Approved" class="btn btn-success float-right">
+            </form>
+            @endif
+
         </div>
         <!-- /.card-body -->
     </div>

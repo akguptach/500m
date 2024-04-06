@@ -87,23 +87,27 @@ class OrderService
         $result = [];
         $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
 
-        $result['orderAssign'] = OrderAssign::where('order_id', $id)->count();
-        $result['qcAssign'] = QcAssign::where('order_id', $id)->count();
-        if ($result['orderAssign'] > 0) {
+        $result['orderAssign'] = OrderAssign::where('order_id', $id)->first();
+        $result['qcAssign'] = QcAssign::where('order_id', $id)->first();
+
+
+
+        if ($result['orderAssign']) {
             $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
             $result['teacherOrderMessage'] = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
         }
-        if ($result['qcAssign'] > 0) {
+        if ($result['qcAssign']) {
             $result['qcOrderMessage'] = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
         }
 
 
 
-        $result['tutorRequestAccepted'] = OrderRequest::where('order_id', $id)
+        $result['tutorRequestAccepted'] = OrderRequest::with(['tutor'])->where('order_id', $id)
             ->where('type', 'TUTOR')
             ->where('status', 'ACCEPTED')
             ->first();
-        $result['qcRequestAccepted'] = OrderRequest::where('order_id', $id)
+
+        $result['qcRequestAccepted'] = OrderRequest::with(['tutor'])->where('order_id', $id)
             ->where('status', 'ACCEPTED')
             ->where('type', 'QC')->first();
 
@@ -158,6 +162,7 @@ class OrderService
                     'attachment' => $attachment
                 ]);
             } else if ($request->type == 'TUTOR') {
+
                 TeacherOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -180,7 +185,58 @@ class OrderService
             }
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
-            return ['message' => 'There is an error', 'status' => 'error'];
+            return ['message' => $e->getMessage(), 'status' => 'error'];
         }
+    }
+
+    public function sendRequestMessage($request)
+    {
+
+        try {
+            $attachment = '';
+            if ($request->has("attachment")) {
+
+                $attachment = request()->file('attachment');
+                $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
+                $attachment = 'images/uploads/attachment/' . $attachmentName;
+            }
+            OrderRequestMessage::Create([
+                'request_id' => $request->request_id,
+                'sendertable_id' => Auth::user()->id,
+                'sendertable_type' => User::class,
+                'receivertable_id' => $request->receiver_id,
+                'receivertable_type' => Tutor::class,
+                'message' => $request->message,
+                'attachment' => $attachment
+            ]);
+            return ['message' => 'Message sent', 'status' => 'success'];
+        } catch (\Exception $e) {
+            return ['message' => $e->getMessage(), 'status' => 'error'];
+        }
+    }
+
+    public function submitFinalBudget($request)
+    {
+
+        $orderRequest = OrderRequest::find($request->id);
+        $budget = $request->final_budget_amount;
+        if ($orderRequest->type == 'TUTOR') {
+            OrderAssign::Create([
+                'order_id' => $orderRequest->order_id,
+                'student_id' => $orderRequest->student_id,
+                'tutor_id' => $orderRequest->tutor_id,
+                'tutor_price' => $budget,
+                'message' => ''
+            ]);
+        } else if ($orderRequest->type == 'QC') {
+            QcAssign::Create([
+                'order_id' => $orderRequest->order_id,
+                'student_id' => $orderRequest->student_id,
+                'qc_id' => $orderRequest->tutor_id,
+                'qc_price' => $budget,
+            ]);
+        }
+        return ['message' => 'Order assigned', 'status' => 'success'];
     }
 }
