@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\OrderRequest;
 use App\Models\Tutor;
-use App\Models\QcOrderRequest;
+use App\Models\OrderAssign;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -31,8 +31,12 @@ class OrderRequestService
                 'type' => 'TUTOR'
             ]);
         } else {
-            if (OrderRequest::where('order_id', $request->order_id)->where('type', 'QC')->count() > 0) {
-                return ['Already Sent'];
+            if (OrderAssign::where('order_id', $request->order_id)->where('status', 'COMPLETED')->count() <= 0) {
+                return ['Tutor has not completed this order'];
+            } else if (OrderRequest::where('order_id', $request->order_id)->where('type', 'TUTOR')->where('tutor_id', $request->teacher_id)->count() > 0) {
+                return ['You can not assign same tutor as QC'];
+            } else if (OrderRequest::where('order_id', $request->order_id)->where('type', 'QC')->count() > 0) {
+                return ['Request already Sent'];
             }
             OrderRequest::Create([
                 'order_id' => $request->order_id,

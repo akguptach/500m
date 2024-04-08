@@ -24,8 +24,13 @@
                     <b>Delivery Date</b> <a class="float-right">{{date('m-d-Y', strtotime($data['delivery_date']))}}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Attachment</b> <a class="float-right">{{$data['fileupload']}}</a>
+                    <b>Student's Attachment</b> <a class="float-right">{{$data['fileupload']}}</a>
                 </li>
+
+                <li class="list-group-item">
+                    <b>Teacher's Attachment</b> <a class="float-right">{{$data['fileupload']}}</a>
+                </li>
+
                 @if($orderAssign)
                 <li class="list-group-item">
                     <b>Tutor Budget</b> <a class="float-right">{{$orderAssign->tutor_price}} {{$data['currency_code']}}</a>
