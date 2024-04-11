@@ -47,7 +47,7 @@
                                     <th>Currency Code</th>
                                     <th>Delivery Date</th>
 
-                                    <th>Actions</th>
+                                    <th width="15%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,9 +113,11 @@
             data: formData, // serializes the form's elements.
             success: function(data) {
                 $('#loadingoverlay').hide();
-                alert(data)
-                //$('#teachers-modal-body').html('<div class="alert alert-success" role="alert">' + data + '</div>');
                 $('#modal-assign-teacher').modal('hide');
+                alert(data);
+                location.reload();
+                //$('#teachers-modal-body').html('<div class="alert alert-success" role="alert">' + data + '</div>');
+                //
             },
             error: function(e) {
                 $('#loadingoverlay').hide();

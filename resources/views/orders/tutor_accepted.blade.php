@@ -4,7 +4,7 @@
         <div class="card-header">
             <h3 class="card-title">Teachers Chat</h3>
             </br>
-            <p class="text-muted text-left">{{$tutorRequestAccepted->tutor->tutor_first_name.' '.$tutorRequestAccepted->tutor->tutor_last_name}}</p>
+            <p class="text-muted text-left">{{$orderRequestSent->tutor->tutor_first_name.' '.$orderRequestSent->tutor->tutor_last_name}}</p>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -59,8 +59,8 @@
                 <div class="input-group">
                     <input type="file" name="attachment" id="tutorattachment" style="display: none;" />
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                    <input type="hidden" name="receiver_id" value="{{$tutorRequestAccepted->tutor->id}}">
-                    <input type="hidden" name="request_id" value="{{$tutorRequestAccepted->id}}">
+                    <input type="hidden" name="receiver_id" value="{{$orderRequestSent->tutor->id}}">
+                    <input type="hidden" name="request_id" value="{{$orderRequestSent->id}}">
                     <input type="hidden" name="type" value="TUTOR">
                     <span class="input-group-append">
                         <a class="btn btn-info btn-sm" href="javascript::void(0);" onclick="document.getElementById('tutorattachment').click()" value="Select a File">

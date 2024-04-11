@@ -68,16 +68,34 @@ class OrderService
     {
 
         $edit_page = 'orders/' . $page['id'] . '/view';
-        $req_page_id = '"' . $page['id'] . '"';
+        //$req_page_id = '"' . $page['id'] . '"';
 
-        $actionsLinks = '<a class="btn btn-primary btn-xs" href="' . url($edit_page) . '">
-        <i class="fas fa-eye"></i></a>
-        <a class="btn btn-info btn-xs assign-teacher" href="#" data-toggle="modal" data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'tutor']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">
-        <i class="fa fa-user"></i></a>  
-        <a class="btn btn-info btn-xs assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">
-        <i class="fa fa-check"></i></a>  
-        <a class="btn btn-danger btn-xs" href="#">
-        <i class="fas fa-trash"></i></a>';
+        $tutorCompleted = OrderAssign::where('order_id', $page['id'])
+            ->where('status', 'COMPLETED')
+            ->count();
+
+        $tutorOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'TUTOR')->orderBy('id', 'desc')->first();
+
+
+        $qcOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'QC')->first();
+
+        $actionsLinks = '<div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+        $actionsLinks .= '<a class="dropdown-item" href="' . url($edit_page) . '">Order Details</a>';
+
+        if ($tutorOrderRequest && $tutorOrderRequest->status != 'REJECTED') {
+            $actionsLinks .= '<a class="dropdown-item" href="' . route('tutor_request_sent', ['id' => $page['id']]) . '">Tutor Request</a>';
+        } else {
+            $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal" data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'tutor']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Tutor Request</a>';
+        }
+
+        if ($tutorCompleted > 0) {
+            $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Qc Request</a>';
+        }
+        $actionsLinks .= '</div></div>';
         return $actionsLinks;
     }
 
@@ -238,5 +256,45 @@ class OrderService
             ]);
         }
         return ['message' => 'Order assigned', 'status' => 'success'];
+    }
+
+    public function getTutorRequestSent($id = null)
+    {
+        $result = [];
+        $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
+
+        $result['orderAssign'] = $result['qcAssign'] = $result['tutorRequestAccepted'] = $result['qcRequestAccepted'] = '';
+
+        $result['orderRequestSent'] = OrderRequest::with(['tutor'])->where('order_id', $id)
+            ->where('type', 'TUTOR')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($result['orderRequestSent'] && $result['orderRequestSent']->status == 'ACCEPTED') {
+            $result['teacherRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['orderRequestSent']->id)->get();
+            $result['orderAssign'] = OrderAssign::where('order_id', $id)->first();
+        }
+
+
+        /*if ($result['orderAssign']) {
+            $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+            $result['teacherOrderMessage'] = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        }
+        if ($result['qcAssign']) {
+            $result['qcOrderMessage'] = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        }*/
+
+
+        /*$result['qcRequestAccepted'] = OrderRequest::with(['tutor'])->where('order_id', $id)
+            ->where('status', 'ACCEPTED')
+            ->where('type', 'QC')->first();
+
+
+        
+        if ($result['qcRequestAccepted']) {
+            $result['qcRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['qcRequestAccepted']->id)->get();
+        }*/
+        //$result['orderRequestSent'] = OrderRequest::where('order_id', $id)->where('type', 'TUTOR')->first();
+        return $result;
     }
 }

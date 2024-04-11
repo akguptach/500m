@@ -38,6 +38,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
 Route::middleware('auth')->group(function () {
     Route::resource('/role', RoleController::class);
     Route::resource('/subject', SubjectController::class);
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages/{pages}/edit', [PageController::class, 'edit'])->name('pages.edit');
     Route::put('/pages/{pages}', [PageController::class, 'update'])->name('pages.update');
     Route::delete('pages/{pages}/delete', [PageController::class, 'destroy'])->name('pages.destroy');
+
+
+
+
+
 
     Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
     Route::get('/categories/create', [CategoriesController::class, 'create'])->name('categories.create');
@@ -87,6 +93,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/order/message', [OrdersController::class, 'sendMessage'])->name('send_message');
     Route::post('/request/message', [OrdersController::class, 'sendRequestMessage'])->name('send_request_message');
     Route::post('/request/submit/budget/{id}', [OrdersController::class, 'submitFinalBudget'])->name('submit_budget');
+
+
+    Route::get('/order/tutor-request-sent/{id}', [OrdersController::class, 'tutorRequestSent'])->name('tutor_request_sent');
 });
 
 require __DIR__ . '/auth.php';

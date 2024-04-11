@@ -91,4 +91,9 @@ class OrdersController extends Controller
         $result = $this->orderService->submitFinalBudget($request);
         return redirect()->back()->with($result['status'], $result['message']);
     }
+
+    public function tutorRequestSent($id)
+    {
+        return view('orders/tutor_request_sent', $this->orderService->getTutorRequestSent($id));
+    }
 }

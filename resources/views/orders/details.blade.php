@@ -41,7 +41,7 @@
       @if($orderAssign)
       @include('orders.tutor_assigned',['data'=>$data, 'studentMessages'=>$studentMessages,'teacherOrderMessage'=>$teacherOrderMessage])
       @elseif($tutorRequestAccepted)
-      @include('orders.tutor_accepted')
+      {{--@include('orders.tutor_accepted')--}}
       @endif
 
       @if($qcAssign)

@@ -44,8 +44,8 @@
 
             </ul>
 
-            @if(!$orderAssign && $tutorRequestAccepted)
-            <form method="POST" action="{{route('submit_budget',['id'=>$tutorRequestAccepted->id])}}">
+            @if(!$orderAssign && isset($orderRequestSent) && $orderRequestSent->status == 'ACCEPTED')
+            <form method="POST" action="{{route('submit_budget',['id'=>$orderRequestSent->id])}}">
                 @csrf
                 <div class="form-group">
                     <label for="inputEstimatedBudget">Tutor Final budget</label>

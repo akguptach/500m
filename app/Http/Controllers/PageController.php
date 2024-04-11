@@ -88,4 +88,10 @@ class PageController extends Controller
             return redirect('/pages');
         }
     }
+
+    public function showPage(string $seo_url_slug)
+    {
+        $page = Pages::where('seo_url_slug', $seo_url_slug)->first();
+        return view('pages/show_page', compact('page'));
+    }
 }
