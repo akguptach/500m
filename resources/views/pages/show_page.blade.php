@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    {{$page->seo_description}}
+    <?php echo ($page->page_desc); ?>
 </body>
 
 </html>

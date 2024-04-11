@@ -32,7 +32,9 @@
 									@endif
 
 								</select>
-
+								@error('website_type')
+								<small class="text-danger">{{ $message }}</small>
+								@enderror
 							</div>
 							<div class="form-group">
 								<label>Page Title</label>

@@ -22,11 +22,17 @@
                   @endforeach
                   @endif
                 </select>
+                @error('website_type')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
 
               <div class="form-group">
                 <label>Page Title</label>
                 <input type="text" name="page_title" class="form-control" placeholder="" value="{{old('page_title')}}">
+                @error('page_title')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
 
 
@@ -50,6 +56,9 @@
                     <option value="1" @if(old('status')=='1' ) selected="selected" @endif>Active</option>
                     <option value="0" @if(old('status')=='0' ) selected="selected" @endif>Not Active</option>
                   </select>
+                  @error('status')
+                  <small class="text-danger">{{ $message }}</small>
+                  @enderror
                 </div>
 
 
@@ -59,31 +68,48 @@
               <div class="form-group">
                 <label>SEO Title</label>
                 <input type="text" name="seo_title" class="form-control" placeholder="" value="{{old('seo_title')}}">
+                @error('seo_title')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
+
               <div class="form-group">
                 <label>Friendly URL</label>
                 <input type="text" name="seo_url_slug" class="form-control" placeholder="" value="{{old('seo_url_slug')}}">
+                @error('seo_url_slug')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
               <div class="form-group">
                 <label>Meta Description</label>
                 <textarea id="seo_description" name="seo_description" class="form-control">{{old('seo_description')}}</textarea>
-
+                @error('seo_description')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
               <div class="form-group">
                 <label>Meta Keywords</label>
                 <input type="text" name="seo_keywords" class="form-control" placeholder="" value="{{old('seo_keywords')}}">
+                @error('seo_keywords')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
 
               <div class="form-group">
                 <label>Meta Tags</label>
                 <textarea id="seo_meta" name="seo_meta" class="form-control">{{old('seo_meta')}}</textarea>
                 <p class="help-block">ex. &lt;meta name="description" content="We sell products that help you" /&gt;</p>
-
+                @error('seo_meta')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
 
               <div class="form-group">
                 <label>Og Image</label>
                 <input type="file" name="og_image">
+                @error('og_image')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
               </div>
             </div>
 
