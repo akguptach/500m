@@ -19,6 +19,7 @@ use App\Http\Controllers\ReferencingStyleController;
 use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,17 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/order/tutor-request-sent/{id}', [OrdersController::class, 'tutorRequestSent'])->name('tutor_request_sent');
+
+
+    Route::get('/services', [ServiceController::class, 'index'])->name('services_index');
+
+    //Route::get('/services/create', [ServiceController::class, 'create'])->name('pages.create');
+    //Route::post('/services/store', [ServiceController::class, 'store'])->name('pages.store');
+    //Route::get('/services/{pages}/edit', [ServiceController::class, 'edit'])->name('pages.edit');
+    //Route::put('/services/{pages}', [ServiceController::class, 'update'])->name('pages.update');
+    //Route::delete('services/{pages}/delete', [ServiceController::class, 'destroy'])->name('pages.destroy');
+
+
 });
 
 require __DIR__ . '/auth.php';

@@ -129,10 +129,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('categories') }}" class="nav-link {{ (request()->is('categories')  || request()->is('categories/*/edit') ) ? 'active' : '' }}">
+                    <a href="{{ route('services_index') }}" class="nav-link {{ (request()->is('services_index')  || request()->is('services_index/*/edit') ) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-pen-nib"></i>
                         <p>
-                            Services {{ request()->is('/categories') ? 'active' : '' }}
+                            Services {{ request()->is('/services_index') ? 'active' : '' }}
                         </p>
                     </a>
                 </li>
