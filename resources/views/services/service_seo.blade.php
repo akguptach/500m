@@ -5,7 +5,7 @@
             <input type="hidden" name="service_id" value="{{Request::route('id') }}">
             <div class="form-group">
                 <label>Seo Title</label>
-                <input type="text" name="seo_title" class="form-control" placeholder="" value="{{old('seo_title')}}">
+                <input type="text" name="seo_title" class="form-control" placeholder="" value="{{old('seo_title',@$service->seo->seo_title)}}">
                 @error('seo_title')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label>Seo Keywords</label>
-                <input type="text" name="seo_keywords" class="form-control" placeholder="" value="{{old('seo_keywords')}}">
+                <input type="text" name="seo_keywords" class="form-control" placeholder="" value="{{old('seo_keywords',@$service->seo->seo_keywords)}}">
                 @error('seo_keywords')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label>Seo Url</label>
-                <input type="text" name="seo_url_slug" class="form-control" placeholder="" value="{{old('seo_url_slug')}}">
+                <input type="text" name="seo_url_slug" class="form-control" placeholder="" value="{{old('seo_url_slug',@$service->seo->seo_url_slug)}}">
                 @error('seo_url_slug')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -29,7 +29,7 @@
 
             <div class="form-group">
                 <label>Seo Meta</label>
-                <input type="text" name="seo_meta" class="form-control" placeholder="" value="{{old('seo_meta')}}">
+                <input type="text" name="seo_meta" class="form-control" placeholder="" value="{{old('seo_meta', @$service->seo->seo_meta)}}">
                 @error('seo_meta')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -39,7 +39,7 @@
 
             <div class="form-group">
                 <label>Seo Description</label>
-                <textarea id="seo_description" name="seo_description" class="form-control">{{old('seo_description')}}</textarea>
+                <textarea id="seo_description" name="seo_description" class="form-control">{{old('seo_description',@$service->seo->seo_description)}}</textarea>
                 @error('seo_description')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror

@@ -28,14 +28,16 @@ class ServiceController extends Controller
         }
     }
 
-    public function create()
+    public function create($id = null)
     {
-        return view('services/create', []);
+        $service = ($id) ? Service::find($id) : [];
+        return view('services/create', compact('service'));
     }
 
     public function storeBasic(BasicServiceRequest $request)
     {
-        $service = Service::Create([
+
+        $service = Service::updateOrCreate(['id' => $request->service_id], [
             'service_name' => $request->service_name,
             'service_description' => $request->service_description,
         ]);
@@ -44,7 +46,8 @@ class ServiceController extends Controller
 
     public function storeSeo(SeoServiceRequest $seoServiceRequest)
     {
-        ServiceSeo::Create([
+
+        ServiceSeo::updateOrCreate(['service_id' => $seoServiceRequest->service_id], [
             'service_id' => $seoServiceRequest->service_id,
             'seo_title' => $seoServiceRequest->seo_title,
             'seo_keywords' => $seoServiceRequest->seo_keywords,

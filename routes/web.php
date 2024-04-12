@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/services', [ServiceController::class, 'index'])->name('services_index');
 
     Route::get('/services/create/{id?}', [ServiceController::class, 'create'])->name('services.create');
+    Route::get('/services/edit/{id}', [ServiceController::class, 'create'])->name('services.edit');
 
     Route::post('/services/store-basic', [ServiceController::class, 'storeBasic'])->name('services.store.basic');
     Route::post('/services/store-seo', [ServiceController::class, 'storeSeo'])->name('services.store.seo');
