@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
+//Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
 Route::middleware('auth')->group(function () {
     Route::resource('/role', RoleController::class);
     Route::resource('/subject', SubjectController::class);

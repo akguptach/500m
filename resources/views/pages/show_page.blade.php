@@ -1,11 +1,11 @@
 <html>
 
 <head>
-    <title>{{$page->seo_title}}</title>
+    <title></title>
 </head>
 
 <body>
-    <?php echo ($page->page_desc); ?>
+
 </body>
 
 </html>
