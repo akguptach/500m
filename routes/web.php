@@ -101,7 +101,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/services', [ServiceController::class, 'index'])->name('services_index');
 
-    //Route::get('/services/create', [ServiceController::class, 'create'])->name('pages.create');
+    Route::get('/services/create/{id?}', [ServiceController::class, 'create'])->name('services.create');
+
+    Route::post('/services/store-basic', [ServiceController::class, 'storeBasic'])->name('services.store.basic');
+    Route::post('/services/store-seo', [ServiceController::class, 'storeSeo'])->name('services.store.seo');
+    Route::post('/services/store-faq', [ServiceController::class, 'storeFaq'])->name('services.store.faq');
+
+
     //Route::post('/services/store', [ServiceController::class, 'store'])->name('pages.store');
     //Route::get('/services/{pages}/edit', [ServiceController::class, 'edit'])->name('pages.edit');
     //Route::put('/services/{pages}', [ServiceController::class, 'update'])->name('pages.update');

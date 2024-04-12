@@ -10,7 +10,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Services</h3>
                                 <div class="float-right">
-                                    <a href="{{ route('pages.create') }}">
+                                    <a href="{{ route('services.create') }}">
                                         <i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                                 </div>
                             </div>
