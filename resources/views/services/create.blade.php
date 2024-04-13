@@ -58,6 +58,7 @@
     </section>
   </div>
 </section>
+@include('services.service_page_js')
 <script>
   $(document).ready(function() {
     if (location.hash) {

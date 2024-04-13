@@ -10,9 +10,38 @@
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
+<script src="{{asset('summernote/summernote-bs5.js')}}"></script>
+<script src="{{asset('summernote/summernote-bs4.js')}}"></script>
+<script src="{{asset('summernote/summernote.js')}}"></script>
+<script src="{{asset('summernote/summernote-lite.js')}}"></script>
+<link rel="stylesheet" href="{{asset('summernote/summernote-bs5.css')}}" />
+<link rel="stylesheet" href="{{asset('summernote/summernote-bs4.css')}}" />
+<link rel="stylesheet" href="{{asset('summernote/summernote.css')}}" />
+<link rel="stylesheet" href="{{asset('summernote/summernote-lite.css')}}" />
 <script>
     $(function() {
+
+        $('.editor').summernote({
+            toolbar: [
+
+                ['style', ['style']],
+
+                ['font', ['bold', 'underline', 'clear']],
+
+                ['fontname', ['fontname']],
+
+                ['color', ['color']],
+
+                ['para', ['ul', 'ol', 'paragraph']],
+
+                ['table', ['table']],
+
+                ['insert', ['link', 'picture', 'video']],
+
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+        });
+
         $('#services').DataTable({
             "columns": [{
                     data: "id"

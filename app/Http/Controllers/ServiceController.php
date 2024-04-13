@@ -47,6 +47,13 @@ class ServiceController extends Controller
     public function storeSeo(SeoServiceRequest $seoServiceRequest)
     {
 
+        $ogImage = '';
+        if ($seoServiceRequest->has("og_image")) {
+            $picture = request()->file('og_image');
+            $imageName = "og_image" . time() . '.' . $picture->getClientOriginalExtension();
+            $picture->move(public_path('images/uploads/services/og_images/'), $imageName);
+            $ogImage = env('APP_URL') . '/images/uploads/services/og_images/' . $imageName;
+        }
         ServiceSeo::updateOrCreate(['service_id' => $seoServiceRequest->service_id], [
             'service_id' => $seoServiceRequest->service_id,
             'seo_title' => $seoServiceRequest->seo_title,
@@ -54,6 +61,9 @@ class ServiceController extends Controller
             'seo_url_slug' => $seoServiceRequest->seo_url_slug,
             'seo_meta' => $seoServiceRequest->seo_meta,
             'seo_description' => $seoServiceRequest->seo_description,
+            'og_image' => $ogImage
+
+
         ]);
         return redirect('/services/create/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
     }

@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label>Service Description</label>
-                <textarea id="service_description" name="service_description" class="form-control">{{ old('service_description', @$service->service_description ) }}</textarea>
+                <textarea id="service_description" name="service_description" class="form-control editor">{{ old('service_description', @$service->service_description ) }}</textarea>
                 @error('service_description')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
