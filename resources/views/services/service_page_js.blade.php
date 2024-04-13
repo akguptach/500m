@@ -34,7 +34,7 @@
     });
 
     function delete_service(msg, id) {
-        alert("hii")
+
         if (confirm(msg)) {
             var form = $('#service_form_' + id);
             var token = $('#csrf_' + id).val();

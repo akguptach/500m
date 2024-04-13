@@ -21,12 +21,12 @@ class ServicesService extends BaseService
                 $editItem = 'services/edit/' . $item['id'];
                 $deleteItem = 'services/' . $item['id'] . '/delete';
 
-                $onclick = 'delete_service(' . `$del_msg` . ',`11`)';
+                $req_serv_id = $item['id'];
 
                 $reqRecord['data'][$index]['action'] = "<a href='" . url($editItem) . "' >
                 <i class='fas fa-edit' title='Edit'></i></a>
                 &nbsp;&nbsp;&nbsp;
-                <a href='javascript:void(0);' onclick=" . $onclick . " >
+                <a href='javascript:void(0);' onclick='delete_service(" . $del_msg . "," . $req_serv_id . ")' >
                 <i class='fas fa-trash'  title='Delete'>
                 </i></a>
                 <form method='POST' action='" . $deleteItem . " ' class='form-delete' id='service_form_" . $item['id'] . "'><input type='hidden' value='" . csrf_token() . "'  id='csrf_" . $item['id'] . "'></form>";

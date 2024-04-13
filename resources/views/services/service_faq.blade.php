@@ -46,7 +46,7 @@
             @if(Request::route('id'))
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{route('pages')}}" class="btn btn-primary">Back</a>
+                <a href="{{route('services_index')}}" class="btn btn-primary">Back</a>
                 @if(Request::route('id'))
                 <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary float-right">Add More</button>
                 @endif

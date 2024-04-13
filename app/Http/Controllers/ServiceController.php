@@ -88,9 +88,9 @@ class ServiceController extends Controller
                 $obj->delete();
             }
 
-            return redirect('/pages')->with('status', 'Service Deleted Successfully');
+            return redirect('/services')->with('status', 'Service Deleted Successfully');
         } else {
-            return redirect('/pages');
+            return redirect('/services');
         }
     }
 }
