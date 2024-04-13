@@ -33,9 +33,10 @@
         });
     });
 
-    function delete_page(msg, id) {
+    function delete_service(msg, id) {
+        alert("hii")
         if (confirm(msg)) {
-            var form = $('#page_form_' + id);
+            var form = $('#service_form_' + id);
             var token = $('#csrf_' + id).val();
             // Create a hidden input field to send the CSRF token 
             var csrfInput = $('<input>')

@@ -61,6 +61,7 @@ class ServiceController extends Controller
     public function storeFaq(FaqServiceRequest $faqServiceRequest)
     {
         $data = $faqServiceRequest->all();
+        $oldValues = ServiceFaq::where('service_id', $faqServiceRequest->service_id)->get();
         foreach ($data['addMoreInputFields'] as $fields) {
             ServiceFaq::Create([
                 'service_id' => $faqServiceRequest->service_id,
@@ -68,6 +69,28 @@ class ServiceController extends Controller
                 'answer' => $fields['answer'],
             ]);
         }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
         return redirect('/services')->with('status', 'Saved Successfully');
+    }
+
+    public function destroy(string $id)
+    {
+
+        $service = Service::find($id);
+        if (!empty($service)) {
+            $service->delete();
+            $serviceSeo = ServiceSeo::where('service_id', $id);
+            $serviceSeo->delete();
+            $serviceFaq = ServiceFaq::where('service_id', $id)->get();
+            foreach ($serviceFaq as $obj) {
+                $obj->delete();
+            }
+
+            return redirect('/pages')->with('status', 'Service Deleted Successfully');
+        } else {
+            return redirect('/pages');
+        }
     }
 }
