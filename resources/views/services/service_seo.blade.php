@@ -46,7 +46,7 @@
             </div>
 
             <div class="form-group">
-                <div><img src="{{$service->seo->og_image}}" width="100px" /></div>
+                <div><img src="{{@$service->seo->og_image}}" width="100px" /></div>
                 <label>Seo OG Image</label>
                 <input type="file" name="og_image" class="form-control" placeholder="">
                 @error('og_image')
