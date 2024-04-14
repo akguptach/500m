@@ -23,7 +23,8 @@ class BasicServiceRequest extends FormRequest
     {
         return [
             'service_name' => 'required',
-            'service_description' => 'required'
+            'service_description' => 'required',
+            'website_id' => 'required'
         ];
     }
 }

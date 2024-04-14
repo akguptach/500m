@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\ServiceFaq;
 use App\Models\ServiceSeo;
+use App\Models\Website;
 use App\Services\ServicesService;
 use App\Http\Requests\BasicServiceRequest;
 use App\Http\Requests\SeoServiceRequest;
@@ -30,8 +31,9 @@ class ServiceController extends Controller
 
     public function create($id = null)
     {
+        $websites   = Website::all();
         $service = ($id) ? Service::find($id) : [];
-        return view('services/create', compact('service'));
+        return view('services/create', compact('service', 'websites'));
     }
 
     public function storeBasic(BasicServiceRequest $request)
@@ -40,6 +42,7 @@ class ServiceController extends Controller
         $service = Service::updateOrCreate(['id' => $request->service_id], [
             'service_name' => $request->service_name,
             'service_description' => $request->service_description,
+            'website_id' => $request->website_id,
         ]);
         return redirect('/services/create/' . $service->id . '#seo')->with('status', 'Saved Successfully');
     }
