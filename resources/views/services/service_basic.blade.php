@@ -6,15 +6,15 @@
 
             <div class="form-group">
                 <label>Website</label>
-                <select name="website_id" class="form-control">
+                <select name="website_type" class="form-control">
                     <option value="">Select website</option>
                     @if(!empty($websites))
                     @foreach($websites as $website)
-                    <option value="{{$website->id}}" @if(old("website_id")==$website->id || @$service->website_id==$website->id) selected @endif>{{$website->website_type }}</option>
+                    <option value="{{$website->website_type}}" @if(old("website_type")==$website->website_type || @$service->website_type==$website->website_type) selected @endif>{{$website->website_type }}</option>
                     @endforeach
                     @endif
                 </select>
-                @error('website_id')
+                @error('website_type')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
