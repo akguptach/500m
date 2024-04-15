@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\ServiceFaq;
 use App\Models\ServiceSeo;
+use App\Models\ServiceSpecification;
 use App\Models\Website;
 use App\Services\ServicesService;
 use App\Http\Requests\BasicServiceRequest;
 use App\Http\Requests\SeoServiceRequest;
 use App\Http\Requests\FaqServiceRequest;
+use App\Http\Requests\ServiceSpecificationRequest;
 
 class ServiceController extends Controller
 {
@@ -87,6 +89,14 @@ class ServiceController extends Controller
         }
         return redirect('/services')->with('status', 'Saved Successfully');
     }
+
+
+    public function storeSpecification(ServiceSpecificationRequest $serviceSpecificationRequest)
+    {
+        $this->servicesService->storeSpecification($serviceSpecificationRequest);
+        return redirect('/services/create/' . $serviceSpecificationRequest->service_id . '#specification')->with('status', 'Saved Successfully');
+    }
+
 
     public function destroy(string $id)
     {

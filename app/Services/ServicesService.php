@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Service;
-use App\Models\ServiceSeo;
+use App\Models\ServiceSpecification;
 
 /**
  * Class ServicesService.
@@ -33,5 +33,34 @@ class ServicesService extends BaseService
             }
         }
         return $reqRecord;
+    }
+
+    public function storeSpecification($serviceSpecificationRequest)
+    {
+        $data = $serviceSpecificationRequest->all();
+
+        $files = request()->file('addMoreSpecificationFields');
+
+        $oldValues = ServiceSpecification::where('service_id', $serviceSpecificationRequest->service_id)->get();
+        foreach ($data['addMoreSpecificationFields'] as $index => $fields) {
+
+            $iconImg = '';
+            if (isset($files[$index]['icon'])) {
+                $icon = $files[$index]['icon'];
+                $imageName = "og_image" . time() . '.' . $icon->getClientOriginalExtension();
+                $icon->move(public_path('images/uploads/services/specification/icons/'), $imageName);
+                $iconImg = env('APP_URL') . '/images/uploads/services/specification/icons/' . $imageName;
+            }
+            ServiceSpecification::Create([
+                'service_id' => $serviceSpecificationRequest->service_id,
+                'title' => $fields['title'],
+                'description' => $fields['description'],
+                'icon' => $iconImg,
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
     }
 }

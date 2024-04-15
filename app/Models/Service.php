@@ -19,4 +19,9 @@ class Service extends Model
     {
         return $this->hasMany('App\Models\ServiceFaq', 'service_id');
     }
+
+    public function specification()
+    {
+        return $this->hasMany('App\Models\ServiceSpecification', 'service_id');
+    }
 }

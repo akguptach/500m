@@ -30,7 +30,13 @@
                   <li class="nav-item" role="presentation">
                     <button class="nav-link" id="faq-tab" data-toggle="tab" data-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false">FAQ</button>
                   </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="faq-tab" data-toggle="tab" data-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
+                  </li>
                 </ul>
+
+
+
                 <div class="tab-content" id="myTabContent">
 
                   <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
@@ -44,6 +50,11 @@
                   <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                     @include('services.service_faq')
                   </div>
+
+                  <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
+                    @include('services.specifications')
+                  </div>
+
                 </div>
 
 

@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/services/store-basic', [ServiceController::class, 'storeBasic'])->name('services.store.basic');
     Route::post('/services/store-seo', [ServiceController::class, 'storeSeo'])->name('services.store.seo');
     Route::post('/services/store-faq', [ServiceController::class, 'storeFaq'])->name('services.store.faq');
+    Route::post('/services/store-specification', [ServiceController::class, 'storeSpecification'])->name('services.store.specification');
 
     Route::delete('services/{id}/delete', [ServiceController::class, 'destroy'])->name('services.destroy');
     //Route::post('/services/store', [ServiceController::class, 'store'])->name('pages.store');
