@@ -44,7 +44,7 @@ class ServicesService extends BaseService
         $oldValues = ServiceSpecification::where('service_id', $serviceSpecificationRequest->service_id)->get();
         foreach ($data['addMoreSpecificationFields'] as $index => $fields) {
 
-            $iconImg = '';
+            $iconImg = isset($fields['icon_url']) ? $fields['icon_url'] : '';
             if (isset($files[$index]['icon'])) {
                 $icon = $files[$index]['icon'];
                 $imageName = "og_image" . time() . '.' . $icon->getClientOriginalExtension();

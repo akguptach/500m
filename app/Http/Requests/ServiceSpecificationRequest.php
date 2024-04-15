@@ -24,7 +24,7 @@ class ServiceSpecificationRequest extends FormRequest
         return [
             'addMoreSpecificationFields.*.title' => 'required',
             'addMoreSpecificationFields.*.description' => 'required',
-            'addMoreSpecificationFields.*.icon' => 'required',
+            'addMoreSpecificationFields.*.icon' => 'required_without:addMoreSpecificationFields.*.icon_url',
             'service_id' => 'required'
         ];
     }

@@ -35,6 +35,7 @@
                         <div style="display: flex;">
                             <input type="file" name="addMoreSpecificationFields[{{$index}}][icon]" class="form-control" require />
                             <img src="{{@$filed['icon']}}" width="30px" />
+                            <input type="hidden" name="addMoreSpecificationFields[{{$index}}][icon_url]" value="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" />
                         </div>
                         @php $e = 'addMoreSpecificationFields.'.$index.'.icon'; @endphp
                         @error($e)
