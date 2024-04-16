@@ -48,6 +48,7 @@ class ServiceController extends Controller
             'service_name' => $request->service_name,
             'service_description' => $request->service_description,
             'website_type' => $request->website_type,
+            'status' => isset($request->status) ? $request->status : 'INACTIVE',
         ]);
         return redirect('/services/create/' . $service->id . '#seo')->with('status', 'Saved Successfully');
     }

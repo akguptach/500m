@@ -27,10 +27,34 @@
                 @enderror
             </div>
 
+            
+            
+
             <div class="form-group">
                 <label>Service Description</label>
                 <textarea id="service_description" name="service_description" class="form-control editor">{{ old('service_description', @$service->service_description ) }}</textarea>
                 @error('service_description')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="form-group" style="margin-top: 40px;">
+                <label style="margin-top: 3px;margin-right: 10px;float: left;">Status</label>
+                <label class="switch">
+                    @if(@$service->status == 'ACTIVE')
+                    <input type="checkbox" name="status" value="ACTIVE" checked>
+                    @else
+                    <input type="checkbox" name="status" value="ACTIVE">
+                    @endif
+                    <div class="slider round">
+                        <!--ADDED HTML -->
+                        <span class="on">Active</span>
+                        <span class="off">Inactive</span>
+                        <!--END-->
+                    </div>
+                </label>
+                
+                @error('status')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>

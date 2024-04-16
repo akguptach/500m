@@ -18,6 +18,12 @@
 <link rel="stylesheet" href="{{asset('summernote/summernote-bs4.css')}}" />
 <link rel="stylesheet" href="{{asset('summernote/summernote.css')}}" />
 <link rel="stylesheet" href="{{asset('summernote/summernote-lite.css')}}" />
+<style>
+    .toolbar {
+    float: right;
+    margin-left: 10px;
+}
+</style>
 <script>
     $(function() {
 
@@ -43,11 +49,29 @@
         });
 
         $('#services').DataTable({
+            initComplete: function () {
+        this.api().columns( [ 2 ] ).every(function () {
+            var column = this;
+            var select = $('#custom-select-filter-1')
+                .on('change', function () {
+                    var val = $(this).val();
+                    column.search(val).draw();
+            });
+
+            /*column.data().unique().sort().each(function (d, j) {
+                select.append('<option value="' + d + '">' + d + '</option>')
+            });*/
+        });
+    },
+            dom: '<"toolbar">frtip',
             "columns": [{
                     data: "id"
                 },
                 {
                     data: "service_name"
+                },
+                {
+                    data: "status"
                 },
                 {
                     data: "seo_url_slug"
@@ -60,6 +84,10 @@
             "serverSide": true,
             "ajax": "{{route('services_index')}}"
         });
+        
+    
+    
+        document.querySelector('div.toolbar').innerHTML = '<select id="custom-select-filter-1" style="padding: 4px;width: 130px;" name="status"><option value="">Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>';
     });
 
     function delete_service(msg, id) {

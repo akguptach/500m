@@ -25,6 +25,7 @@
                                         <tr>
                                             <th style="width:100px;">Sr.No.</th>
                                             <th>Service Name</th>
+                                            <th>Status</th>
                                             <th>Service Url</th>
                                             <th style="width:100px;">Actions</th>
                                         </tr>
