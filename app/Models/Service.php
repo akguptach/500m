@@ -24,4 +24,9 @@ class Service extends Model
     {
         return $this->hasMany('App\Models\ServiceSpecification', 'service_id');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany('App\Models\ServiceRating', 'service_id');
+    }
 }

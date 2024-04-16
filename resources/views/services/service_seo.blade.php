@@ -56,7 +56,7 @@
 
             @if(Request::route('id'))
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit and Next</button>
+                <button type="submit" class="btn btn-primary">Save and Next</button>
                 <a href="{{route('services_index')}}" class="btn btn-primary">Back</a>
             </div>
             @endif

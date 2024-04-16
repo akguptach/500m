@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Service;
 use App\Models\ServiceSpecification;
+use App\Models\ServiceRating;
 
 /**
  * Class ServicesService.
@@ -56,6 +57,36 @@ class ServicesService extends BaseService
                 'title' => $fields['title'],
                 'description' => $fields['description'],
                 'icon' => $iconImg,
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
+    }
+
+    public function storeRatings($serviceRatingRequest)
+    {
+        $data = $serviceRatingRequest->all();
+
+        $files = request()->file('addMoreRatingFields');
+
+        $oldValues = ServiceRating::where('service_id', $serviceRatingRequest->service_id)->get();
+        foreach ($data['addMoreRatingFields'] as $index => $fields) {
+
+            $userImage = isset($fields['user_image_url']) ? $fields['user_image_url'] : '';
+            if (isset($files[$index]['user_image'])) {
+                $image = $files[$index]['user_image'];
+                $imageName = "og_image" . time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/uploads/services/ratings/user_image/'), $imageName);
+                $userImage = env('APP_URL') . '/images/uploads/services/ratings/user_image/' . $imageName;
+            }
+            ServiceRating::Create([
+                'service_id' => $serviceRatingRequest->service_id,
+                'star_rating' => $fields['star_rating'],
+                'address' => $fields['address'],
+                'description' => $fields['description'],
+                'user_image' => $userImage,
             ]);
         }
         foreach ($oldValues as $obj) {

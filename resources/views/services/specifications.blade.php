@@ -34,7 +34,7 @@
                     <td>
                         <div style="display: flex;">
                             <input type="file" name="addMoreSpecificationFields[{{$index}}][icon]" class="form-control" require />
-                            <img src="{{@$filed['icon']}}" width="30px" />
+                            <img src="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" width="30px" />
                             <input type="hidden" name="addMoreSpecificationFields[{{$index}}][icon_url]" value="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" />
                         </div>
                         @php $e = 'addMoreSpecificationFields.'.$index.'.icon'; @endphp
@@ -50,8 +50,7 @@
                         @enderror
                     </td>
 
-                    <td>
-                    </td>
+                    <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>
                 @endforeach
                 @else
@@ -76,7 +75,7 @@
 
             @if(Request::route('id'))
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Save and Next</button>
                 <a href="{{route('services_index')}}" class="btn btn-primary">Back</a>
                 @if(Request::route('id'))
                 <button type="button" name="add" id="add_more_specification" class="btn btn-outline-primary float-right">Add More</button>

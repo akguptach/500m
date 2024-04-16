@@ -14,6 +14,9 @@ use App\Http\Requests\BasicServiceRequest;
 use App\Http\Requests\SeoServiceRequest;
 use App\Http\Requests\FaqServiceRequest;
 use App\Http\Requests\ServiceSpecificationRequest;
+use App\Http\Requests\ServiceRatingRequest;
+
+
 
 class ServiceController extends Controller
 {
@@ -87,14 +90,14 @@ class ServiceController extends Controller
         foreach ($oldValues as $obj) {
             $obj->delete();
         }
-        return redirect('/services')->with('status', 'Saved Successfully');
+        return redirect('/services/create/' . $faqServiceRequest->service_id . '#specifications');
     }
 
 
     public function storeSpecification(ServiceSpecificationRequest $serviceSpecificationRequest)
     {
         $this->servicesService->storeSpecification($serviceSpecificationRequest);
-        return redirect('/services/create/' . $serviceSpecificationRequest->service_id . '#specification')->with('status', 'Saved Successfully');
+        return redirect('/services/create/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
     }
 
 
@@ -115,5 +118,11 @@ class ServiceController extends Controller
         } else {
             return redirect('/services');
         }
+    }
+
+    public function storeRatings(ServiceRatingRequest $serviceRatingRequest)
+    {
+        $this->servicesService->storeRatings($serviceRatingRequest);
+        return redirect('/services')->with('status', 'Saved Successfully');
     }
 }

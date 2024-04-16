@@ -31,7 +31,10 @@
                     <button class="nav-link" id="faq-tab" data-toggle="tab" data-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false">FAQ</button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="faq-tab" data-toggle="tab" data-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
+                    <button class="nav-link" id="specifications-tab" data-toggle="tab" data-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="ratings-tab" data-toggle="tab" data-target="#ratings" type="button" role="tab" aria-controls="ratings" aria-selected="false">Ratings</button>
                   </li>
                 </ul>
 
@@ -53,6 +56,10 @@
 
                   <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
                     @include('services.specifications')
+                  </div>
+
+                  <div class="tab-pane fade" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
+                    @include('services.services_ratings')
                   </div>
 
                 </div>
