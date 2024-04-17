@@ -14,6 +14,8 @@ class Service extends Model
     {
         return $this->hasOne('App\Models\ServiceSeo', 'service_id');
     }
+    
+    
 
     public function faq()
     {

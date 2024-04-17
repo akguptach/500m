@@ -50,18 +50,35 @@
 
         $('#services').DataTable({
             initComplete: function () {
-        this.api().columns( [ 2 ] ).every(function () {
-            var column = this;
-            var select = $('#custom-select-filter-1')
-                .on('change', function () {
-                    var val = $(this).val();
-                    column.search(val).draw();
-            });
+                
+                this.api().columns( [ 2 ] ).every(function () {
+                    var column = this;
+                    var select = $('#custom-select-filter-1')
+                        .on('change', function () {
+                            var val = $(this).val();
+                            column.search(val).draw();
+                    });
 
-            /*column.data().unique().sort().each(function (d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>')
-            });*/
-        });
+                });
+        
+        
+                this.api().columns( [ 3 ] ).every(function () {
+                    var column = this;
+
+
+                    var website_type = $('#website_type')
+                        .on('change', function () {
+                            var val = $(this).val();
+                            column.search(val).draw();
+                    });
+                    website_type.append('<option value="">All Websites</option>')
+                    column.data().unique().sort().each(function (d, j) {
+                        if(d !='' && d!=0)
+                        website_type.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+        
+        
     },
             dom: '<"toolbar">frtip',
             "columns": [{
@@ -72,6 +89,9 @@
                 },
                 {
                     data: "status"
+                },
+                {
+                    data: "website_type"
                 },
                 {
                     data: "seo_url_slug"
@@ -87,7 +107,7 @@
         
     
     
-        document.querySelector('div.toolbar').innerHTML = '<select id="custom-select-filter-1" style="padding: 4px;width: 130px;" name="status"><option value="">Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>';
+        document.querySelector('div.toolbar').innerHTML = '<select id="website_type" style="padding: 4px;width: 130px;" name="website_type"></select><select id="custom-select-filter-1" style="padding: 4px;width: 130px;" name="status"><option value="">Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>';
     });
 
     function delete_service(msg, id) {

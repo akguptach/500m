@@ -16,7 +16,7 @@ class ServicesService extends BaseService
     {
         $req_record['data'] = array();
 
-        if (isset($_GET['search']['value']) && !empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
+        if (isset($_GET['search']['value']) && !empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value']) || isset($_GET['columns'][3]['search']['value']) && !empty($_GET['columns'][3]['search']['value'])) {
 
             $req_record['data'] = $ModelClass::where(function ($q) use ($filters) {
                 foreach ($filters as $filter) {
@@ -26,6 +26,9 @@ class ServicesService extends BaseService
                 ->where(function ($q) {
                     if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
                         $q->where('status', $_GET['columns'][2]['search']['value']);
+                    }
+                    if (isset($_GET['columns'][3]['search']['value']) && !empty($_GET['columns'][3]['search']['value'])) {
+                        $q->where('website_type', $_GET['columns'][3]['search']['value']);
                     }
                 })
 
@@ -43,6 +46,9 @@ class ServicesService extends BaseService
                     if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
                         $q->where('status', $_GET['columns'][2]['search']['value']);
                     }
+                    if (isset($_GET['columns'][3]['search']['value']) && !empty($_GET['columns'][3]['search']['value'])) {
+                        $q->where('website_type', $_GET['columns'][3]['search']['value']);
+                    }
                 })
                 ->orderBy('id', 'desc')->get();
         } else {
@@ -59,12 +65,17 @@ class ServicesService extends BaseService
 
     public function getPages()
     {
-        $filters = ['service_name', 'status'];
+        $filters = ['service_name', 'website_type'];
         $reqRecord  = $this->getBasePages1(Service::class, $filters);
         $del_msg = '"' . 'Are you want to delete?' . '"';
         if (!empty($reqRecord['data'])) {
             foreach ($reqRecord['data'] as $index => $item) {
+                
+                
+                
                 $reqRecord['data'][$index]->seo_url_slug = ($item->seo) ? $item->seo->seo_url_slug : '';
+                
+                
                 $editItem = 'services/edit/' . $item['id'];
                 $deleteItem = 'services/' . $item['id'] . '/delete';
 
