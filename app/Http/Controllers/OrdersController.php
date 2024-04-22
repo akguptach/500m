@@ -96,4 +96,9 @@ class OrdersController extends Controller
     {
         return view('orders/tutor_request_sent', $this->orderService->getTutorRequestSent($id));
     }
+
+    public function qcRequestSent($id)
+    {
+        return view('orders/qc_request_sent', $this->orderService->getQcRequestSent($id));
+    }
 }

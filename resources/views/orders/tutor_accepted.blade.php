@@ -22,9 +22,9 @@
                     <!-- /.direct-chat-infos -->
                     <img class="direct-chat-img" src="{{ asset('images/avatar.png') }}" alt="Message User Image">
                     <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
+                    <div class="direct-chat-text" >
                         {{$item['message']}}
-                        <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        <a href="{{$item['attachment']}}" target="_blank" style="color:#fff;">{{$item['attachment']}}</a>
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -40,7 +40,7 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        <a href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>

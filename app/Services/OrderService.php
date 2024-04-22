@@ -93,7 +93,11 @@ class OrderService
         }
 
         if ($tutorCompleted > 0) {
-            $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Qc Request</a>';
+            if ($qcOrderRequest && $qcOrderRequest->status != 'REJECTED') {
+                $actionsLinks .= '<a class="dropdown-item" href="' . route('qc_request_sent', ['id' => $page['id']]) . '">Qc Request</a>';
+            } else {
+                $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Qc Request</a>';
+            }
         }
         $actionsLinks .= '</div></div>';
         return $actionsLinks;
@@ -217,7 +221,7 @@ class OrderService
                 $attachment = request()->file('attachment');
                 $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
-                $attachment = 'images/uploads/attachment/' . $attachmentName;
+                $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
             }
             OrderRequestMessage::Create([
                 'request_id' => $request->request_id,
@@ -261,6 +265,9 @@ class OrderService
     public function getTutorRequestSent($id = null)
     {
         $result = [];
+
+
+        $result['type'] = 'TUTOR';
         $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
 
         $result['orderAssign'] = $result['qcAssign'] = $result['tutorRequestAccepted'] = $result['qcRequestAccepted'] = '';
@@ -295,6 +302,28 @@ class OrderService
             $result['qcRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['qcRequestAccepted']->id)->get();
         }*/
         //$result['orderRequestSent'] = OrderRequest::where('order_id', $id)->where('type', 'TUTOR')->first();
+        return $result;
+    }
+
+
+    public function getQcRequestSent($id = null)
+    {
+        $result = [];
+        $result['type'] = 'QC';
+        $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
+        $result['orderAssign'] = $result['qcAssign'] = $result['tutorRequestAccepted'] = $result['qcRequestAccepted'] = '';
+        $result['orderRequestSent'] = OrderRequest::with(['tutor'])->where('order_id', $id)
+            ->where('type', 'QC')
+            ->orderBy('id', 'desc')
+            ->first();
+        if ($result['orderRequestSent'] && $result['orderRequestSent']->status == 'ACCEPTED') {
+            $result['teacherRequestMessage'] = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $result['orderRequestSent']->id)->get();
+            $result['orderAssign'] = QcAssign::where('order_id', $id)->first();
+        }
+
+
+
+
         return $result;
     }
 }
