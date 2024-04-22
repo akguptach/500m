@@ -37,4 +37,15 @@ class Pages extends Model
 		}
 		return $seo_url_slug;
 	}
+
+
+	public function faq()
+	{
+		return $this->hasMany('App\Models\PageFaq', 'page_id');
+	}
+
+	public function ratings()
+	{
+		return $this->hasMany('App\Models\PageRating', 'page_id');
+	}
 }

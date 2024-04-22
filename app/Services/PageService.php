@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Pages;
+use App\Models\PageRating;
 use Illuminate\Support\Str;
 
 /**
@@ -61,5 +62,36 @@ class PageService
             $pages->og_image = 'images/uploads/pages/' . $imageName;
         }
         $pages->save();
+        return $pages;
+    }
+
+    public function storeRatings($pageRatingRequest)
+    {
+        $data = $pageRatingRequest->all();
+
+        $files = request()->file('addMoreRatingFields');
+
+        $oldValues = PageRating::where('page_id', $pageRatingRequest->page_id)->get();
+        foreach ($data['addMoreRatingFields'] as $index => $fields) {
+
+            $userImage = isset($fields['user_image_url']) ? $fields['user_image_url'] : '';
+            if (isset($files[$index]['user_image'])) {
+                $image = $files[$index]['user_image'];
+                $imageName = "og_image" . time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/uploads/pages/ratings/user_image/'), $imageName);
+                $userImage = env('APP_URL') . '/images/uploads/pages/ratings/user_image/' . $imageName;
+            }
+            PageRating::Create([
+                'page_id' => $pageRatingRequest->page_id,
+                'star_rating' => $fields['star_rating'],
+                'address' => $fields['address'],
+                'description' => $fields['description'],
+                'user_image' => $userImage,
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
     }
 }

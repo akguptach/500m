@@ -59,7 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages/{pages}/edit', [PageController::class, 'edit'])->name('pages.edit');
     Route::put('/pages/{pages}', [PageController::class, 'update'])->name('pages.update');
     Route::delete('pages/{pages}/delete', [PageController::class, 'destroy'])->name('pages.destroy');
-
+    Route::post('/pages/store-faq', [PageController::class, 'storeFaq'])->name('pages.store.faq');
+    Route::post('/pages/store-ratings', [PageController::class, 'storeRatings'])->name('pages.store.ratings');
 
 
 

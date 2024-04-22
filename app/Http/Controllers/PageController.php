@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Website;
 use App\Models\Pages;
+use App\Models\PageFaq;
+use App\Models\PageRating;
 use App\Http\Requests\PageRequest;
 use App\Services\PageService;
+use App\Http\Requests\FaqPageRequest;
+use App\Http\Requests\PageRatingRequest;
 
 class PageController extends Controller
 {
@@ -37,8 +41,8 @@ class PageController extends Controller
     /**     * Store a newly created resource in storage.     */
     public function store(PageRequest $request)
     {
-        $this->pageService->savePage($request);
-        return redirect('/pages')->with('status', 'Page Created Successfully');
+        $page = $this->pageService->savePage($request);
+        return redirect("/pages/$page->id/edit/#faq")->with('status', 'Page Created Successfully');
     }
 
 
@@ -64,12 +68,37 @@ class PageController extends Controller
     {
         try {
             $this->pageService->savePage($request, $id);
-            return redirect('/pages')->with('status', 'Page Updated Successfully');
+            return redirect("/pages/$id/edit/#faq")->with('status', 'Page Updated Successfully');
         } catch (\Exception $e) {
             echo $e;
             die;
         }
     }
+
+
+    public function storeFaq(FaqPageRequest $faqPageRequest)
+    {
+        $data = $faqPageRequest->all();
+        $oldValues = PageFaq::where('page_id', $faqPageRequest->page_id)->get();
+        foreach ($data['addMoreInputFields'] as $fields) {
+            PageFaq::Create([
+                'page_id' => $faqPageRequest->page_id,
+                'question' => $fields['question'],
+                'answer' => $fields['answer'],
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return redirect("/pages/$faqPageRequest->page_id/edit/#ratings")->with('status', 'Page Updated Successfully');
+    }
+
+    public function storeRatings(PageRatingRequest $pageRatingRequest)
+    {
+        $this->pageService->storeRatings($pageRatingRequest);
+        return redirect("/pages/")->with('status', 'Page Updated Successfully');
+    }
+
 
     /**
 
