@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 
 use App\Models\TaskType;
+use App\Models\Website;
 use App\Http\Requests\TaskTypeRequest;
 use App\Services\TaskTypeService;
 
@@ -34,7 +35,8 @@ class TaskTypeController extends Controller
      */
     public function create()
     {
-        return view('task_type/create');
+		$data['websites']   = Website::all();
+        return view('task_type/create',$data);
     }
 
     /**
@@ -50,8 +52,9 @@ class TaskTypeController extends Controller
      */
     public function edit(string $id)
     {
+		$websites   = Website::all();
         $datas = TaskType::where('id', $id)->first();
-        return view('task_type/edit', array('formAction' => route('tasktype.update', ['tasktype' => $id]), 'data' => $datas));
+        return view('task_type/edit', array('formAction' => route('tasktype.update', ['tasktype' => $id]), 'data' => $datas,'websites'=>$websites));
     }
 
     /**

@@ -21,10 +21,13 @@
                                 @enderror
                                 <div class="form-group">
                                     <label >Website type</label>
-                                    <select class="form-control select2" style="width: 100%;" name="website_type">
-                                      <option selected="selected" value="">Please select website type</option>
-                                      <option value="Essay Help" <?php if(old('website_type') == 'Essay Help'){ echo 'selected';}?>>Essay Help</option>
-                                      <option value="SOP" <?php if(old('website_type') == 'SOP'){ echo 'selected';}?>>SOP</option> 
+                                    <select name="website_id" class="form-control">
+                                        <option value="">Select website</option>
+                                        @if(!empty($websites))
+                                          @foreach($websites as $website1)
+                                            <option value="{{$website1->id}}"  @if(old("website_id") == $website1->id) selected @endif>{{$website1->website_type }}</option>
+                                          @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="form-group">

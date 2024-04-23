@@ -24,6 +24,8 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+									    <th>Sr.No.</th>
+										<th>Website Type</th>
                                         <th>Question</th>
                                         <th>Answer</th>
                                         <th>Actions</th>
@@ -57,6 +59,8 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+				{ data: "id" },
+				{ data: "website_id" },
                 { data: "question" },
                 { data: "answer" },
                 { data: "action" }
