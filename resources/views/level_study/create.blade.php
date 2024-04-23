@@ -12,14 +12,7 @@
             @csrf
             <div class="card-body">
               <div class="form-group">
-
-                <label>Website type</label>
-
-                <select name="website_type" class="form-control">
-                  <option value="">Select website type</option>
-                  <option value="Essay Help">Essay Help</option>
-                  <option value="SOP">SOP</option>
-                </select>
+                {{ HtmlHelper::WebsiteDropdown('website_type',old('website_type')) }}
                 @error('website_type')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

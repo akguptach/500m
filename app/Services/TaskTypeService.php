@@ -10,9 +10,22 @@ class TaskTypeService
     public function getTaskTypes()
     {
         $req_record['data'] = array();
-        if (!empty($_GET['search']['value'])) {
-            $req_record['data'] = TaskType::where('type_name', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
-            $tasks = TaskType::where('type_name', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->get()->toArray();
+        if (!empty($_GET['search']['value']) || isset($_GET['columns'][0]['search']['value']) && !empty($_GET['columns'][0]['search']['value'])) {
+
+            $req_record['data'] = TaskType::where('type_name', 'LIKE', '%' . $_GET['search']['value'] . '%')
+                ->where(function ($q) {
+                    if (isset($_GET['columns'][0]['search']['value']) && !empty($_GET['columns'][0]['search']['value'])) {
+                        $q->where('website_type', $_GET['columns'][0]['search']['value']);
+                    }
+                })
+                ->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
+            $tasks = TaskType::where('type_name', 'LIKE', '%' . $_GET['search']['value'] . '%')
+                ->where(function ($q) {
+                    if (isset($_GET['columns'][0]['search']['value']) && !empty($_GET['columns'][0]['search']['value'])) {
+                        $q->where('website_type', $_GET['columns'][0]['search']['value']);
+                    }
+                })
+                ->orderBy('id', 'desc')->get()->toArray();
         } else {
             $req_record['data'] = TaskType::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             $tasks = TaskType::orderBy('id', 'desc')->get()->toArray();

@@ -10,7 +10,9 @@
                         </div>
                         <form id="quickForm" method="POST" action="{{route('website.store')}}">
                             @csrf
-                            <div class="card-body">                                <div class="form-group">                                    <label>Website type</label>                                    <select name="website_type" class="form-control">                                        <option value="">Select website type</option>                                        <option value="Essay Help">Essay Help</option>                                        <option value="SOP">SOP</option>                                    </select>                                </div>
+                            <div class="card-body">
+                              <div class="form-group">{{ HtmlHelper::WebsiteDropdown('website_type',old('website_type')) }}</div>
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Website name</label>
                                     <input type="text" name="website_name" class="form-control"  placeholder="Enter website name" value="{{old('website_name')}}">

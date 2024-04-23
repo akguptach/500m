@@ -13,20 +13,8 @@
                             @method('PUT')
                             <div class="card-body">
 							    <div class="form-group">
-
-                                    <label >Website type</label>
-
-                                    <select name="website_type" class="form-control">
-
-                                        <option value="">Select website type</option>
-
-                                        <option value="Essay Help" @if($data->website_type == 'Essay Help') selected @endif>Essay Help</option>
-
-                                        <option value="SOP" @if($data->website_type == 'SOP') selected @endif>SOP</option>
-
-                                    </select>
-
-                                </div>
+                    {{ HtmlHelper::WebsiteDropdown('website_type',($data->website_type)?$data->website_type:old('website_type')) }}
+                  </div>
                                 <div class="form-group">
                                     <label >Level Name</label>
                                     <input type="text" name="level_name" class="form-control" placeholder="Enter Level Name" value="{{$data->level_name}}">

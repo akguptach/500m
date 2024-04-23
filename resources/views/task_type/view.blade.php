@@ -52,10 +52,32 @@
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
+<style>
+    .toolbar {
+    float: right;
+    margin-left: 10px;
+}
+</style>
 <script>
   $(function () {
     $('#example1').DataTable( {
+        initComplete: function () {
+            this.api().columns( [ 0 ] ).every(function () {
+                    var column = this;
+                    var website_type = $('#website_type')
+                        .on('change', function () {
+                            var val = $(this).val();
+                            column.search(val).draw();
+                    }); 
+                    website_type.append('<option value="">All Websites</option>')
+                    column.data().unique().sort().each(function (d, j) {
+                        if(d !='' && d!=0)
+                        website_type.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+        },
+
+        dom: '<"toolbar">frtip',
 				 "columns": [                 { data: "website_type" },
                 { data: "type_name" },
                 { data: "price" },
@@ -63,10 +85,12 @@
             ],
         "processing": true,
         "serverSide": true,
-        "ajax": "<?php echo URL::to('tasktype');
-;?>"
+        "ajax": "<?php echo URL::to('tasktype');?>"
     } );
+    document.querySelector('div.toolbar').innerHTML = '<select id="website_type" style="padding: 4px;width: 130px;" name="website_type"></select>';
   });
+  
+
   function delete_task_type(msg,id){
     if(confirm(msg)){
         var form = $('#task_type_form_'+id);
