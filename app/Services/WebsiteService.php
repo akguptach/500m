@@ -14,6 +14,12 @@ class WebsiteService
         $query = Website::query();
         $searchValue = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
 
+
+        if (isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+            $query->where('website_type', $_GET['columns'][1]['search']['value']);
+        }
+
+
         if (!empty($searchValue)) {
             $query->where(function ($subquery) use ($searchValue) {
                 $subquery->orwhere('website_name', 'LIKE', '%' . $searchValue . '%')

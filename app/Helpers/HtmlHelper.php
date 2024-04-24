@@ -8,10 +8,19 @@ class HtmlHelper
         echo "Hii";
     }
 
-    static function WebsiteDropdown($name, $default = '')
+    static function WebsiteDropdown($name, $default = '', $label = true, $style = '', $id = '')
     {
         $websites = \App\Models\Website::get();
-        $html = '<div><label>Website</label><select name="' . $name . '" class="form-control"><option value="">Select website</option>';
+        $html = '<div>';
+
+        if ($label)
+            $html .= '<label>Website</label>';
+
+        if ($style) {
+            $style = 'style="' . $style . '"';
+        }
+
+        $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select website</option>';
         if (!empty($websites))
             foreach ($websites as $website) {
                 $selected = '';

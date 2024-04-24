@@ -9,5 +9,11 @@ class Faq extends Model
 {
     use HasFactory;
     protected $table = 'faq';
-    protected $fillable = ['question','answer'];
+    protected $fillable = ['question', 'answer'];
+
+
+    public function website()
+    {
+        return $this->belongsTo('App\Models\Website', 'website_id');
+    }
 }

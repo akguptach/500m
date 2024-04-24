@@ -14,9 +14,26 @@ class PageService
     public function getPages()
     {
         $req_record['data'] = array();
-        if (!empty($_GET['search']['value'])) {
-            $req_record['data'] = Pages::where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
-            $pages = Pages::where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->get()->toArray();
+        if (!empty($_GET['search']['value']) || isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+
+            $req_record['data'] = Pages::where(function ($q) {
+                if (!empty($_GET['search']['value'])) {
+                    $q->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                }
+                if (isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+                    $q->where('website_type', $_GET['columns'][1]['search']['value']);
+                }
+            })->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
+
+
+            $pages = Pages::where(function ($q) {
+                if (!empty($_GET['search']['value'])) {
+                    $q->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                }
+                if (isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+                    $q->where('website_type', $_GET['columns'][1]['search']['value']);
+                }
+            })->orderBy('id', 'desc')->get()->toArray();
         } else {
             $req_record['data'] = Pages::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             $pages = Pages::orderBy('id', 'desc')->get()->toArray();

@@ -14,7 +14,7 @@ use App\Models\OrderAssign;
 use App\Models\QcAssign;
 use App\Models\OrderRequest;
 use App\Models\OrderRequestMessage;
-
+use App\Models\Website;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -25,9 +25,53 @@ class OrderService
     public function getOrders()
     {
         $req_record['data'] = array();
-        if (!empty($_GET['search']['value'])) {
-            $req_record['data'] = Orders::where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
-            $pages = Orders::where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->get()->toArray();
+        $query = Orders::query();
+        if (!empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
+
+            /*if (!empty($_GET['search']['value'])) {
+                $query->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                $query->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
+            }
+
+            if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
+                $website  = Website::where('website_type', $_GET['columns'][2]['search']['value'])->first();
+                $query->where('website_id', $website->id);
+            }
+
+            $req_record['data'] = $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc')->get()->toArray();
+            $pages = $query->orderBy('id', 'desc')->get()->toArray();*/
+
+
+            $query = Orders::join('student', 'student.id', '=', 'orders.student_id')
+                ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
+                ->join('websites', 'websites.id', '=', 'orders.website_id')
+                ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
+                ->join('level_study', 'level_study.id', '=', 'orders.studylabel_id')
+                ->join('grades', 'grades.id', '=', 'orders.grade_id')
+                ->join('referencing_style', 'referencing_style.id', '=', 'orders.referencing_style_id');
+
+            if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
+                $website  = Website::where('website_type', $_GET['columns'][2]['search']['value'])->first();
+                $query->where('orders.website_id', $website->id);
+            }
+
+            if (!empty($_GET['search']['value'])) {
+                $query->where(function ($q) {
+                    $q->orWhere('subjects.subject_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('student.first_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('student.last_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                });
+            }
+
+
+            $query->select('orders.*', 'subjects.subject_name', 'websites.website_type', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
+                ->orderBy('id', 'desc');
+            $arrD = $query->get();
+            $req_record['data'] = json_decode(json_encode($arrD), true);
+
+            //$req_record['data'] = Orders::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
+            //$pages = Orders::orderBy('id', 'desc')->get()->toArray();
+            $pages = $arrD;
         } else {
 
             $arrD = DB::table('orders')
@@ -38,7 +82,7 @@ class OrderService
                 ->join('level_study', 'level_study.id', '=', 'orders.studylabel_id')
                 ->join('grades', 'grades.id', '=', 'orders.grade_id')
                 ->join('referencing_style', 'referencing_style.id', '=', 'orders.referencing_style_id')
-                ->select('orders.*', 'subjects.subject_name', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
+                ->select('orders.*', 'subjects.subject_name', 'websites.website_type', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
                 ->orderBy('id', 'desc')
                 ->get();
 

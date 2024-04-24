@@ -19,119 +19,113 @@
 <link rel="stylesheet" href="{{asset('summernote/summernote.css')}}" />
 <link rel="stylesheet" href="{{asset('summernote/summernote-lite.css')}}" />
 <style>
-    .toolbar {
+.toolbar {
     float: right;
     margin-left: 10px;
 }
 </style>
 <script>
-    $(function() {
+$(function() {
 
-        $('.editor').summernote({
-            toolbar: [
+    $('.editor').summernote({
+        toolbar: [
 
-                ['style', ['style']],
+            ['style', ['style']],
 
-                ['font', ['bold', 'underline', 'clear']],
+            ['font', ['bold', 'underline', 'clear']],
 
-                ['fontname', ['fontname']],
+            ['fontname', ['fontname']],
 
-                ['color', ['color']],
+            ['color', ['color']],
 
-                ['para', ['ul', 'ol', 'paragraph']],
+            ['para', ['ul', 'ol', 'paragraph']],
 
-                ['table', ['table']],
+            ['table', ['table']],
 
-                ['insert', ['link', 'picture', 'video']],
+            ['insert', ['link', 'picture', 'video']],
 
-                ['view', ['fullscreen', 'codeview', 'help']],
-            ],
-        });
-
-        $('#services').DataTable({
-            initComplete: function () {
-                
-                this.api().columns( [ 2 ] ).every(function () {
-                    var column = this;
-                    var select = $('#custom-select-filter-1')
-                        .on('change', function () {
-                            var val = $(this).val();
-                            column.search(val).draw();
-                    });
-
-                });
-        
-        
-                this.api().columns( [ 3 ] ).every(function () {
-                    var column = this;
-
-
-                    var website_type = $('#website_type')
-                        .on('change', function () {
-                            var val = $(this).val();
-                            column.search(val).draw();
-                    });
-                    website_type.append('<option value="">All Websites</option>')
-                    column.data().unique().sort().each(function (d, j) {
-                        if(d !='' && d!=0)
-                        website_type.append('<option value="' + d + '">' + d + '</option>')
-                    });
-                });
-        
-        
-    },
-            dom: '<"toolbar">frtip',
-            "columns": [{
-    data: 'id',
-    render: function (data, type, row, meta) {
-        return meta.row + meta.settings._iDisplayStart + 1;
-    }
-},
-                {
-                    data: "service_name"
-                },
-                {
-                    data: "status"
-                },
-                {
-                    data: "website_type"
-                },
-                {
-                    data: "seo_url_slug"
-                },
-                {
-                    data: "action"
-                }
-            ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{route('services_index')}}"
-        });
-        
-    
-    
-        document.querySelector('div.toolbar').innerHTML = '<select id="website_type" style="padding: 4px;width: 130px;" name="website_type"></select><select id="custom-select-filter-1" style="padding: 4px;width: 130px;" name="status"><option value="">Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>';
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
     });
 
-    function delete_service(msg, id) {
+    $('#services').DataTable({
+        initComplete: function() {
 
-        if (confirm(msg)) {
-            var form = $('#service_form_' + id);
-            var token = $('#csrf_' + id).val();
-            // Create a hidden input field to send the CSRF token 
-            var csrfInput = $('<input>')
-                .attr('type', 'hidden')
-                .attr('name', '_token')
-                .val(token);
-            // Create a hidden input field to send the DELETE method
-            var methodInput = $('<input>')
-                .attr('type', 'hidden')
-                .attr('name', '_method')
-                .val('DELETE');
-            // Append the hidden input fields to the form 
-            form.append(csrfInput, methodInput);
-            // Submit the form 
-            form.submit();
-        }
+            this.api().columns([2]).every(function() {
+                var column = this;
+                var select = $('#custom-select-filter-1')
+                    .on('change', function() {
+                        var val = $(this).val();
+                        column.search(val).draw();
+                    });
+
+            });
+
+
+            this.api().columns([3]).every(function() {
+                var column = this;
+                var website_type = $('#website_type')
+                    .on('change', function() {
+                        var val = $(this).val();
+                        column.search(val).draw();
+                    });
+            });
+
+
+        },
+        dom: '<"toolbar">frtip',
+        "columns": [{
+                data: 'id',
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {
+                data: "service_name"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "website_type"
+            },
+            {
+                data: "seo_url_slug"
+            },
+            {
+                data: "action"
+            }
+        ],
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{{route('services_index')}}"
+    });
+
+
+
+    document.querySelector('div.toolbar').innerHTML =
+        '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
+});
+
+function delete_service(msg, id) {
+
+    if (confirm(msg)) {
+        var form = $('#service_form_' + id);
+        var token = $('#csrf_' + id).val();
+        // Create a hidden input field to send the CSRF token 
+        var csrfInput = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', '_token')
+            .val(token);
+        // Create a hidden input field to send the DELETE method
+        var methodInput = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', '_method')
+            .val('DELETE');
+        // Append the hidden input fields to the form 
+        form.append(csrfInput, methodInput);
+        // Submit the form 
+        form.submit();
     }
+}
 </script>

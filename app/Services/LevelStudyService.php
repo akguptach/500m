@@ -13,9 +13,26 @@ class LevelStudyService
     public function getLavelStudy()
     {
         $req_record['data'] = array();
-        if (!empty($_GET['search']['value'])) {
-            $req_record['data'] = Level_study::where('level_name', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
-            $levels = Level_study::where('level_name', 'LIKE', '%' . $_GET['search']['value'] . '%')->orderBy('id', 'desc')->get()->toArray();
+        if (!empty($_GET['search']['value']) || isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+
+            $req_record['data'] = Level_study::where(function ($q) {
+                if (!empty($_GET['search']['value'])) {
+                    $q->where('level_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                }
+                if (isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+                    $q->where('website_type', $_GET['columns'][1]['search']['value']);
+                }
+            })->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
+
+
+            $levels = Level_study::where(function ($q) {
+                if (!empty($_GET['search']['value'])) {
+                    $q->where('level_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                }
+                if (isset($_GET['columns'][1]['search']['value']) && !empty($_GET['columns'][1]['search']['value'])) {
+                    $q->where('website_type', $_GET['columns'][1]['search']['value']);
+                }
+            })->orderBy('id', 'desc')->get()->toArray();
         } else {
             $req_record['data'] = Level_study::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             $levels = Level_study::orderBy('id', 'desc')->get()->toArray();
