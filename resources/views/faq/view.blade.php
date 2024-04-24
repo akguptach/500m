@@ -72,13 +72,7 @@ $(function() {
                         var val = $(this).val();
                         column.search(val).draw();
                     });
-                website_type.append('<option value="">All Websites</option>')
-                column.data().unique().sort().each(function(d, j) {
-                    console.log('-', j)
-                    if (d != '' && d != 0)
-                        website_type.append('<option value="' + d + '">' + d +
-                            '</option>')
-                });
+
             });
         },
         "columns": [{
@@ -105,7 +99,7 @@ $(function() {
         "ajax": "<?php echo URL::to('faq');; ?>"
     });
     document.querySelector('div.toolbar').innerHTML =
-        '<select id="website_type" style="padding: 4px;width: 130px;" name="website_type"></select>';
+        '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
 });
 
 function delete_faq(msg, id) {
