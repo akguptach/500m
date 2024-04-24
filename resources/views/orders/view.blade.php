@@ -35,6 +35,7 @@
                         <table id="example1" class="table table-bordered table-striped" style="font-size: 12px;">
                             <thead>
                                 <tr>
+                                    <th>Sr.No.</th>
                                     <th>Student Name</th>
                                     <th>Website</th>
                                     <th>Subject</th>
@@ -133,7 +134,13 @@
 
     $(function() {
         $('#example1').DataTable({
-            "columns": [{
+            "columns": [
+                {
+    data: 'id',
+    render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    }
+},{
                     data: "first_name"
                 },
                 {

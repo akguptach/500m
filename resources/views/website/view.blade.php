@@ -23,7 +23,8 @@
                         @endif
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>									    										<th>Website Type</th>
+                                    <tr>	
+                                        <th>Sr.No.</th>								    										<th>Website Type</th>
                                         <th>Website Name</th>
                                         <th>Contact Person Name</th>
                                         <th>Words Rate</th>										<th>Currency</th>										<th>Add. Rate</th>										<th>No. of Words</th>
@@ -58,6 +59,12 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
 				{ data: "website_type" },
                 { data: "website_name" },
                 { data: "person_name" },

@@ -24,6 +24,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Sr.No.</th>
                                         <th>Grade Name</th>                                        <th>Price</th>
                                         <th>Actions</th>
                                     </tr>
@@ -56,6 +57,12 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+                    {
+    data: 'id',
+    render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    }
+},
                 { data: "grade_name" },				{ data: "price" },
                 { data: "action" }
             ],

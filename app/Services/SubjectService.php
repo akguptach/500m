@@ -26,9 +26,9 @@ class SubjectService
         $del_msg = '"' . 'Are you want to delete?' . '"';
         $i = 0;
         if (!empty($req_record['data'])) {
-            foreach ($req_record['data'] as $subject1) {
+            foreach ($req_record['data'] as $index => $subject1) {
 
-
+                $req_record['data'][$i]['srno'] = $index + 1;
                 $req_record['data'][$i]['status'] = ($subject1['status'] == '1') ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-success">Deactive</span>';
                 $edit_page = 'subject/' . $subject1['id'] . '/edit';
                 $del_page = route('subject.destroy', ['subject' => $subject1['id']]);

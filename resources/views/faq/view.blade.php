@@ -59,7 +59,12 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
-				{ data: "id" },
+                    {
+    data: 'id',
+    render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    }
+},
 				{ data: "website_id" },
                 { data: "question" },
                 { data: "answer" },

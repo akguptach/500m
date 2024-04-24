@@ -24,6 +24,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Sr.No.</th>
 									    <th>Website Type</th>
                                         <th>Level Name</th>
 										<th>Additional Percentage Price</th>
@@ -58,6 +59,12 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+                    {
+    data: 'id',
+    render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    }
+},
 				{ data: "website_type" },
                 { data: "level_name" },
 				{ data: "price" },

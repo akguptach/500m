@@ -24,6 +24,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Sr.No.</th>
                                         <th>Subject Name</th>
 										<th>Minimum Words Rate</th>
 										<th>Additional Per Workd Rate</th>
@@ -59,6 +60,7 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+                { data: "srno" },
                 { data: "subject_name" },
 				{ data: "price" },
 				{ data: "additional_word_rate" },

@@ -23,7 +23,9 @@
                         @endif
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>                                        <th>Website Type</th>
+                                    <tr>
+                                        <th>Sr.No.</th>
+                                        <th>Website Type</th>
                                         <th>Task type name</th>
                                         <th>Price</th>
                                         <th>Actions</th>
@@ -78,10 +80,17 @@
         },
 
         dom: '<"toolbar">frtip',
-				 "columns": [                 { data: "website_type" },
-                { data: "type_name" },
-                { data: "price" },
-                { data: "action" }
+				 "columns": [
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },   
+                    { data: "website_type" },
+                    { data: "type_name" },
+                    { data: "price" },
+                    { data: "action" }
             ],
         "processing": true,
         "serverSide": true,

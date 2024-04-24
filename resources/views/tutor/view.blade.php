@@ -24,6 +24,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                      <th>Sr.No.</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Email</th>
@@ -86,6 +87,12 @@
   $(function () {
     $('#example1').DataTable( {
 				 "columns": [
+          {
+    data: 'id',
+    render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    }
+},
                 { data: "tutor_first_name" },
                 { data: "tutor_last_name" },
                 { data: "tutor_email" },
@@ -97,7 +104,7 @@
         "processing": true,
         "serverSide": true,
         "ajax": "<?php echo URL::to('tutor');
-;?>?status=<?= $status;?>"
+;?>?status=<?= @$status;?>"
     } );
   });
   function delete_tutor(msg,id){

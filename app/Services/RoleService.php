@@ -24,10 +24,10 @@ class RoleService
         $del_msg = '"' . 'Are you want to delete?' . '"';
         $i = 0;
         if (!empty($req_record['data'])) {
-            foreach ($req_record['data'] as $role1) {
+            foreach ($req_record['data'] as $index => $role1) {
                 $edit_page = 'role/' . $role1['id'] . '/edit';
                 $del_page = route('role.destroy', ['role' => $role1['id']]);
-
+                $req_record['data'][$i]['srno'] = $index + 1;
                 $req_role_id = '"' . $role1['id'] . '"';
                 if ($role1['id'] == 1) {
                     $req_record['data'][$i]['action'] = "";

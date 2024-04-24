@@ -13,12 +13,13 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
+                                  
                                     <label >Website</label>
                                     <select name="website_id" class="form-control">
                                         <option value="">Select website</option>
                                         @if(!empty($websites))
                                           @foreach($websites as $website1)
-                                            <option value="{{$website1->id}}"  @if($data->website_id == $website1->id) selected @endif>{{$website1->website_name }}</option>
+                                            <option value="{{$website1->id}}"  @if($data->website_id == $website1->id) selected @endif>{{$website1->website_type }}</option>
                                           @endforeach
                                         @endif
                                     </select>
