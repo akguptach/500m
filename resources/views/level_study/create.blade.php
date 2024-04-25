@@ -12,7 +12,7 @@
             @csrf
             <div class="card-body">
               <div class="form-group">
-                {{ HtmlHelper::WebsiteDropdown('website_type',old('website_type')) }}
+                {{ HtmlHelper::WebsiteDropdown('website_type',old('website_type'),true,'','',['Educrafter']) }}
                 @error('website_type')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

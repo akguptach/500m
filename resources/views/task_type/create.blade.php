@@ -25,17 +25,13 @@
 
 
                             <div class="form-group">
-                                <label>Website type</label>
-                                <select name="website_type" class="form-control">
-                                    <option value="">Select website</option>
-                                    @if(!empty($websites))
-                                    @foreach($websites as $website1)
-                                    <option value="{{$website1->website_type}}" @if(old("website_id")==$website1->id)
-                                        selected
-                                        @endif>{{$website1->website_type }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
+
+                                {{ HtmlHelper::WebsiteDropdown('website_type',old('website_type'),true,'','',['Educrafter']) }}
+                                @error('website_type')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+
                             </div>
                             @error('website_type')
                             <small class="text-danger">{{ $message }}</small>
@@ -55,11 +51,11 @@
                                 <select class="form-control select2" style="width: 100%;" name="status">
                                     <option selected="selected" value="">Please select status</option>
                                     <option value="active" <?php if (old('status') == 'active') {
-                                            echo 'selected';
-                                          } ?>>Active</option>
+                                                                echo 'selected';
+                                                            } ?>>Active</option>
                                     <option value="inactive" <?php if (old('status') == 'inactive') {
-                                              echo 'selected';
-                                            } ?>>Inactive</option>
+                                                                    echo 'selected';
+                                                                } ?>>Inactive</option>
                                 </select>
                             </div>
 

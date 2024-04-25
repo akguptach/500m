@@ -14,8 +14,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Task type name</label>
-                                <input type="text" name="type_name" class="form-control" id="exampleInputEmail1"
-                                    placeholder="Enter type name" value="{{$data->type_name}}">
+                                <input type="text" name="type_name" class="form-control" id="exampleInputEmail1" placeholder="Enter type name" value="{{$data->type_name}}">
                                 @error('type_name')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -23,17 +22,8 @@
 
 
                             <div class="form-group">
-                                <label>Website type</label>
-                                <select name="website_type" class="form-control">
-                                    <option value="">Select website</option>
-                                    @if(!empty($websites))
-                                    @foreach($websites as $website1)
-                                    <option value="{{$website1->website_type}}" @if($data->website_id == $website1->id)
-                                        selected
-                                        @endif>{{$website1->website_type }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
+                                {{ HtmlHelper::WebsiteDropdown('website_type',($data->website_type)?$data->website_type:old('website_type'),true,'','',['Educrafter']) }}
+
                                 @error('website_type')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -42,8 +32,7 @@
 
                             <div class="form-group">
                                 <label>Price(%)</label>
-                                <input type="number" name="price" class="form-control" placeholder="Enter price"
-                                    value="{{$data->price}}">
+                                <input type="number" name="price" class="form-control" placeholder="Enter price" value="{{$data->price}}">
                                 @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -76,35 +65,35 @@
 <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 <script>
-$(function() {
-    $('#quickForm').validate({
-        rules: {
-            type_name: {
-                required: true,
+    $(function() {
+        $('#quickForm').validate({
+            rules: {
+                type_name: {
+                    required: true,
+                },
+                website_type: {
+                    required: true,
+                },
+                price: {
+                    required: true,
+                    number: true
+                },
+                status: {
+                    required: true,
+                },
             },
-            website_type: {
-                required: true,
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
             },
-            price: {
-                required: true,
-                number: true
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
             },
-            status: {
-                required: true,
-            },
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
     });
-});
 </script>
 @endsection
