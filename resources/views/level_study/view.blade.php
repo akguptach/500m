@@ -100,7 +100,7 @@ $(function() {
         "ajax": "<?php echo URL::to('level_study');; ?>"
     });
     document.querySelector('div.toolbar').innerHTML =
-        '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
+        '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type', ['Educrafter']) ?>';
 });
 
 function delete_level(msg, id) {
