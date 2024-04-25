@@ -215,7 +215,7 @@ class OrderService
                 $attachment = request()->file('attachment');
                 $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
-                $attachment = 'images/uploads/attachment/' . $attachmentName;
+                $attachment = env('APP_URL', '/') . '/images/uploads/attachment/' . $attachmentName;
             }
             if ($request->type == 'STUDENT') {
                 StudentOrderMessage::Create([
