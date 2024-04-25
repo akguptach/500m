@@ -44,6 +44,7 @@ class LevelStudyController extends Controller
     {
 
         Level_study::create([
+            'website_type' => $request->website_type,
             'level_name'  => $request->level_name,
             'price'       => $request->price,
             'website_type' => $request->website_type
