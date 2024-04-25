@@ -34,4 +34,30 @@ class HtmlHelper
         $html .= '</select></div>';
         echo $html;
     }
+
+    static function PriceTypeDropdown($name, $default = '', $label = true, $style = '', $id = '', $hideOptions = [])
+    {
+        $tasktypes = ['SOP' => 'SOP', 'Essay' => 'Essay'];
+        $html = '<div>';
+
+        if ($label)
+            $html .= '<label>Price Type</label>';
+
+        if ($style) {
+            $style = 'style="' . $style . '"';
+        }
+
+        $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select Price Type</option>';
+        if (!empty($tasktypes))
+            foreach ($tasktypes as $tasktype) {
+
+                $selected = '';
+                if ($default == $tasktype) {
+                    $selected = 'selected="selected"';
+                }
+                $html .= '<option ' . $selected . ' value="' . $tasktype . '">' . $tasktype . '</option>';
+            }
+        $html .= '</select></div>';
+        echo $html;
+    }
 }

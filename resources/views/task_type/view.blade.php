@@ -55,74 +55,74 @@
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <style>
-    .toolbar {
-        float: right;
-        margin-left: 10px;
-    }
+.toolbar {
+    float: right;
+    margin-left: 10px;
+}
 </style>
 <script>
-    $(function() {
-        $('#example1').DataTable({
-            initComplete: function() {
-                this.api().columns([0]).every(function() {
-                    var column = this;
-                    var website_type = $('#website_type')
-                        .on('change', function() {
-                            var val = $(this).val();
-                            column.search(val).draw();
-                        });
+$(function() {
+    $('#example1').DataTable({
+        initComplete: function() {
+            this.api().columns([0]).every(function() {
+                var column = this;
+                var website_type = $('#website_type')
+                    .on('change', function() {
+                        var val = $(this).val();
+                        column.search(val).draw();
+                    });
 
-                });
-            },
+            });
+        },
 
-            dom: '<"toolbar">frtip',
-            "columns": [{
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
-                    data: "website_type"
-                },
-                {
-                    data: "type_name"
-                },
-                {
-                    data: "price"
-                },
-                {
-                    data: "action"
+        dom: '<"toolbar">frtip',
+        "columns": [{
+                data: 'id',
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
                 }
-            ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": "<?php echo URL::to('tasktype'); ?>"
-        });
-        document.querySelector('div.toolbar').innerHTML =
-            '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type', ['Educrafter']) ?>';
+            },
+            {
+                data: "website_type"
+            },
+            {
+                data: "type_name"
+            },
+            {
+                data: "price"
+            },
+            {
+                data: "action"
+            }
+        ],
+        "processing": true,
+        "serverSide": true,
+        "ajax": "<?php echo URL::to('tasktype'); ?>"
     });
+    document.querySelector('div.toolbar').innerHTML =
+        '<?php HtmlHelper::PriceTypeDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
+});
 
 
-    function delete_task_type(msg, id) {
-        if (confirm(msg)) {
-            var form = $('#task_type_form_' + id);
-            var token = $('#csrf_' + id).val();
-            // Create a hidden input field to send the CSRF token
-            var csrfInput = $('<input>')
-                .attr('type', 'hidden')
-                .attr('name', '_token')
-                .val(token);
-            // Create a hidden input field to send the DELETE method
-            var methodInput = $('<input>')
-                .attr('type', 'hidden')
-                .attr('name', '_method')
-                .val('DELETE');
-            // Append the hidden input fields to the form
-            form.append(csrfInput, methodInput);
-            // Submit the form
-            form.submit();
-        }
+function delete_task_type(msg, id) {
+    if (confirm(msg)) {
+        var form = $('#task_type_form_' + id);
+        var token = $('#csrf_' + id).val();
+        // Create a hidden input field to send the CSRF token
+        var csrfInput = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', '_token')
+            .val(token);
+        // Create a hidden input field to send the DELETE method
+        var methodInput = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', '_method')
+            .val('DELETE');
+        // Append the hidden input fields to the form
+        form.append(csrfInput, methodInput);
+        // Submit the form
+        form.submit();
     }
+}
 </script>
 @endsection

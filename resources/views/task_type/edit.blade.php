@@ -14,7 +14,8 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Task type name</label>
-                                <input type="text" name="type_name" class="form-control" id="exampleInputEmail1" placeholder="Enter type name" value="{{$data->type_name}}">
+                                <input type="text" name="type_name" class="form-control" id="exampleInputEmail1"
+                                    placeholder="Enter type name" value="{{$data->type_name}}">
                                 @error('type_name')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -22,7 +23,7 @@
 
 
                             <div class="form-group">
-                                {{ HtmlHelper::WebsiteDropdown('website_type',($data->website_type)?$data->website_type:old('website_type'),true,'','',['Educrafter']) }}
+                                {{ HtmlHelper::PriceTypeDropdown('website_type',($data->website_type)?$data->website_type:old('website_type'),true,'','') }}
 
                                 @error('website_type')
                                 <small class="text-danger">{{ $message }}</small>
@@ -32,7 +33,8 @@
 
                             <div class="form-group">
                                 <label>Price(%)</label>
-                                <input type="number" name="price" class="form-control" placeholder="Enter price" value="{{$data->price}}">
+                                <input type="number" name="price" class="form-control" placeholder="Enter price"
+                                    value="{{$data->price}}">
                                 @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -65,35 +67,35 @@
 <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 <script>
-    $(function() {
-        $('#quickForm').validate({
-            rules: {
-                type_name: {
-                    required: true,
-                },
-                website_type: {
-                    required: true,
-                },
-                price: {
-                    required: true,
-                    number: true
-                },
-                status: {
-                    required: true,
-                },
+$(function() {
+    $('#quickForm').validate({
+        rules: {
+            type_name: {
+                required: true,
             },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
+            website_type: {
+                required: true,
             },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
+            price: {
+                required: true,
+                number: true
             },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
+            status: {
+                required: true,
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
     });
+});
 </script>
 @endsection
