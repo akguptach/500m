@@ -75,6 +75,9 @@ class LevelStudyController extends Controller
      */
     public function update(LevelStudyRequest $request, string $id)
     {
+
+
+
         Level_study::where('id', $id)->update([
             'level_name' => $request->level_name,
             'price' => $request->price,

@@ -9,5 +9,5 @@ class Level_study extends Model
 {
     use HasFactory;
     protected $table = 'level_study';
-    protected $fillable = ['level_name','price'];
+    protected $fillable = ['level_name', 'price', 'website_type'];
 }
