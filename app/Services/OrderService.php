@@ -155,11 +155,11 @@ class OrderService
 
         $result['orderAssign'] = OrderAssign::where('order_id', $id)->first();
         $result['qcAssign'] = QcAssign::where('order_id', $id)->first();
-
+        $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
 
 
         if ($result['orderAssign']) {
-            $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+
             $result['teacherOrderMessage'] = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
         }
         if ($result['qcAssign']) {
@@ -315,7 +315,7 @@ class OrderService
         $result['data'] = Orders::with(['website', 'student', 'subject', 'teacherAssigned.teacher', 'teacherAssigned.student', 'qcAssigned.qc'])->where('id', $id)->first();
 
         $result['orderAssign'] = $result['qcAssign'] = $result['tutorRequestAccepted'] = $result['qcRequestAccepted'] = '';
-
+        $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
         $result['orderRequestSent'] = OrderRequest::with(['tutor'])->where('order_id', $id)
             ->where('type', 'TUTOR')
             ->orderBy('id', 'desc')

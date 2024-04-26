@@ -37,6 +37,9 @@
         <div class="row">
             @include('orders.order_info',['data'=>$data])
 
+            @include('orders.student_chat',['data'=>$data,
+            'studentMessages'=>$studentMessages])
+
             @if($orderRequestSent && $orderRequestSent->status == 'ACCEPTED')
             @include('orders.tutor_accepted')
             @elseif($orderRequestSent && $orderRequestSent->status == 'PENDING')
