@@ -157,6 +157,9 @@ class OrderService
         $result['qcAssign'] = QcAssign::where('order_id', $id)->first();
         $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
 
+        DB::table('student_order_messages')
+            ->where('order_id', $id)
+            ->update(array('read' => 1));
 
         if ($result['orderAssign']) {
 

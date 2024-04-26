@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-9">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
         <div class="card-header">
