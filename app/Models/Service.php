@@ -14,8 +14,8 @@ class Service extends Model
     {
         return $this->hasOne('App\Models\ServiceSeo', 'service_id');
     }
-    
-    
+
+
 
     public function faq()
     {
@@ -30,5 +30,15 @@ class Service extends Model
     public function ratings()
     {
         return $this->hasMany('App\Models\ServiceRating', 'service_id');
+    }
+
+    public function howWorks()
+    {
+        return $this->hasMany('App\Models\ServiceHowWork', 'service_id');
+    }
+
+    public function assistBtns()
+    {
+        return $this->hasMany('App\Models\ServiceAssistButton', 'service_id');
     }
 }

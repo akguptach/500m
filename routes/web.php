@@ -111,6 +111,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/services/store-faq', [ServiceController::class, 'storeFaq'])->name('services.store.faq');
     Route::post('/services/store-specification', [ServiceController::class, 'storeSpecification'])->name('services.store.specification');
 
+
+    Route::post('/services/store-how-works', [ServiceController::class, 'storeHowWorks'])->name('services.store.how_works');
+
+    Route::post('/services/store-assist-btn', [ServiceController::class, 'storeAssistBtn'])->name('services.store.assist_btn');
+
+
     Route::post('/services/store-ratings', [ServiceController::class, 'storeRatings'])->name('services.store.ratings');
 
     Route::delete('services/{id}/delete', [ServiceController::class, 'destroy'])->name('services.destroy');

@@ -7,7 +7,7 @@
                 <tr>
                     <th>Stars</th>
                     <th>Image</th>
-                    <th>Address</th>
+                    <th>Name</th>
                     <th>Description</th>
                     <th>Action</th>
                 </tr>
@@ -25,7 +25,8 @@
                 @foreach($oldArray as $index=>$filed)
                 <tr>
                     <td>
-                        <input type="text" name="addMoreRatingFields[{{$index}}][star_rating]" placeholder="Enter Title" class="form-control" value="{{@$filed['star_rating']}}" require />
+                        <input type="text" name="addMoreRatingFields[{{$index}}][star_rating]" placeholder="Enter Title"
+                            class="form-control" value="{{@$filed['star_rating']}}" require />
                         @php $e = 'addMoreRatingFields.'.$index.'.star_rating'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
@@ -33,9 +34,12 @@
                     </td>
                     <td>
                         <div style="display: flex;">
-                            <input type="file" name="addMoreRatingFields[{{$index}}][user_image]" class="form-control" require />
-                            <img src="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif" width="30px" />
-                            <input type="hidden" name="addMoreRatingFields[{{$index}}][user_image_url]" value="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif" />
+                            <input type="file" name="addMoreRatingFields[{{$index}}][user_image]" class="form-control"
+                                require />
+                            <img src="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif"
+                                width="30px" />
+                            <input type="hidden" name="addMoreRatingFields[{{$index}}][user_image_url]"
+                                value="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif" />
                         </div>
                         @php $e = 'addMoreRatingFields.'.$index.'.user_image'; @endphp
                         @error($e)
@@ -43,21 +47,23 @@
                         @enderror
                     </td>
                     <td>
-                        <input type="text" name="addMoreRatingFields[{{$index}}][address]" placeholder="Enter address" class="form-control" value="{{@$filed['address']}}" require />
+                        <input type="text" name="addMoreRatingFields[{{$index}}][address]" placeholder="Enter address"
+                            class="form-control" value="{{@$filed['address']}}" require />
                         @php $e = 'addMoreRatingFields.'.$index.'.address'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </td>
                     <td>
-                        <textarea name="addMoreRatingFields[{{$index}}][description]" placeholder="Enter Description" class="form-control" require>{{@$filed['description']}}</textarea>
+                        <textarea name="addMoreRatingFields[{{$index}}][description]" placeholder="Enter Description"
+                            class="form-control" require>{{@$filed['description']}}</textarea>
                         @php $e = 'addMoreRatingFields.'.$index.'.description'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </td>
 
-                    
+
 
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>
@@ -65,7 +71,8 @@
                 @else
                 <tr>
                     <td>
-                        <input type="text" name="addMoreRatingFields[0][star_rating]" placeholder="Enter rating" class="form-control" require />
+                        <input type="text" name="addMoreRatingFields[0][star_rating]" placeholder="Enter rating"
+                            class="form-control" require />
                     </td>
                     <td>
                         <input type="file" name="addMoreRatingFields[0][user_image]" class="form-control" require />
@@ -74,7 +81,8 @@
                         <input type="text" name="addMoreRatingFields[0][address]" class="form-control" require />
                     </td>
                     <td>
-                        <textarea name="addMoreRatingFields[0][description]" placeholder="Enter address" class="form-control" require></textarea>
+                        <textarea name="addMoreRatingFields[0][description]" placeholder="Enter address"
+                            class="form-control" require></textarea>
                     </td>
 
                     <td>
@@ -90,7 +98,8 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="{{route('services_index')}}" class="btn btn-primary">Back</a>
                 @if(Request::route('id'))
-                <button type="button" name="add" id="add_more_rating" class="btn btn-outline-primary float-right">Add More</button>
+                <button type="button" name="add" id="add_more_rating" class="btn btn-outline-primary float-right">Add
+                    More</button>
                 @endif
             </div>
             @endif
@@ -99,10 +108,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    var i = '{{$i}}';
-    $("#add_more_rating").click(function() {
-        ++i;
-        $("#ratingsAddRemove").append(`<tr>
+var i = '{{$i}}';
+$("#add_more_rating").click(function() {
+    ++i;
+    $("#ratingsAddRemove").append(`<tr>
                     <td>
                         <input type="text" name="addMoreRatingFields[${i}][star_rating]" placeholder="Enter rating" class="form-control" require />
                     </td>
@@ -118,8 +127,8 @@
 
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>`);
-    });
-    $(document).on('click', '.remove-input-field', function() {
-        $(this).parents('tr').remove();
-    });
+});
+$(document).on('click', '.remove-input-field', function() {
+    $(this).parents('tr').remove();
+});
 </script>

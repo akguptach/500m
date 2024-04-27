@@ -10,5 +10,15 @@ class ServiceSeo extends Model
     use HasFactory;
     protected $table = 'service_seo';
 
-    protected $fillable = ['service_id', 'seo_title', 'seo_keywords', 'seo_url_slug', 'seo_meta', 'seo_description', 'og_image'];
+    protected $fillable = [
+        'service_id',
+        'seo_title',
+        'seo_keywords',
+        'seo_url_slug',
+        'seo_meta',
+        'seo_description',
+        'og_image',
+        'button_title',
+        'button_url'
+    ];
 }

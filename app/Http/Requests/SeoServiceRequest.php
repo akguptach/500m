@@ -23,10 +23,10 @@ class SeoServiceRequest extends FormRequest
     {
         return [
             'seo_title' => 'required',
-            'seo_keywords' => 'required',
+            //'seo_keywords' => 'required',
             'seo_url_slug' => 'required',
-            'seo_meta' => 'required',
-            'seo_description' => 'required',
+            //'seo_meta' => 'required',
+            //'button_url' => 'url',
         ];
     }
 

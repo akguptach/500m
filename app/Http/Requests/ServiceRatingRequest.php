@@ -25,7 +25,7 @@ class ServiceRatingRequest extends FormRequest
             'service_id' => 'required',
             'addMoreRatingFields.*.star_rating' => 'required',
             'addMoreRatingFields.*.description' => 'required',
-            'addMoreRatingFields.*.user_image' => 'required_without:addMoreRatingFields.*.user_image_url',
+            'addMoreRatingFields.*.user_image' => 'dimensions:max_width=300,max_height=200|required_without:addMoreRatingFields.*.user_image_url',
             'addMoreRatingFields.*.address' => 'required'
         ];
     }
@@ -37,7 +37,8 @@ class ServiceRatingRequest extends FormRequest
             'addMoreRatingFields.*.star_rating.required' => 'Rating is required',
             'addMoreRatingFields.*.description.required' => 'Description is required',
             'addMoreRatingFields.*.user_image.required_without' => 'Image is required',
-            'addMoreRatingFields.*.address.required' => 'address is required'
+            'addMoreRatingFields.*.address.required' => 'address is required',
+            'addMoreRatingFields.*.user_image.dimensions' => 'Image dimensions should be less than or equal to 300x200',
         ];
     }
 

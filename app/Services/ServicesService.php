@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Service;
 use App\Models\ServiceSpecification;
 use App\Models\ServiceRating;
+use App\Models\ServiceHowWork;
+use App\Models\ServiceAssistButton;
 
 /**
  * Class ServicesService.
@@ -70,12 +72,12 @@ class ServicesService extends BaseService
         $del_msg = '"' . 'Are you want to delete?' . '"';
         if (!empty($reqRecord['data'])) {
             foreach ($reqRecord['data'] as $index => $item) {
-                
-                
-                
+
+
+
                 $reqRecord['data'][$index]->seo_url_slug = ($item->seo) ? $item->seo->seo_url_slug : '';
-                
-                
+
+
                 $editItem = 'services/edit/' . $item['id'];
                 $deleteItem = 'services/' . $item['id'] . '/delete';
 
@@ -144,6 +146,55 @@ class ServicesService extends BaseService
                 'address' => $fields['address'],
                 'description' => $fields['description'],
                 'user_image' => $userImage,
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
+    }
+
+
+
+    public function storeHowWorks($serviceHowWorksRequest)
+    {
+        $data = $serviceHowWorksRequest->all();
+
+        $files = request()->file('addMoreFields');
+
+        $oldValues = ServiceHowWork::where('service_id', $serviceHowWorksRequest->service_id)->get();
+        foreach ($data['addMoreFields'] as $index => $fields) {
+
+            $iconImg = isset($fields['icon_url']) ? $fields['icon_url'] : '';
+            if (isset($files[$index]['icon'])) {
+                $icon = $files[$index]['icon'];
+                $imageName = "og_image" . time() . '.' . $icon->getClientOriginalExtension();
+                $icon->move(public_path('images/uploads/services/how_works/icons/'), $imageName);
+                $iconImg = env('APP_URL') . '/images/uploads/services/how_works/icons/' . $imageName;
+            }
+            ServiceHowWork::Create([
+                'service_id' => $serviceHowWorksRequest->service_id,
+                'title' => $fields['title'],
+                'description' => $fields['description'],
+                'icon' => $iconImg,
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
+    }
+
+
+    public function storeAssistBtn($serviceAssistButtonRequest)
+    {
+        $data = $serviceAssistButtonRequest->all();
+        $oldValues = ServiceAssistButton::where('service_id', $serviceAssistButtonRequest->service_id)->get();
+        foreach ($data['addMoreFields'] as $index => $fields) {
+            ServiceAssistButton::Create([
+                'service_id' => $serviceAssistButtonRequest->service_id,
+                'btn_text' => $fields['btn_text'],
+                'btn_url' => $fields['btn_url'],
             ]);
         }
         foreach ($oldValues as $obj) {

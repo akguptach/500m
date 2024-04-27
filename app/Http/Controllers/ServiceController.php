@@ -15,6 +15,9 @@ use App\Http\Requests\SeoServiceRequest;
 use App\Http\Requests\FaqServiceRequest;
 use App\Http\Requests\ServiceSpecificationRequest;
 use App\Http\Requests\ServiceRatingRequest;
+use App\Http\Requests\ServiceHowWorksRequest;
+
+
 
 
 
@@ -70,7 +73,9 @@ class ServiceController extends Controller
             'seo_url_slug' => $seoServiceRequest->seo_url_slug,
             'seo_meta' => $seoServiceRequest->seo_meta,
             'seo_description' => $seoServiceRequest->seo_description,
-            'og_image' => $ogImage
+            'og_image' => $ogImage,
+            'button_title' => $seoServiceRequest->button_title,
+            'button_url' => $seoServiceRequest->button_url
 
 
         ]);
@@ -102,6 +107,9 @@ class ServiceController extends Controller
     }
 
 
+
+
+
     public function destroy(string $id)
     {
 
@@ -124,6 +132,18 @@ class ServiceController extends Controller
     public function storeRatings(ServiceRatingRequest $serviceRatingRequest)
     {
         $this->servicesService->storeRatings($serviceRatingRequest);
+        return redirect('/services/create/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
+    }
+
+    public function storeHowWorks(ServiceHowWorksRequest $serviceHowWorksRequest)
+    {
+        $this->servicesService->storeHowWorks($serviceHowWorksRequest);
+        return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
+    }
+
+    public function storeAssistBtn(\App\Http\Requests\ServiceAssistButtonRequest $serviceAssistButtonRequest)
+    {
+        $this->servicesService->storeAssistBtn($serviceAssistButtonRequest);
         return redirect('/services')->with('status', 'Saved Successfully');
     }
 }
