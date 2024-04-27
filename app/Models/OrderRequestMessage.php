@@ -31,4 +31,9 @@ class OrderRequestMessage extends Model
     {
         return $this->morphTo();
     }
+
+    public function request()
+    {
+        return $this->belongsTo('App\Models\OrderRequest', 'request_id');
+    }
 }

@@ -157,7 +157,15 @@ class OrderService
         $result['qcAssign'] = QcAssign::where('order_id', $id)->first();
         $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
 
+        DB::table('qc_order_messages')
+            ->where('order_id', $id)
+            ->update(array('read' => 1));
+
         DB::table('student_order_messages')
+            ->where('order_id', $id)
+            ->update(array('read' => 1));
+
+        DB::table('teacher_order_messages')
             ->where('order_id', $id)
             ->update(array('read' => 1));
 
@@ -330,6 +338,10 @@ class OrderService
         }
 
 
+        DB::table('order_request_messages')
+            ->where('request_id', $result['orderRequestSent']->id)
+            ->update(array('read' => 1));
+
         /*if ($result['orderAssign']) {
             $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
             $result['teacherOrderMessage'] = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
@@ -368,7 +380,9 @@ class OrderService
             $result['orderAssign'] = QcAssign::where('order_id', $id)->first();
         }
 
-
+        DB::table('order_request_messages')
+            ->where('request_id', $result['orderRequestSent']->id)
+            ->update(array('read' => 1));
 
 
         return $result;

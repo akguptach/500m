@@ -35,7 +35,7 @@
             showDuration: 0,
             hideDuration: 0,
             autoHide: false,
-            clickToHide: false
+            clickToHide: true
         });
     },
 
