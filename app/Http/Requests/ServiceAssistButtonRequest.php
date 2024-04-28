@@ -23,7 +23,7 @@ class ServiceAssistButtonRequest extends FormRequest
     {
         return [
             'addMoreFields.*.btn_text' => 'required',
-            'addMoreFields.*.btn_url' => 'required',
+            //'addMoreFields.*.btn_url' => 'required',
             'service_id' => 'required'
         ];
     }
@@ -32,7 +32,7 @@ class ServiceAssistButtonRequest extends FormRequest
     {
         return [
             'addMoreFields.*.btn_text.required' => 'Button Text is required',
-            'addMoreFields.*.btn_url.required' => 'Url is required',
+            //'addMoreFields.*.btn_url.required' => 'Url is required',
             'service_id.required' => 'required'
         ];
     }

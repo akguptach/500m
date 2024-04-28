@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
-    protected $fillable = ['service_name', 'service_description', 'website_type', 'status'];
+    protected $fillable = ['service_name', 'service_description', 'website_type', 'status', 'short_description'];
 
     public function seo()
     {

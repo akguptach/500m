@@ -31,8 +31,7 @@
                         @enderror
                     </td>
                     <td>
-                        <input type="text" name="addMoreFields[{{$index}}][btn_url]" placeholder="Enter url"
-                            class="form-control" value="{{@$filed['btn_url']}}" require />
+                        {{ HtmlHelper::ServicePageDropdown("addMoreFields[$index][btn_url]",@$filed["btn_url"],[],['id'=>['value'=>Request::route('id'),'statement'=>'!=']]) }}
                         @php $e = 'addMoreFields.'.$index.'.btn_url'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
@@ -48,8 +47,7 @@
                             class="form-control" require />
                     </td>
                     <td>
-                        <input type="text" name="addMoreFields[0][btn_url]" class="form-control"
-                            placeholder="Enter Button Url" />
+                        {{ HtmlHelper::ServicePageDropdown('addMoreFields[0][btn_url]','',[],['id'=>['value'=>Request::route('id'),'statement'=>'!=']]) }}
                     </td>
                     <td>
                     </td>
@@ -80,9 +78,8 @@ $("#add_more_btns").click(function() {
                     <td>
                         <input type="text" name="addMoreFields[${i}][btn_text]" placeholder="Enter rating" class="form-control" require />
                     </td>
-                    
                     <td>
-                        <input type="text" name="addMoreFields[${i}][btn_url]" class="form-control" require />
+                    {{ HtmlHelper::ServicePageDropdown('addMoreFields[${i}][btn_url]','',[], ['id'=>['value'=>Request::route('id'),'statement'=>'!=']]) }}
                     </td>
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>`);
