@@ -41,4 +41,9 @@ class Service extends Model
     {
         return $this->hasMany('App\Models\ServiceAssistButton', 'service_id');
     }
+
+    public function whyEducrafter()
+    {
+        return $this->hasMany('App\Models\ServiceWhyEducrafter', 'service_id');
+    }
 }

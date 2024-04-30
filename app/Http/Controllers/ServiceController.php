@@ -16,6 +16,7 @@ use App\Http\Requests\FaqServiceRequest;
 use App\Http\Requests\ServiceSpecificationRequest;
 use App\Http\Requests\ServiceRatingRequest;
 use App\Http\Requests\ServiceHowWorksRequest;
+use App\Http\Requests\ServiceWhyEducrafterRequest;
 
 
 
@@ -108,6 +109,12 @@ class ServiceController extends Controller
     }
 
 
+    public function storeWhyEducrafter(ServiceWhyEducrafterRequest $serviceWhyEducrafterRequest)
+    {
+        $this->servicesService->storeWhyEducrafter($serviceWhyEducrafterRequest);
+        return redirect('/services/create/' . $serviceWhyEducrafterRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
+    }
+
 
 
 
@@ -139,7 +146,7 @@ class ServiceController extends Controller
     public function storeHowWorks(ServiceHowWorksRequest $serviceHowWorksRequest)
     {
         $this->servicesService->storeHowWorks($serviceHowWorksRequest);
-        return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
+        return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
     }
 
     public function storeAssistBtn(\App\Http\Requests\ServiceAssistButtonRequest $serviceAssistButtonRequest)

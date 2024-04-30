@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/services/store-ratings', [ServiceController::class, 'storeRatings'])->name('services.store.ratings');
 
+    Route::post('/services/why-educrafter', [ServiceController::class, 'storeWhyEducrafter'])->name('services.store.why_educrafter');
+
     Route::delete('services/{id}/delete', [ServiceController::class, 'destroy'])->name('services.destroy');
     //Route::post('/services/store', [ServiceController::class, 'store'])->name('pages.store');
     //Route::get('/services/{pages}/edit', [ServiceController::class, 'edit'])->name('pages.edit');

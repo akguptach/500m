@@ -7,6 +7,7 @@ use App\Models\ServiceSpecification;
 use App\Models\ServiceRating;
 use App\Models\ServiceHowWork;
 use App\Models\ServiceAssistButton;
+use App\Models\ServiceWhyEducrafter;
 
 /**
  * Class ServicesService.
@@ -195,6 +196,35 @@ class ServicesService extends BaseService
                 'service_id' => $serviceAssistButtonRequest->service_id,
                 'btn_text' => $fields['btn_text'],
                 'btn_url' => $fields['btn_url'],
+            ]);
+        }
+        foreach ($oldValues as $obj) {
+            $obj->delete();
+        }
+        return true;
+    }
+
+    public function storeWhyEducrafter($serviceSpecificationRequest)
+    {
+        $data = $serviceSpecificationRequest->all();
+
+        $files = request()->file('addMoreSpecificationFields');
+
+        $oldValues = ServiceWhyEducrafter::where('service_id', $serviceSpecificationRequest->service_id)->get();
+        foreach ($data['addMoreSpecificationFields'] as $index => $fields) {
+
+            $iconImg = isset($fields['icon_url']) ? $fields['icon_url'] : '';
+            if (isset($files[$index]['icon'])) {
+                $icon = $files[$index]['icon'];
+                $imageName = "og_image" . time() . '.' . $icon->getClientOriginalExtension();
+                $icon->move(public_path('images/uploads/services/specification/icons/'), $imageName);
+                $iconImg = env('APP_URL') . '/images/uploads/services/specification/icons/' . $imageName;
+            }
+            ServiceWhyEducrafter::Create([
+                'service_id' => $serviceSpecificationRequest->service_id,
+                'title' => $fields['title'],
+                'description' => $fields['description'],
+                'icon' => $iconImg,
             ]);
         }
         foreach ($oldValues as $obj) {
