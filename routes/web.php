@@ -67,27 +67,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages/create/{id?}', function () {
         return \App::call('App\Http\Controllers\ServiceController@create', ['type' => 'PAGE']);
     })->name('pages.create');
-
-
-    /*Route::get('/services/store-basic', function () {
-        return \App::call('App\Http\Controllers\ServiceController@storeBasic', ['type' => 'PAGE']);
-    })->name('services.store.basic');*/
-
-
-
     Route::get('/pages', [ServiceController::class, 'page'])->name('pages');
     // Route::get('/pages/create/{id?}', [ServiceController::class, 'create'])->name('pages.create');
     Route::get('/pages/edit/{id}', [ServiceController::class, 'create'])->name('pages.edit');
-    Route::post('/services/store-basic', [ServiceController::class, 'storeBasic'])->name('services.store.basic');
-    Route::post('/services/store-seo', [ServiceController::class, 'storeSeo'])->name('services.store.seo');
-    Route::post('/services/store-faq', [ServiceController::class, 'storeFaq'])->name('services.store.faq');
-    Route::post('/services/store-specification', [ServiceController::class, 'storeSpecification'])->name('services.store.specification');
-    Route::post('/services/store-how-works', [ServiceController::class, 'storeHowWorks'])->name('services.store.how_works');
-    Route::post('/services/store-assist-btn', [ServiceController::class, 'storeAssistBtn'])->name('services.store.assist_btn');
-    Route::post('/services/store-ratings', [ServiceController::class, 'storeRatings'])->name('services.store.ratings');
-    Route::post('/services/why-educrafter', [ServiceController::class, 'storeWhyEducrafter'])->name('services.store.why_educrafter');
-    Route::delete('services/{id}/delete', [ServiceController::class, 'destroy'])->name('services.destroy');
-    //////
+
+
 
 
 
