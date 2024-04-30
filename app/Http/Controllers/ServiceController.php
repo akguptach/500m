@@ -32,17 +32,31 @@ class ServiceController extends Controller
     public function index()
     {
         if (isset($_GET) && !empty($_GET['columns'])) {
-            return response($this->servicesService->getPages());
+            return response($this->servicesService->getPages('SERVICE'));
         } else {
             return view('services/index');
         }
     }
 
-    public function create($id = null)
+    public function page()
     {
+
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->servicesService->getPages('PAGE'));
+        } else {
+            return view('services/page');
+        }
+    }
+
+    public function create($id = null, $type = 'SERVICE')
+    {
+
         $websites   = Website::all();
         $service = ($id) ? Service::find($id) : [];
-        return view('services/create', compact('service', 'websites'));
+        if ($service) {
+            $type = $service->type;
+        }
+        return view('services/create', compact('service', 'websites', 'type'));
     }
 
     public function storeBasic(BasicServiceRequest $request)
@@ -54,8 +68,13 @@ class ServiceController extends Controller
             'website_type' => $request->website_type,
             'status' => isset($request->status) ? $request->status : 'INACTIVE',
             'short_description' => $request->short_description,
+            'type' => $request->content_type,
         ]);
-        return redirect('/services/create/' . $service->id . '#seo')->with('status', 'Saved Successfully');
+
+        if ($request->content_type == 'PAGE')
+            return redirect('/pages/edit/' . $service->id . '#seo')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/edit/' . $service->id . '#seo')->with('status', 'Saved Successfully');
     }
 
     public function storeSeo(SeoServiceRequest $seoServiceRequest)
@@ -81,7 +100,11 @@ class ServiceController extends Controller
 
 
         ]);
-        return redirect('/services/create/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
+        $service = Service::find($seoServiceRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/edit/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
     }
 
     public function storeFaq(FaqServiceRequest $faqServiceRequest)
@@ -98,21 +121,34 @@ class ServiceController extends Controller
         foreach ($oldValues as $obj) {
             $obj->delete();
         }
-        return redirect('/services/create/' . $faqServiceRequest->service_id . '#specifications');
+        $service = Service::find($faqServiceRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $faqServiceRequest->service_id . '#specifications');
+        else
+            return redirect('/services/edit/' . $faqServiceRequest->service_id . '#specifications');
     }
 
 
     public function storeSpecification(ServiceSpecificationRequest $serviceSpecificationRequest)
     {
         $this->servicesService->storeSpecification($serviceSpecificationRequest);
-        return redirect('/services/create/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
+        $service = Service::find($serviceSpecificationRequest->service_id);
+
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/edit/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
     }
 
 
     public function storeWhyEducrafter(ServiceWhyEducrafterRequest $serviceWhyEducrafterRequest)
     {
         $this->servicesService->storeWhyEducrafter($serviceWhyEducrafterRequest);
-        return redirect('/services/create/' . $serviceWhyEducrafterRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
+        $service = Service::find($serviceWhyEducrafterRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $serviceWhyEducrafterRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/edit/' . $serviceWhyEducrafterRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
     }
 
 
@@ -130,28 +166,40 @@ class ServiceController extends Controller
             foreach ($serviceFaq as $obj) {
                 $obj->delete();
             }
-
-            return redirect('/services')->with('status', 'Service Deleted Successfully');
+            return redirect()->back()->with('status', 'Deleted Successfully');
+            //return redirect('/services')->with('status', 'Service Deleted Successfully');
         } else {
-            return redirect('/services');
+            return redirect();
         }
     }
 
     public function storeRatings(ServiceRatingRequest $serviceRatingRequest)
     {
         $this->servicesService->storeRatings($serviceRatingRequest);
-        return redirect('/services/create/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
+        $service = Service::find($serviceRatingRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/edit/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
     }
 
     public function storeHowWorks(ServiceHowWorksRequest $serviceHowWorksRequest)
     {
         $this->servicesService->storeHowWorks($serviceHowWorksRequest);
-        return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
+        $service = Service::find($serviceHowWorksRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages/edit/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
     }
 
     public function storeAssistBtn(\App\Http\Requests\ServiceAssistButtonRequest $serviceAssistButtonRequest)
     {
         $this->servicesService->storeAssistBtn($serviceAssistButtonRequest);
-        return redirect('/services')->with('status', 'Saved Successfully');
+        $service = Service::find($serviceAssistButtonRequest->service_id);
+        if ($service->type == 'PAGE')
+            return redirect('/pages')->with('status', 'Saved Successfully');
+        else
+            return redirect('/services')->with('status', 'Saved Successfully');
     }
 }

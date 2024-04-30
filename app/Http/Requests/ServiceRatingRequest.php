@@ -25,9 +25,10 @@ class ServiceRatingRequest extends FormRequest
             'service_id' => 'required',
             'addMoreRatingFields.*.star_rating' => 'required',
             'addMoreRatingFields.*.description' => 'required',
-            'addMoreRatingFields.*.user_image' => 'dimensions:max_width=300,max_height=200|required_without:addMoreRatingFields.*.user_image_url',
+            'addMoreRatingFields.*.user_image' => 'required_without:addMoreRatingFields.*.user_image_url',
             'addMoreRatingFields.*.address' => 'required'
         ];
+        //dimensions:max_width=300,max_height=200|
     }
 
     public function messages(): array

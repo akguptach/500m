@@ -15,13 +15,13 @@ use App\Models\ServiceWhyEducrafter;
 class ServicesService extends BaseService
 {
 
-    public function getBasePages1($ModelClass, $filters)
+    public function getBasePages1($ModelClass, $type, $filters)
     {
         $req_record['data'] = array();
 
         if (isset($_GET['search']['value']) && !empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value']) || isset($_GET['columns'][3]['search']['value']) && !empty($_GET['columns'][3]['search']['value'])) {
 
-            $req_record['data'] = $ModelClass::where(function ($q) use ($filters) {
+            $req_record['data'] = $ModelClass::where('type', $type)->where(function ($q) use ($filters) {
                 foreach ($filters as $filter) {
                     $q->orWhere($filter, 'LIKE', '%' . $_GET['search']['value'] . '%');
                 }
@@ -40,7 +40,7 @@ class ServicesService extends BaseService
 
 
 
-            $pages = $ModelClass::where(function ($q) use ($filters) {
+            $pages = $ModelClass::where('type', $type)->where(function ($q) use ($filters) {
                 foreach ($filters as $filter) {
                     $q->orWhere($filter, 'LIKE', '%' . $_GET['search']['value'] . '%');
                 }
@@ -55,8 +55,8 @@ class ServicesService extends BaseService
                 })
                 ->orderBy('id', 'desc')->get();
         } else {
-            $req_record['data'] = $ModelClass::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get();
-            $pages = $ModelClass::orderBy('id', 'desc')->get();
+            $req_record['data'] = $ModelClass::where('type', $type)->orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get();
+            $pages = $ModelClass::where('type', $type)->orderBy('id', 'desc')->get();
         }
         if (!empty($pages))
             $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($pages);
@@ -66,10 +66,11 @@ class ServicesService extends BaseService
         return $req_record;
     }
 
-    public function getPages()
+    public function getPages($type)
     {
+
         $filters = ['service_name', 'website_type'];
-        $reqRecord  = $this->getBasePages1(Service::class, $filters);
+        $reqRecord  = $this->getBasePages1(Service::class, $type, $filters);
         $del_msg = '"' . 'Are you want to delete?' . '"';
         if (!empty($reqRecord['data'])) {
             foreach ($reqRecord['data'] as $index => $item) {
@@ -78,8 +79,10 @@ class ServicesService extends BaseService
 
                 $reqRecord['data'][$index]->seo_url_slug = ($item->seo) ? $item->seo->seo_url_slug : '';
 
-
-                $editItem = 'services/edit/' . $item['id'];
+                if ($type == 'PAGE')
+                    $editItem = 'pages/edit/' . $item['id'];
+                else
+                    $editItem = 'services/edit/' . $item['id'];
                 $deleteItem = 'services/' . $item['id'] . '/delete';
 
                 $req_serv_id = $item['id'];
