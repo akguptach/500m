@@ -190,7 +190,7 @@ class ServiceController extends Controller
         if ($service->type == 'PAGE')
             return redirect('/pages/edit/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
+            return redirect('/services/edit/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
     }
 
     public function storeAssistBtn(\App\Http\Requests\ServiceAssistButtonRequest $serviceAssistButtonRequest)
