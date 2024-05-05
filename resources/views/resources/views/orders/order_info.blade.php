@@ -10,7 +10,7 @@
                     <b>Website</b> <a class="float-right">{{$data['website']['website_name']}}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Subject</b> <a class="float-right">{{$data['subject']['subject_name']}}</a>
+                    <b>Subject11</b> <a class="float-right"></a>
                 </li>
                 <li class="list-group-item">
                     <b>No Of Words</b> <a class="float-right">{{$data['no_of_words']}}</a>

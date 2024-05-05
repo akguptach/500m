@@ -10,7 +10,11 @@
                     <b>Website</b> <a class="float-right">{{$data['website']['website_name']}}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Subject</b> <a class="float-right">{{$data['subject']['subject_name']}}</a>
+                    <b>Subject</b> <a class="float-right">@if(isset($data['subject']) && isset($data['subject']['subject_name']) && $data['subject']['subject_name'])
+                    {{$data['subject']['subject_name']}}
+                    @else
+                    {{@$data['subject_name']}}
+                    @endif</a>
                 </li>
                 <li class="list-group-item">
                     <b>No Of Words</b> <a class="float-right">{{$data['no_of_words']}}</a>
