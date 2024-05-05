@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Pages;
+use App\Models\ContactUs;
 use App\Models\PageRating;
 use Illuminate\Support\Str;
 
@@ -110,5 +111,22 @@ class PageService
             $obj->delete();
         }
         return true;
+    }
+    public function getReferencingStyle1(): array
+    {
+        $req_record['data'] = array();
+        if (!empty($_GET['search']['value'])) {
+            $req_record['data'] = ContactUs::get()->toArray();
+            $styles = ContactUs::get()->toArray();
+        } else {
+            $req_record['data'] = ContactUs::get()->toArray();
+            $styles = ContactUs::orderBy('id', 'desc')->get()->toArray();
+        }
+        
+        if (!empty($styles))
+            $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($styles);
+        else
+            $req_record['recordsFiltered'] = $req_record['recordsTotal'] = 0;       
+        return $req_record;
     }
 }

@@ -123,4 +123,12 @@ class PageController extends Controller
         $page = Pages::where('seo_url_slug', $seo_url_slug)->first();
         return view('pages/show_page', compact('page'));
     }
+    public function dataStore()
+    {
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->pageService->getReferencingStyle1());
+        } else {
+            return view('style/form');
+        }
+    }
 }

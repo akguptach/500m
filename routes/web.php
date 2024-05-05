@@ -15,6 +15,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ReferencingStyleController;
 use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -93,9 +94,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/kyc/{tutor}', [TutorViewController::class, 'kyc'])->name('kyc');
     Route::get('/education/{tutor}', [TutorViewController::class, 'education'])->name('education');
     Route::get('/tutor_view/{profile_status}', [TutorViewController::class, 'profile_status'])->name('tutor_view.profile_status');
-
-
-
     Route::get('/get-teacher-list/{order_id}/{student_id}/{type}', [AjaxController::class, 'getTeacherList'])->name('get_teachers');
 
     Route::post('/tutor-assign-request', [AjaxController::class, 'tutorAssignRequest'])->name('tutor_assign_request');
@@ -135,6 +133,12 @@ Route::middleware('auth')->group(function () {
     //Route::get('/services/{pages}/edit', [ServiceController::class, 'edit'])->name('pages.edit');
     //Route::put('/services/{pages}', [ServiceController::class, 'update'])->name('pages.update');
     //Route::delete('services/{pages}/delete', [ServiceController::class, 'destroy'])->name('pages.destroy');
+    Route::get('/contact/form-store', [PageController::class, 'dataStore'])->name('contact.form.store');
+    Route::post('/contact/form', [PageController::class, 'dataStore1'])->name('form.store');
+    Route::get('/media', [MediaController::class, 'index'])->name('media.save');
+    Route::post('/save', [MediaController::class, 'save'])->name('media.store');
+    Route::get('/media-data', [MediaController::class, 'getData'])->name('media.data');
+    Route::post('/media/delete', [MediaController::class, 'deleteMedia'])->name('deleteMedia');
 
 
 });

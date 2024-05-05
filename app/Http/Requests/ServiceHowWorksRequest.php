@@ -24,7 +24,7 @@ class ServiceHowWorksRequest extends FormRequest
         return [
             'addMoreFields.*.title' => 'required',
             'addMoreFields.*.description' => 'required',
-            'addMoreFields.*.icon' => 'required_without:addMoreFields.*.icon_url',
+            // 'addMoreFields.*.icon' => 'required_without:addMoreFields.*.icon_url',
             'service_id' => 'required'
         ];
     }

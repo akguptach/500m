@@ -210,7 +210,6 @@ class ServicesService extends BaseService
     public function storeWhyEducrafter($serviceSpecificationRequest)
     {
         $data = $serviceSpecificationRequest->all();
-
         $files = request()->file('addMoreSpecificationFields');
 
         $oldValues = ServiceWhyEducrafter::where('service_id', $serviceSpecificationRequest->service_id)->get();

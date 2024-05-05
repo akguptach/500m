@@ -9,6 +9,7 @@ use App\Models\ServiceFaq;
 use App\Models\ServiceSeo;
 use App\Models\ServiceSpecification;
 use App\Models\Website;
+use App\Models\Media;
 use App\Services\ServicesService;
 use App\Http\Requests\BasicServiceRequest;
 use App\Http\Requests\SeoServiceRequest;
@@ -50,13 +51,14 @@ class ServiceController extends Controller
 
     public function create($id = null, $type = 'SERVICE')
     {
-
+        $ImageIcon =Media::get();
         $websites   = Website::all();
         $service = ($id) ? Service::find($id) : [];
         if ($service) {
             $type = $service->type;
         }
-        return view('services/create', compact('service', 'websites', 'type'));
+
+        return view('services/create', compact('service', 'websites', 'type','ImageIcon'));
     }
 
     public function storeBasic(BasicServiceRequest $request)
@@ -190,7 +192,7 @@ class ServiceController extends Controller
         if ($service->type == 'PAGE')
             return redirect('/pages/edit/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
+            return redirect('/services/create/' . $serviceHowWorksRequest->service_id . '#why_educrafter')->with('status', 'Saved Successfully');
     }
 
     public function storeAssistBtn(\App\Http\Requests\ServiceAssistButtonRequest $serviceAssistButtonRequest)

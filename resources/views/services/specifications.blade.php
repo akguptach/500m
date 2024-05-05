@@ -5,10 +5,9 @@
             <input type="hidden" name="service_id" value="{{Request::route('id') }}">
             <table class="table table-bordered" id="specificationAddRemove">
                 <tr>
-                    <th>Title</th>
-                    <th>Icon</th>
-                    <th>Description</th>
+                    <th>Title/Description</th>
                     <th>Action</th>
+                   
                 </tr>
                 @php $oldArray = []; @endphp
                 @if(old('addMoreSpecificationFields') && count(old('addMoreSpecificationFields')) > 0)
@@ -30,43 +29,54 @@
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </td>
-                    <td>
-                        <div style="display: flex;">
-                            <input type="file" name="addMoreSpecificationFields[{{$index}}][icon]" class="form-control" require />
-                            <img src="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" width="30px" />
-                            <input type="hidden" name="addMoreSpecificationFields[{{$index}}][icon_url]" value="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" />
+						
+						<br>
+						<div style="display: flex;">
+                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[{{$index}}][icon_url]" id="WorkImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}" />
+                            <button type="button" class="btn btn-primary text-center btnimageModal1" rel="{{@$filed['id']}}">
+                                Select Image
+                            </button>
+                            <div class="col-sm-1">
+                                <img src="{{@$filed['icon']}}" alt="Image Description" class="WorkViewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
+                            </div>
                         </div>
                         @php $e = 'addMoreSpecificationFields.'.$index.'.icon'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </td>
-                    <td>
-                        <textarea name="addMoreSpecificationFields[{{$index}}][description]" placeholder="Enter Description" class="form-control" require>{{@$filed['description']}}</textarea>
+						<br>
+						<textarea name="addMoreSpecificationFields[{{$index}}][description]" placeholder="Enter Description" class="form-control editor" require>{{@$filed['description']}}</textarea>
                         @php $e = 'addMoreSpecificationFields.'.$index.'.description'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
+						</br>
+						
+                    </td>
+                   
+                    <td>
+                         <button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>
                     </td>
 
-                    <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
+                   
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td>
                         <input type="text" name="addMoreSpecificationFields[0][title]" placeholder="Enter Title" class="form-control" require />
+						<br>
+						<input type="file" name="addMoreSpecificationFields[0][icon]" class="form-control" require />
+						
+						<br>
+						<textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
+						
                     </td>
+             
                     <td>
-                        <input type="file" name="addMoreSpecificationFields[0][icon]" class="form-control" require />
-                    </td>
-                    <td>
-                        <textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
+                        
                     </td>
 
-                    <td>
-                    </td>
                 </tr>
                 @endif
 
@@ -86,6 +96,30 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="IconModal" tabindex="-1" role="dialog" aria-labelledby="IconModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Icon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="imageForm" name="imageForm" method="POST" action="">
+                    <div class="row">
+                        @foreach($ImageIcon as $icon)
+                        <div class="col-sm-2">
+                            <img src="{{ $icon->image }}" alt="Image Description" class="clickableImage" style="width: 60px;border: 1px solid #000;padding: 2px;">
+                        </div>
+                        @endforeach
+                    </div>
+                    <input type="hidden" id="clickbtn" name="clickbtn" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var i = '{{$i}}';
     $("#add_more_specification").click(function() {
@@ -102,8 +136,42 @@
                     </td>
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>`);
+				$('.editor').summernote({
+        toolbar: [
+
+            ['style', ['style']],
+
+            ['font', ['bold', 'underline', 'clear']],
+
+            ['fontname', ['fontname']],
+
+            ['color', ['color']],
+
+            ['para', ['ul', 'ol', 'paragraph']],
+
+            ['table', ['table']],
+
+            ['insert', ['link', 'picture', 'video']],
+
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    });
     });
     $(document).on('click', '.remove-input-field', function() {
         $(this).parents('tr').remove();
+    });
+    $(document).on('click', '.btnimageModal1', function() {
+        $('#clickbtn').val($(this).attr('rel'));
+        $('#IconModal').modal('show');
+    });
+    $(document).ready(function() {
+        $('.clickableImage').click(function() {
+            var imagePath = $(this).attr('src');
+            var aa = $('#clickbtn').val();
+            $('#WorkImageIcon_' + aa).val(imagePath);
+            $('.WorkViewImage_' + aa).attr('src', imagePath);
+            // Close the modal
+            $('#IconModal').modal('hide');
+        });
     });
 </script>

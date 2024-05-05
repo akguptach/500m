@@ -33,9 +33,14 @@
                     </td>
                     <td>
                         <div style="display: flex;">
-                            <input type="file" name="addMoreSpecificationFields[{{$index}}][icon]" class="form-control" require />
-                            <img src="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" width="30px" />
-                            <input type="hidden" name="addMoreSpecificationFields[{{$index}}][icon_url]" value="@if(isset($filed['icon_url'])){{$filed['icon_url']}}@else{{@$filed['icon']}}@endif" />
+                            
+                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[{{$index}}][icon_url]" id="ImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}"/>
+                            <button type="button" class="btn btn-primary text-center btnimageModal3" rel="{{@$filed['id']}}">
+                                Select icon
+                            </button>
+                            <div class="col-sm-6" >
+                                <img src="{{@$filed['icon']}}" alt="Image Description" class="viewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
+                            </div>
                         </div>
                         @php $e = 'addMoreSpecificationFields.'.$index.'.icon'; @endphp
                         @error($e)
@@ -49,7 +54,6 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </td>
-
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>
                 @endforeach
@@ -64,15 +68,12 @@
                     <td>
                         <textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
                     </td>
-
                     <td>
                     </td>
                 </tr>
                 @endif
 
             </table>
-
-
             @if(Request::route('id'))
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Save and Next</button>
@@ -84,6 +85,34 @@
             @endif
 
         </form>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="IconModal1" tabindex="-1" role="dialog" aria-labelledby="IconModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Icon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="imageForm" name="imageForm" method="POST" action="">
+                    <div class="row">
+                        @foreach($ImageIcon as $icon)
+                        <div class="col-sm-2">
+                            <img src="{{ $icon->image }}" alt="Image Description" class="clickableImage" style="width: 60px;border: 1px solid #000;padding: 2px;">
+                        </div>
+                        @endforeach
+                    </div>
+                    <input type="hidden" id="clickbtn" name="clickbtn" value="">
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -105,5 +134,19 @@
     });
     $(document).on('click', '.remove-input-field', function() {
         $(this).parents('tr').remove();
+    });
+    $(document).on('click', '.btnimageModal3', function() {
+        $('#clickbtn').val($(this).attr('rel'));
+        $('#IconModal1').modal('show');
+    });
+    $(document).ready(function() {
+        $('.clickableImage').click(function() {
+            var imagePath = $(this).attr('src');
+            var aa = $('#clickbtn').val();
+            $('#ImageIcon_' + aa).val(imagePath);
+            $('.viewImage_' + aa).attr('src', imagePath);
+            // Close the modal
+            $('#IconModal1').modal('hide');
+        });
     });
 </script>
