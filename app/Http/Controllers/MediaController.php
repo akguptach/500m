@@ -10,6 +10,7 @@ use App\Http\Requests\FaqRequest;
 use App\Services\MediaService;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Media;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Services\FaqService;
 
@@ -47,7 +48,7 @@ class MediaController extends Controller
         return redirect()->back()->with('error', 'No image uploaded!');
     }
 
-   
+
     public function deleteMedia(Request $request)
     {
         $ids = $request->input('id');
@@ -63,5 +64,23 @@ class MediaController extends Controller
             $media->delete();
         }
         return response()->json(['success' => true, 'message' => 'Media deleted successfully.']);
+    }
+    public function subscription(Request $request)
+    {
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->MediaService->subscription());
+        } else {
+            return view('style/subscription');
+        }
+    }
+    public function  subscriptionDelete(Request $request)
+    {
+        $ids = $request->input('id');
+        $DeleteEmail = Subscription::findOrFail($ids);
+        if ($DeleteEmail->delete()) {
+            return response()->json(['success' => true, 'message' => 'Subscription deleted successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to delete subscription.']);
+        }
     }
 }

@@ -31,7 +31,7 @@
                         @enderror
                     </td>
                     <td>
-                        {{ HtmlHelper::ServicePageDropdown("addMoreFields[$index][btn_url]",@$filed["btn_url"],[],['id'=>['value'=>Request::route('id'),'statement'=>'!=']]) }}
+                    {{ HtmlHelper::ServicePageDropdown("addMoreFields[$index][btn_url]",@$filed["btn_url"],[],['id'=>['value'=>Request::route('id'),'statement'=>'!='] ,'type'=>['statement'=>'=','value'=>'SERVICE']]) }}
                         @php $e = 'addMoreFields.'.$index.'.btn_url'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
@@ -47,15 +47,13 @@
                             class="form-control" require />
                     </td>
                     <td>
-                        {{ HtmlHelper::ServicePageDropdown('addMoreFields[0][btn_url]','',[],['id'=>['value'=>Request::route('id'),'statement'=>'!=']]) }}
+                        {{ HtmlHelper::ServicePageDropdown('addMoreFields[0][btn_url]','',[],['id'=>['value'=>Request::route('id'),'statement'=>'!='],'type'=>['statement'=>'=','value'=>'PAGE']]) }}
                     </td>
                     <td>
                     </td>
                 </tr>
                 @endif
             </table>
-
-
             @if(Request::route('id'))
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>

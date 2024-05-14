@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Essay Help</title>
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
 
     <link rel="stylesheet" href="{{ asset('js/plugins/fontawesome-free/css/all.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
 
-    <link rel="stylesheet"
-        href="{{ asset('js/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('js/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
@@ -38,65 +36,65 @@
     <script src="{{ asset('js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <style>
-    .notifications {
-        width: 300px;
-        max-height: 400px;
+        .notifications {
+            width: 300px;
+            max-height: 400px;
 
-    }
+        }
 
-    .notifications h2 {
-        font-size: 14px;
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-        color: #999
-    }
+        .notifications h2 {
+            font-size: 14px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            color: #999
+        }
 
-    .notifications h2 span {
-        color: #f00
-    }
+        .notifications h2 span {
+            color: #f00
+        }
 
-    .notifications-item {
-        display: flex;
-        border-bottom: 1px solid #eee;
-        padding: 6px 9px;
-        margin-bottom: 0px;
-        cursor: pointer
-    }
+        .notifications-item {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            padding: 6px 9px;
+            margin-bottom: 0px;
+            cursor: pointer
+        }
 
-    .notifications-item:hover {
-        background-color: #eee
-    }
+        .notifications-item:hover {
+            background-color: #eee
+        }
 
-    .notifications-item img {
-        display: block;
-        width: 50px;
-        height: 50px;
-        margin-right: 9px;
-        border-radius: 50%;
-        margin-top: 2px
-    }
+        .notifications-item img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin-right: 9px;
+            border-radius: 50%;
+            margin-top: 2px
+        }
 
-    .notifications-item .text h4 {
-        color: #777;
-        font-size: 16px;
-        margin-top: 3px
-    }
+        .notifications-item .text h4 {
+            color: #777;
+            font-size: 16px;
+            margin-top: 3px
+        }
 
-    .notifications-item .text p {
-        color: #aaa;
-        font-size: 12px
-    }
+        .notifications-item .text p {
+            color: #aaa;
+            font-size: 12px
+        }
 
-    .button__badge {
-        background-color: #fa3e3e;
-        border-radius: 2px;
-        color: white;
-        padding: 0px 4px;
-        font-size: 10px;
-        position: absolute;
-        top: -7%;
-        right: 8%;
-    }
+        .button__badge {
+            background-color: #fa3e3e;
+            border-radius: 2px;
+            color: white;
+            padding: 0px 4px;
+            font-size: 10px;
+            position: absolute;
+            top: -7%;
+            right: 8%;
+        }
     </style>
 </head>
 
@@ -140,8 +138,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell"></i>
-                        <span
-                            class="button__badge">{{count($studentOrderMessages)+count($qcOrderMessages)+count($teacherOrderMessages)+count($teacherOrderReqMessages)}}</span>
+                        <span class="button__badge">{{count($studentOrderMessages)+count($qcOrderMessages)+count($teacherOrderMessages)+count($teacherOrderReqMessages)}}</span>
                     </a>
 
 
@@ -226,21 +223,11 @@
 
 
 
+
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                    <a href="{{ route('logout') }}" class="nav-link">
+                        <i class="fa fa-cog"></i> 
                     </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-cog"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <div class="dropdown-divider"></div>
-                        <a href="{{ route('logout') }}" class="dropdown-item">
-                            Logout
-                        </a>
-                    </div>
                 </li>
             </ul>
         </nav>

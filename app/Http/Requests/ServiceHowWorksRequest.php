@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
-
 class ServiceHowWorksRequest extends FormRequest
 {
     /**
@@ -13,7 +10,6 @@ class ServiceHowWorksRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,7 +24,6 @@ class ServiceHowWorksRequest extends FormRequest
             'service_id' => 'required'
         ];
     }
-
     public function messages(): array
     {
         return [
@@ -38,9 +33,8 @@ class ServiceHowWorksRequest extends FormRequest
             'service_id.required' => 'required'
         ];
     }
-
     protected function getRedirectUrl()
     {
-        return $this->redirector->getUrlGenerator()->previous() . '#specifications';
+        return $this->redirector->getUrlGenerator()->previous() . '#how_works';
     }
 }

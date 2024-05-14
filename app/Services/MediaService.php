@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Services;
-
 use App\Models\Media;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\Hash;
-
 class MediaService
 {
 
@@ -13,6 +11,22 @@ class MediaService
         $req_record['data'] = array();
         $query = Media::query();
 
+        $query->orderBy('id', 'desc');
+        $req_record['data'] = $query->get()->toArray();
+        $websites = $query->get()->toArray();
+        if (!empty($websites))
+            $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($websites);
+        else
+            $req_record['recordsFiltered'] = $req_record['recordsTotal'] = 0;
+        $del_msg = '"' . 'Are you want to delete?' . '"';
+        $i = 0;
+        
+        return $req_record;
+    }
+    public function subscription()
+    {
+        $req_record['data'] = array();
+        $query = Subscription::query();
         $query->orderBy('id', 'desc');
         $req_record['data'] = $query->get()->toArray();
         $websites = $query->get()->toArray();

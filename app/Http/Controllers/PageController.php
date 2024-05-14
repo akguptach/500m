@@ -108,7 +108,6 @@ class PageController extends Controller
 
     public function destroy(string $id)
     {
-
         $page = Pages::find($id);
         if (!empty($page)) {
             $page->delete();
@@ -117,7 +116,6 @@ class PageController extends Controller
             return redirect('/pages');
         }
     }
-
     public function showPage(string $seo_url_slug)
     {
         $page = Pages::where('seo_url_slug', $seo_url_slug)->first();

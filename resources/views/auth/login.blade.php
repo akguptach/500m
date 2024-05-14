@@ -28,7 +28,7 @@
 	<body class="hold-transition login-page" style="background-image: url('images/1.jpg');">
 		<div class="login-box">
   <div class="login-logo">
-    <a href="index.html"><b>Wecome to </b>admin login</a>
+    <a href=""><b>Wecome to </b>admin login</a>
   </div>
   <!-- /.login-logo -->
   <div class="card" style="border-radius: 1rem; ">

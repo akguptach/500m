@@ -6,8 +6,7 @@
             <table class="table table-bordered" id="specificationAddRemove">
                 <tr>
                     <th>Title/Description</th>
-                    <th>Action</th>
-                   
+                    <th>Action</th>                   
                 </tr>
                 @php $oldArray = []; @endphp
                 @if(old('addMoreSpecificationFields') && count(old('addMoreSpecificationFields')) > 0)
@@ -24,17 +23,15 @@
                 <tr>
                     <td>
                         <input type="text" name="addMoreSpecificationFields[{{$index}}][title]" placeholder="Enter Title" class="form-control" value="{{@$filed['title']}}" require />
-
                         @php $e = 'addMoreSpecificationFields.'.$index.'.title'; @endphp
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
-                        @enderror
-						
+                        @enderror						
 						<br>
 						<div style="display: flex;">
                             <input type="hidden" class="form-control" name="addMoreSpecificationFields[{{$index}}][icon_url]" id="WorkImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}" />
                             <button type="button" class="btn btn-primary text-center btnimageModal1" rel="{{@$filed['id']}}">
-                                Select Image
+                                Select Icon
                             </button>
                             <div class="col-sm-1">
                                 <img src="{{@$filed['icon']}}" alt="Image Description" class="WorkViewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
@@ -50,15 +47,11 @@
                         @error($e)
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
-						</br>
-						
-                    </td>
-                   
+						</br>						
+                    </td>                   
                     <td>
                          <button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>
-                    </td>
-
-                   
+                    </td>                  
                 </tr>
                 @endforeach
                 @else
@@ -66,10 +59,17 @@
                     <td>
                         <input type="text" name="addMoreSpecificationFields[0][title]" placeholder="Enter Title" class="form-control" require />
 						<br>
-						<input type="file" name="addMoreSpecificationFields[0][icon]" class="form-control" require />
-						
+						<div style="display: flex;">
+                            <input type="hidden" class="form-control"  id="WorkImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}" />
+                            <button type="button" class="btn btn-primary text-center btnimageModal1" rel="{{@$filed['id']}}">
+                                Select Icon
+                            </button>
+                            <div class="col-sm-1">
+                                <img src="{{@$filed['icon']}}" alt="Image Description" class="WorkViewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div>						
 						<br>
-						<textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
+						<textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control editor" require></textarea>
 						
                     </td>
              
@@ -127,12 +127,17 @@
         $("#specificationAddRemove").append(`<tr>
                     <td>
                         <input type="text" name="addMoreSpecificationFields[${i}][title]" placeholder="Enter Title" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="file" name="addMoreSpecificationFields[${i}][icon]" class="form-control" />
-                    </td>
-                    <td>
-                        <textarea name="addMoreSpecificationFields[${i}][description]" placeholder="Enter Description" class="form-control"></textarea>
+                    <br>
+                    <div style="display: flex;" >
+                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[${i}][icon_url]" value="{{@$filed['icon']}}" id="WorkImageIcon_${i}" />
+                            <button type="button" class="btn btn-primary text-center btnimageModal1" rel="${i}">
+                                Select Icon
+                            </button>
+                            <div class="col-sm-1">
+                                <img src="" alt="Image Description" class="WorkViewImage_${i}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div> <br>
+                        <textarea name="addMoreSpecificationFields[${i}][description]" placeholder="Enter Description" class="form-control editor"></textarea>
                     </td>
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>`);

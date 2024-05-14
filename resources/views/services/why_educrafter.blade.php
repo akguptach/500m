@@ -33,12 +33,12 @@
                     </td>
                     <td>
                         <div style="display: flex;">
-                            
-                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[{{$index}}][icon_url]" id="ImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}"/>
+
+                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[{{$index}}][icon_url]" id="ImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}" />
                             <button type="button" class="btn btn-primary text-center btnimageModal3" rel="{{@$filed['id']}}">
                                 Select icon
                             </button>
-                            <div class="col-sm-6" >
+                            <div class="col-sm-6">
                                 <img src="{{@$filed['icon']}}" alt="Image Description" class="viewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
                             </div>
                         </div>
@@ -63,7 +63,15 @@
                         <input type="text" name="addMoreSpecificationFields[0][title]" placeholder="Enter Title" class="form-control" require />
                     </td>
                     <td>
-                        <input type="file" name="addMoreSpecificationFields[0][icon]" class="form-control" require />
+                        <div style="display: flex;">
+                            <input type="hidden" class="form-control" id="ImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}" />
+                            <button type="button" class="btn btn-primary text-center btnimageModal3" rel="{{@$filed['id']}}">
+                                Select icon
+                            </button>
+                            <div class="col-sm-6">
+                                <img src="{{@$filed['icon']}}" alt="Image Description" class="viewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <textarea name="addMoreSpecificationFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
@@ -124,7 +132,15 @@
                         <input type="text" name="addMoreSpecificationFields[${i}][title]" placeholder="Enter Title" class="form-control" />
                     </td>
                     <td>
-                        <input type="file" name="addMoreSpecificationFields[${i}][icon]" class="form-control" />
+                        <div style="display: flex;">
+                            <input type="hidden" class="form-control" name="addMoreSpecificationFields[${i}][icon_url]" id="ImageIcon_${i}" />
+                            <button type="button" class="btn btn-primary text-center btnimageModal3" rel="${i}">
+                                Select icon
+                            </button>
+                            <div class="col-sm-6">
+                                <img src="" alt="Image Description" class="viewImage_${i}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <textarea name="addMoreSpecificationFields[${i}][description]" placeholder="Enter Description" class="form-control"></textarea>

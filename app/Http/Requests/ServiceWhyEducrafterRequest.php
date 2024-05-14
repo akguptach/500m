@@ -41,6 +41,6 @@ class ServiceWhyEducrafterRequest extends FormRequest
 
     protected function getRedirectUrl()
     {
-        return $this->redirector->getUrlGenerator()->previous() . '#specifications';
+        return $this->redirector->getUrlGenerator()->previous() . '#why_educrafter';
     }
 }

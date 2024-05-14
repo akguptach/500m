@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Models\Service;
 use App\Models\ServiceFaq;
 use App\Models\ServiceSeo;
@@ -57,10 +54,8 @@ class ServiceController extends Controller
         if ($service) {
             $type = $service->type;
         }
-
         return view('services/create', compact('service', 'websites', 'type','ImageIcon'));
     }
-
     public function storeBasic(BasicServiceRequest $request)
     {
 
@@ -152,10 +147,6 @@ class ServiceController extends Controller
         else
             return redirect('/services/edit/' . $serviceWhyEducrafterRequest->service_id . '#assist_buttons')->with('status', 'Saved Successfully');
     }
-
-
-
-
     public function destroy(string $id)
     {
 

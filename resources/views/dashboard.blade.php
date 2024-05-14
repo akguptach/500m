@@ -16,6 +16,12 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
+<?php
+use App\Models\Orders;
+use App\Models\ContactUs;
+$orders = Orders::get()->count();
+$enqury = ContactUs::get()->count();
+?>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -23,9 +29,9 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>200000</h3>
+                        <h3>{{$orders}}</h3>
 
-                        <p>Total Income</p>
+                        <p>Total Order</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -68,9 +74,9 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{$enqury}}</h3>
 
-                        <p>Total Complains </p>
+                        <p>Total Enquery </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>

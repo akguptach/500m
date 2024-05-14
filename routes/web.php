@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -139,6 +138,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/save', [MediaController::class, 'save'])->name('media.store');
     Route::get('/media-data', [MediaController::class, 'getData'])->name('media.data');
     Route::post('/media/delete', [MediaController::class, 'deleteMedia'])->name('deleteMedia');
+    Route::get('/subscription/list', [MediaController::class, 'subscription'])->name('subscription');
+    Route::post('/subscription/delete', [MediaController::class, 'subscriptionDelete'])->name('subscriptionDelete');
 
 
 });

@@ -6,7 +6,6 @@
             <table class="table table-bordered" id="ratingsAddRemove">
                 <tr>
                     <th>Stars</th>
-                    <th>Image</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Action</th>
@@ -32,20 +31,7 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </td>
-                    <td>
-                        <div style="display: flex;">
-                            <input type="file" name="addMoreRatingFields[{{$index}}][user_image]" class="form-control"
-                                require />
-                            <img src="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif"
-                                width="30px" />
-                            <input type="hidden" name="addMoreRatingFields[{{$index}}][user_image_url]"
-                                value="@if(isset($filed['user_image_url'])){{$filed['user_image_url']}}@else{{@$filed['user_image']}}@endif" />
-                        </div>
-                        @php $e = 'addMoreRatingFields.'.$index.'.user_image'; @endphp
-                        @error($e)
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </td>
+                    
                     <td>
                         <input type="text" name="addMoreRatingFields[{{$index}}][address]" placeholder="Enter address"
                             class="form-control" value="{{@$filed['address']}}" require />
@@ -74,9 +60,7 @@
                         <input type="text" name="addMoreRatingFields[0][star_rating]" placeholder="Enter rating"
                             class="form-control" require />
                     </td>
-                    <td>
-                        <input type="file" name="addMoreRatingFields[0][user_image]" class="form-control" require />
-                    </td>
+                    
                     <td>
                         <input type="text" name="addMoreRatingFields[0][address]" class="form-control" require />
                     </td>
@@ -115,9 +99,7 @@ $("#add_more_rating").click(function() {
                     <td>
                         <input type="text" name="addMoreRatingFields[${i}][star_rating]" placeholder="Enter rating" class="form-control" require />
                     </td>
-                    <td>
-                        <input type="file" name="addMoreRatingFields[${i}][user_image]" class="form-control" require />
-                    </td>
+                    
                     <td>
                         <input type="text" name="addMoreRatingFields[${i}][address]" class="form-control" require />
                     </td>

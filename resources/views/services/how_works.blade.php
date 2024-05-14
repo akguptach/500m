@@ -16,9 +16,7 @@
                 @elseif($service && $service->howWorks && count($service->howWorks) >0)
                 @php $oldArray = $service->howWorks; @endphp
                 @endif
-
                 @php $i = 0; @endphp
-
                 @if(count($oldArray)>0)
                 @php $i = count($oldArray)-1; @endphp
                 @foreach($oldArray as $index=>$filed)
@@ -53,7 +51,6 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </td>
-
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                 </tr>
                 @endforeach
@@ -63,7 +60,15 @@
                         <input type="text" name="addMoreFields[0][title]" placeholder="Enter Title" class="form-control" require />
                     </td>
                     <td>
-                        <input type="file" name="addMoreFields[0][icon]" class="form-control" require />
+                    <div style="display: flex;">
+                            <input type="hidden" class="form-control"  id="WorkImageIcon_{{@$filed['id']}}" value="{{@$filed['icon']}}"/>
+                            <button type="button" class="btn btn-primary text-center btnimageModal2" rel="{{@$filed['id']}}">
+                                Select icon
+                            </button>
+                            <div class="col-sm-1">
+                                <img src="{{@$filed['icon']}}" alt="Image Description" class="WorkViewImage_{{@$filed['id']}}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <textarea name="addMoreFields[0][description]" placeholder="Enter Description" class="form-control" require></textarea>
@@ -73,7 +78,6 @@
                     </td>
                 </tr>
                 @endif
-
             </table>
             @if(Request::route('id'))
             <div class="card-footer">
@@ -85,7 +89,6 @@
                 @endif
             </div>
             @endif
-
         </form>
     </div>
 </div>
@@ -122,7 +125,15 @@
                         <input type="text" name="addMoreFields[${i}][title]" placeholder="Enter Title" class="form-control" />
                     </td>
                     <td>
-                        <input type="file" name="addMoreFields[${i}][icon]" class="form-control" />
+                    <div style="display: flex;">
+                            <input type="hidden" class="form-control" name="addMoreFields[${i}][icon_url]" value="{{@$filed['icon']}}" id="WorkImageIcon_${i}"/>
+                            <button type="button" class="btn btn-primary text-center btnimageModal2" rel="${i}">
+                                Select icon
+                            </button>
+                            <div class="col-sm-1">
+                                <img src="" alt="Image Description" class="WorkViewImage_${i}" style="width: 40px; border-radius: 21px;">
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <textarea name="addMoreFields[${i}][description]" placeholder="Enter Description" class="form-control"></textarea>

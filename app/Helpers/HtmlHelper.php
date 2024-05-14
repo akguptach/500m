@@ -77,7 +77,6 @@ class HtmlHelper
         } else {
             $services = \App\Models\Service::get();
         }
-
         $id = isset($options['id']) ? $options['id'] : $name;
         $style = isset($options['style']) ? $options['style'] : '';
         $label = isset($options['label']) ? $options['label'] : 'Select Service';

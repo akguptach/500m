@@ -163,12 +163,10 @@ class ServicesService extends BaseService
     public function storeHowWorks($serviceHowWorksRequest)
     {
         $data = $serviceHowWorksRequest->all();
-
         $files = request()->file('addMoreFields');
 
         $oldValues = ServiceHowWork::where('service_id', $serviceHowWorksRequest->service_id)->get();
         foreach ($data['addMoreFields'] as $index => $fields) {
-
             $iconImg = isset($fields['icon_url']) ? $fields['icon_url'] : '';
             if (isset($files[$index]['icon'])) {
                 $icon = $files[$index]['icon'];
