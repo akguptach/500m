@@ -387,4 +387,13 @@ class OrderService
 
         return $result;
     }
+
+
+    public function deliverToStudent($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 'DELIVERED';
+        $order->save();
+        return ['message' => 'Order Delivered to student', 'status' => 'success'];
+    }
 }

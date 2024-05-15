@@ -2,7 +2,7 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
-            <h3 class="profile-username text-center">Order Details</h3>
+            <h3 class="profile-username text-center">Order Details11</h3>
             <p class="text-muted text-center">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}
             </p>
             <ul class="list-group list-group-unbordered mb-3">
@@ -29,6 +29,9 @@
                         style="overflow-wrap: anywhere;">{{$data['fileupload']}}</a>
                 </li>
 
+
+
+
                 @if(isset($data['teacherAssigned']) && $data['teacherAssigned']['status'] == 'COMPLETED')
                 <li class="list-group-item">
                     <b>Teacher's Attachment--</b> <a target="_blank" class="float-right"
@@ -44,6 +47,13 @@
                         style="overflow-wrap: anywhere;">{{$data['qcAssigned']['attachment']}}</a>
                 </li>
                 @endif
+
+                @if(isset($data['teacherAssigned']) && $data['teacherAssigned']['status'] == 'COMPLETED' && isset($data['qcAssigned']) && $data['qcAssigned']['status'] == 'COMPLETED')
+
+                <button type="submit" name="final_budget" value="Deliver to Student" class="btn btn-success float-right">
+
+                @endif
+
 
 
                 @if(isset($data['teacherAssigned']))

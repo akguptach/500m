@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Http\Requests\OrdersRequest;
 use App\Http\Requests\OrderMessageRequest;
@@ -100,5 +100,11 @@ class OrdersController extends Controller
     public function qcRequestSent($id)
     {
         return view('orders/qc_request_sent', $this->orderService->getQcRequestSent($id));
+    }
+
+    public function deliverToStudent(string $id)
+    {
+        $result = $this->orderService->deliverToStudent($id);
+        return redirect()->back()->with($result['status'], $result['message']);
     }
 }

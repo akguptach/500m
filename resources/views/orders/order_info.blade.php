@@ -10,11 +10,12 @@
                     <b>Website</b> <a class="float-right">{{$data['website']['website_name']}}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Subject</b> <a class="float-right">@if(isset($data['subject']) && isset($data['subject']['subject_name']) && $data['subject']['subject_name'])
-                    {{$data['subject']['subject_name']}}
-                    @else
-                    {{@$data['subject_name']}}
-                    @endif</a>
+                    <b>Subject</b> <a class="float-right">@if(isset($data['subject']) &&
+                        isset($data['subject']['subject_name']) && $data['subject']['subject_name'])
+                        {{$data['subject']['subject_name']}}
+                        @else
+                        {{@$data['subject_name']}}
+                        @endif</a>
                 </li>
                 <li class="list-group-item">
                     <b>No Of Words</b> <a class="float-right">{{$data['no_of_words']}}</a>
@@ -48,6 +49,8 @@
                         style="overflow-wrap: anywhere;">{{$data['qcAssigned']['attachment']}}</a>
                 </li>
                 @endif
+
+
 
 
                 @if(isset($data['teacherAssigned']))
@@ -96,6 +99,23 @@
             </form>
             @endif
 
+
+            
+            @if(isset($data['teacherAssigned']) && $data['teacherAssigned']['status'] == 'COMPLETED' &&
+            isset($data['qcAssigned']) && $data['qcAssigned']['status'] == 'COMPLETED')
+                
+                @if($data['status'] !='DELIVERED')
+                <form method="POST" action="{{route('deliver_to_student',['id'=>$data['id']])}}">
+                    @csrf
+                    <button type="submit" class="btn btn-success float-right">
+                        Deliver to Student
+                    </button>
+                </form>
+                @else
+                <h5 style="text-align: center;">Delivered to Student</h5>
+                @endif
+
+            @endif
 
         </div>
         <!-- /.card-body -->

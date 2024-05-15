@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/tutor-request-sent/{id}', [OrdersController::class, 'tutorRequestSent'])->name('tutor_request_sent');
     Route::get('/order/qc-request-sent/{id}', [OrdersController::class, 'qcRequestSent'])->name('qc_request_sent');
 
+    Route::post('/order/deliver/{id}', [OrdersController::class, 'deliverToStudent'])->name('deliver_to_student');
 
     Route::get('/services', [ServiceController::class, 'index'])->name('services_index');
 
