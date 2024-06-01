@@ -159,14 +159,20 @@ class OrderService
 
         DB::table('qc_order_messages')
             ->where('order_id', $id)
+            ->where('receivertable_type', User::class)
+            ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
         DB::table('student_order_messages')
             ->where('order_id', $id)
+            ->where('receivertable_type', User::class)
+            ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
         DB::table('teacher_order_messages')
             ->where('order_id', $id)
+            ->where('receivertable_type', User::class)
+            ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
         if ($result['orderAssign']) {
@@ -340,6 +346,8 @@ class OrderService
 
         DB::table('order_request_messages')
             ->where('request_id', $result['orderRequestSent']->id)
+            ->where('receivertable_type', User::class)
+            ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
         /*if ($result['orderAssign']) {
@@ -382,6 +390,8 @@ class OrderService
 
         DB::table('order_request_messages')
             ->where('request_id', $result['orderRequestSent']->id)
+            ->where('receivertable_type', User::class)
+            ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
 
