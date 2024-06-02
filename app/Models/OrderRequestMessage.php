@@ -18,6 +18,8 @@ class OrderRequestMessage extends Model
         'message',
         'attachment',
         'read',
+        'url',
+        'type'
     ];
 
 

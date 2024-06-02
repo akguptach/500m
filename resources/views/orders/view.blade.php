@@ -3,15 +3,10 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <h1 class="m-0">Orders</h1>
             </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Orders</li>
-                </ol>
-            </div><!-- /.col -->
+            
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
@@ -150,12 +145,7 @@ $(function() {
                         var val = $(this).val();
                         column.search(val).draw();
                     });
-                /*website_type.append('<option value="">All Websites</option>')
-                column.data().unique().sort().each(function(d, j) {
-                    if (d != '' && d != 0)
-                        website_type.append('<option value="' + d + '">' + d +
-                            '</option>')
-                });*/
+               
             });
         },
         "columns": [{
@@ -172,10 +162,7 @@ $(function() {
             {
                 data: "subject_name"
             },
-            //{ data: "type_name" },
-            //{ data: "level_name" },
-            //{ data: "grade_name" },
-            //{ data: "style" },
+            
             {
                 data: "no_of_words"
             },

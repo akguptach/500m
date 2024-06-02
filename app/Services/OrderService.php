@@ -16,6 +16,7 @@ use App\Models\OrderRequest;
 use App\Models\OrderRequestMessage;
 use App\Models\Website;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class OrderService.
@@ -113,7 +114,14 @@ class OrderService
 
         $edit_page = 'orders/' . $page['id'] . '/view';
         //$req_page_id = '"' . $page['id'] . '"';
-
+        
+		if($page['status']=='ENQUIRIES')
+		{ 
+	         $actionsLinks = '<div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ENQUIRIES
+        </button></div>';
+		}else{
         $tutorCompleted = OrderAssign::where('order_id', $page['id'])
             ->where('status', 'COMPLETED')
             ->count();
@@ -121,8 +129,8 @@ class OrderService
         $tutorOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'TUTOR')->orderBy('id', 'desc')->first();
 
 
-        $qcOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'QC')->first();
-
+        $qcOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'QC')->orderBy('id', 'desc')->first();
+ 
         $actionsLinks = '<div class="dropdown">
         <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Actions
@@ -144,6 +152,7 @@ class OrderService
             }
         }
         $actionsLinks .= '</div></div>';
+		}
         return $actionsLinks;
     }
 
@@ -235,6 +244,10 @@ class OrderService
                 $attachment = env('APP_URL', '/') . '/images/uploads/attachment/' . $attachmentName;
             }
             if ($request->type == 'STUDENT') {
+
+                $receiver = Student::find($request->receiver_id);
+                $toEmail = $receiver->email;
+                $url = env('EDUCRAFTER_URL','https://mywriters.in').'/vieworder/'.$request->order_id;
                 StudentOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -242,10 +255,17 @@ class OrderService
                     'receivertable_id' => $request->receiver_id,
                     'receivertable_type' => Student::class,
                     'message' => $request->message,
-                    'attachment' => $attachment
+                    'attachment' => $attachment,
+                    'url'=>$url
                 ]);
+                
             } else if ($request->type == 'TUTOR') {
 
+                $receiver = Tutor::find($request->receiver_id);
+                $toEmail = $receiver->tutor_email;
+                $orderAssign = OrderAssign::where('order_id',$request->order_id)
+                ->where('tutor_id',$request->receiver_id)->first();
+                $url = env('TUTOR_URL','https://mywriters.in').'/open/order/details/'.$orderAssign->id;
                 TeacherOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -253,9 +273,17 @@ class OrderService
                     'receivertable_id' => $request->receiver_id,
                     'receivertable_type' => Tutor::class,
                     'message' => $request->message,
-                    'attachment' => $attachment
+                    'attachment' => $attachment,
+                    'url'=>$url
                 ]);
+
             } else if ($request->type == 'QC') {
+
+                $receiver = Tutor::find($request->receiver_id);
+                $toEmail = $receiver->tutor_email;
+                $orderAssign = QcAssign::where('order_id',$request->order_id)
+                ->where('qc_id',$request->receiver_id)->first();
+                $url = env('TUTOR_URL','https://mywriters.in').'/qc/open/order/details/'.$orderAssign->id;
                 QcOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -263,9 +291,31 @@ class OrderService
                     'receivertable_id' => $request->receiver_id,
                     'receivertable_type' => Tutor::class,
                     'message' => $request->message,
-                    'attachment' => $attachment
+                    'attachment' => $attachment,
+                    'url'=>$url
                 ]);
+
             }
+
+
+
+            
+            
+            $data = ['url'=>$url,'messageContent'=>$request->message];
+            try {
+                Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $toEmail) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Message Received");
+                    $message->to(env('APP_TEST_EMAIL', $toEmail));
+                });
+
+            } catch (\Exception $e) {
+                //echo $e; die;
+            }
+
+
+
+
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
             return ['message' => $e->getMessage(), 'status' => 'error'];
@@ -293,6 +343,22 @@ class OrderService
                 'message' => $request->message,
                 'attachment' => $attachment
             ]);
+
+        $tutor = Tutor::find($request->receiver_id);
+        $url = env('TUTOR_URL','https://mywriters.in').'/request/details/'.$request->request_id;
+        $data = ['url'=>$url,'messageContent'=>$request->message];
+        try {
+            Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->subject("Message received");
+                $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+            });
+
+        } catch (\Exception $e) {
+            echo $e; die;
+        }
+
+
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
             return ['message' => $e->getMessage(), 'status' => 'error'];
@@ -305,21 +371,52 @@ class OrderService
         $orderRequest = OrderRequest::find($request->id);
         $budget = $request->final_budget_amount;
         if ($orderRequest->type == 'TUTOR') {
-            OrderAssign::Create([
+            $assigned = OrderAssign::Create([
                 'order_id' => $orderRequest->order_id,
                 'student_id' => $orderRequest->student_id,
                 'tutor_id' => $orderRequest->tutor_id,
                 'tutor_price' => $budget,
                 'message' => ''
             ]);
+            $url = env('TUTOR_URL','https://mywriters.in').'/open/order/details/'.$assigned->id;
+            $tutor = Tutor::find($orderRequest->tutor_id);
         } else if ($orderRequest->type == 'QC') {
-            QcAssign::Create([
+            $assigned = QcAssign::Create([
                 'order_id' => $orderRequest->order_id,
                 'student_id' => $orderRequest->student_id,
                 'qc_id' => $orderRequest->tutor_id,
                 'qc_price' => $budget,
             ]);
+            $url = env('TUTOR_URL','https://mywriters.in').'/qc/open/order/details/'.$assigned->id;
+            $tutor = Tutor::find($orderRequest->tutor_id);
         }
+
+       // print_r($tutor['tutor_email ']); die;
+        OrderRequestMessage::Create([
+            'request_id' => $orderRequest->id,
+            'sendertable_id' => Auth::user()->id,
+            'sendertable_type' => \App\Models\User::class,
+            'receivertable_id' => $tutor->id,
+            'receivertable_type' => Tutor::class,
+            'message' => 'You are assigned on order',
+            'url'=>$url,
+            'type'=>'notification'
+        ]);
+
+    
+    $data = ['url'=>$url,'messageContent'=>'You are assigned on order'];
+    try {
+        Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
+            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $message->subject("Order assigned");
+            $message->to(env('APP_TEST_EMAIL', $tutor['tutor_email ']));
+        });
+
+    } catch (\Exception $e) {
+        echo $e; die;
+    }
+
+
         return ['message' => 'Order assigned', 'status' => 'success'];
     }
 
@@ -404,6 +501,36 @@ class OrderService
         $order = Orders::find($id);
         $order->status = 'DELIVERED';
         $order->save();
+
+
+        $receiver = Student::find($order->student_id);
+        $toEmail = $receiver->email;
+        $url = env('EDUCRAFTER_URL','https://mywriters.in').'/vieworder/'.$id;
+        StudentOrderMessage::Create([
+            'order_id' => $id,
+            'sendertable_id' => Auth::user()->id,
+            'sendertable_type' => User::class,
+            'receivertable_id' => $receiver->id,
+            'receivertable_type' => Student::class,
+            'message' => 'Your order has been delivered',
+            'url'=>$url,
+            'type'=>'notification'
+        ]);
+
+    
+        $data = ['url'=>$url,'messageContent'=>'Your order has been delivered'];
+        try {
+            Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $toEmail) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->subject("Order Delivered");
+                $message->to(env('APP_TEST_EMAIL', $toEmail));
+            });
+
+        } catch (\Exception $e) {
+            echo $e; die;
+        }
+
+    
         return ['message' => 'Order Delivered to student', 'status' => 'success'];
     }
 }

@@ -20,6 +20,7 @@ use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/grade', GradesController::class);
     Route::resource('/blog', BlogController::class);
     Route::resource('/referencing', ReferencingStyleController::class);
+	
+	
+	Route::resource('/coupon', CouponController::class);
 
     /*Route::get('/pages', [PageController::class, 'index'])->name('pages');
     Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');

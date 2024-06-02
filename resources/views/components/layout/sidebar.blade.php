@@ -3,7 +3,7 @@
        
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+               
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ ( request()->is('dashboard') ) ? 'active' : '' }}">
@@ -13,6 +13,111 @@
                         </p>
                     </a>
                 </li>
+				
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-tachometer-alt"></i>
+						<p>
+						Pricing Calculator
+						<i class="right fas fa-angle-left"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="display: none;">
+						<li class="nav-item">
+							
+							<a href="{{ route('subject.index') }}"
+                        class="nav-link {{ (request()->is('subject') || request()->is('subject/create') || request()->is('subject/*/edit') )? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Subject
+                        </p>
+                    </a>
+               
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('tasktype.index') }}"
+								class="nav-link {{ ( request()->is('tasktype') || request()->is('tasktype/create') || request()->is('tasktype/*/edit')  ) ? 'active' : '' }}">
+								<i class="nav-icon fas fa-columns"></i>
+								<p>
+									Task Type
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('level_study.index') }}"
+							class="nav-link {{ (request()->is('level_study') || request()->is('level_study/create') || request()->is('level_study/*/edit') ) ? 'active' : '' }}">
+							<i class="nav-icon fas fa-circle"></i>
+							<p>Level of Study {{ request()->is('/level_study') ? 'active' : '' }}</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('grade.index') }}"
+							class="nav-link {{ (request()->is('grade') || request()->is('grade/create') || request()->is('grade/*/edit') ) ? 'active' : '' }}">
+							<i class="nav-icon fas fa-file"></i>
+							<p>
+								Grades {{ request()->is('/grade') ? 'active' : '' }}
+							</p>
+							</a>
+						</li>
+						<li class="nav-item">
+						      <a href="{{ route('referencing.index') }}"
+							class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
+							<i class="nav-icon fas fa-bolt"></i>
+							<p>Referencing Style {{ request()->is('/referencing') ? 'active' : '' }}</p>
+							</a>
+						</li>
+                    </a>
+					</ul>
+				</li>
+				
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-tachometer-alt"></i>
+						<p>
+						Content Management
+						<i class="right fas fa-angle-left"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="display: none;">
+					     <li class="nav-item">
+							<a href="{{route('media.save')}}"
+								class="nav-link ">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									Media
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('pages') }}"
+								class="nav-link {{ (request()->is('pages')  || request()->is('pages/*/edit') ) ? 'active' : '' }}">
+								<i class="nav-icon fas fa-book"></i>
+								<p>
+									Pages {{ request()->is('/grade') ? 'active' : '' }}
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('services_index') }}"
+								class="nav-link {{ (request()->is('services_index')  || request()->is('services_index/*/edit') ) ? 'active' : '' }}">
+								<i class="nav-icon fas fa-pen-nib"></i>
+								<p>
+									Services {{ request()->is('/services_index') ? 'active' : '' }}
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+								<a href="{{ route('faq.index') }}"
+									class="nav-link {{ (request()->is('faq') || request()->is('faq/create') || request()->is('faq/*/edit') ) ? 'active' : '' }}">
+									<i class="nav-icon fas fa-question"></i>
+									<p>
+										FAQ {{ request()->is('/faq') ? 'active' : '' }}
+									</p>
+								</a>
+						</li>
+					</ul>
+				</li>
+
                 <li class="nav-item">
                     <a href="{{ route('role.index') }}"
                         class="nav-link {{ ( request()->is('role')  || request()->is('role/create') || request()->is('role/*/edit') ) ? 'active' : '' }}">
@@ -22,24 +127,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('subject.index') }}"
-                        class="nav-link {{ (request()->is('subject') || request()->is('subject/create') || request()->is('subject/*/edit') )? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Subject
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('tasktype.index') }}"
-                        class="nav-link {{ ( request()->is('tasktype') || request()->is('tasktype/create') || request()->is('tasktype/*/edit')  ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-columns"></i>
-                        <p>
-                            Task Type
-                        </p>
-                    </a>
-                </li>
+                
                 <!--<li class="nav-item">
                 <a href="{{ route('studylabel.index') }}" class="nav-link {{ (request()->is('studylabel') || request()->is('studylabel/create') || request()->is('studylabel/*/edit')  ) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-file"></i>
@@ -58,18 +146,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('media.save')}}"
-                        class="nav-link ">
-                        <i class="nav-icon fa-solid fa-image"></i>
+                    <a href="{{ route('contact.form.store') }}"
+                        class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
-                            Media
+                        Enquery Form List {{ request()->is('/referencing') ? 'active' : '' }}
                         </p>
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a href="{{route('subscription')}}"
                         class="nav-link ">
-                        <i class="nav-icon fa-solid fa-image"></i>
+                        <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>
                         Subscription
                         </p>
@@ -115,15 +204,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('faq.index') }}"
-                        class="nav-link {{ (request()->is('faq') || request()->is('faq/create') || request()->is('faq/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-question"></i>
-                        <p>
-                            FAQ {{ request()->is('/faq') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
+                
                 <li class="nav-item">
                     <a href="{{ route('orders') }}"
                         class="nav-link {{ (request()->is('orders') || request()->is('orders/create') || request()->is('orders/*/edit') ) ? 'active' : '' }}"><i
@@ -131,42 +212,7 @@
                         <p>Orders {{ request()->is('/orders') ? 'active' : '' }}</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('level_study.index') }}"
-                        class="nav-link {{ (request()->is('level_study') || request()->is('level_study/create') || request()->is('level_study/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-circle"></i>
-                        <p>
-                            Level of Study {{ request()->is('/level_study') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('grade.index') }}"
-                        class="nav-link {{ (request()->is('grade') || request()->is('grade/create') || request()->is('grade/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>
-                            Grades {{ request()->is('/grade') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('pages') }}"
-                        class="nav-link {{ (request()->is('pages')  || request()->is('pages/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Pages {{ request()->is('/grade') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('services_index') }}"
-                        class="nav-link {{ (request()->is('services_index')  || request()->is('services_index/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-pen-nib"></i>
-                        <p>
-                            Services {{ request()->is('/services_index') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
+               
                 <li class="nav-item">
                     <a href="{{ route('blog.index') }}"
                         class="nav-link {{ (request()->is('blog') || request()->is('blog/create') || request()->is('blog/*/edit') ) ? 'active' : '' }}">
@@ -176,24 +222,64 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('referencing.index') }}"
-                        class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-bolt"></i>
-                        <p>
-                            Referencing Style {{ request()->is('/referencing') ? 'active' : '' }}
-                        </p>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Students</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('contact.form.store') }}"
-                        class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                        Enquery Form List {{ request()->is('/referencing') ? 'active' : '' }}
-                        </p>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Payment History</p>
                     </a>
                 </li>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Notification</p>
+                    </a>
+                </li>
+				<li class="nav-item">
+                    <a href="{{ route('coupon.index') }}"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Coupon code</p>
+                    </a>
+                </li>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Expert Profile</p>
+                    </a>
+                </li>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Expert Profile</p>
+                    </a>
+                </li>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Student Market Place</p>
+                    </a>
+                </li>
+				<li class="nav-item">
+                    <a href="#"
+                        class="nav-link ">
+                        <i class=" nav-icon fa-solid fa-bell"></i>
+                        <p>Affiliate Users</p>
+                    </a>
+                </li>
+				
+                
             </ul>
         </nav>
 
