@@ -145,7 +145,7 @@
 
 
 
-                    <div class="notifications dropdown-menu" id="box">
+                    <div class="notifications dropdown-menu" id="box" style="overflow: scroll;">
                         <h2>Notifications -
                             <span>{{count($studentOrderMessages)+count($qcOrderMessages)+count($teacherOrderMessages)+count($teacherOrderReqMessages)}}</span>
                         </h2>
