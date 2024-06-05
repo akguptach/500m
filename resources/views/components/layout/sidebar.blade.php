@@ -244,7 +244,7 @@
                     </a>
                 </li>
 				<li class="nav-item">
-                    <a href="{{ route('coupon.index') }}"
+                    <a href="{{ route('coupons.coupon.index') }}"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Coupon code</p>

@@ -20,7 +20,7 @@ use App\Http\Controllers\TutorViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CouponsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +147,24 @@ Route::middleware('auth')->group(function () {
     Route::post('/subscription/delete', [MediaController::class, 'subscriptionDelete'])->name('subscriptionDelete');
 
 
+    Route::group([
+        'prefix' => 'coupons',
+    ], function () {
+        Route::get('/', [CouponsController::class, 'index'])
+             ->name('coupons.coupon.index');
+        Route::get('/create', [CouponsController::class, 'create'])
+             ->name('coupons.coupon.create');
+        Route::get('/show/{coupon}',[CouponsController::class, 'show'])
+             ->name('coupons.coupon.show')->where('id', '[0-9]+');
+        Route::get('/{coupon}/edit',[CouponsController::class, 'edit'])
+             ->name('coupons.coupon.edit')->where('id', '[0-9]+');
+        Route::post('/', [CouponsController::class, 'store'])
+             ->name('coupons.coupon.store');
+        Route::any('coupon/{coupon}', [CouponsController::class, 'update'])
+             ->name('coupons.coupon.update')->where('id', '[0-9]+');
+        Route::delete('/coupon/{coupon}',[CouponsController::class, 'destroy'])
+             ->name('coupons.coupon.destroy')->where('id', '[0-9]+');
+            });
 });
 
 require __DIR__ . '/auth.php';
