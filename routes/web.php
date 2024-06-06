@@ -21,6 +21,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CouponsController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\PaymentController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/referencing', ReferencingStyleController::class);
 	
 	
-	Route::resource('/coupon', CouponController::class);
+     
 
     /*Route::get('/pages', [PageController::class, 'index'])->name('pages');
     Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
@@ -85,7 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{categories}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{categories}', [CategoriesController::class, 'update'])->name('categories.update');
 
-    Route::get('/orders', [OrdersController::class, 'index'])->name('orders');
+    Route::get('/orders/{student_id?}', [OrdersController::class, 'index'])->name('orders');
     Route::get('/orders/{orders}/view', [OrdersController::class, 'view'])->name('orders.view');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -147,6 +152,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/subscription/delete', [MediaController::class, 'subscriptionDelete'])->name('subscriptionDelete');
 
 
+    Route::get('/payments/{status?}', [PaymentController::class, 'index'])->name('payments');
+
+
     Route::group([
         'prefix' => 'coupons',
     ], function () {
@@ -165,6 +173,29 @@ Route::middleware('auth')->group(function () {
         Route::delete('/coupon/{coupon}',[CouponsController::class, 'destroy'])
              ->name('coupons.coupon.destroy')->where('id', '[0-9]+');
             });
+
+            Route::group([
+               'prefix' => 'students',
+           ], function () {
+               Route::get('/', [StudentsController::class, 'index'])
+                    ->name('students.student.index');
+               Route::get('/create', [StudentsController::class, 'create'])
+                    ->name('students.student.create');
+               Route::get('/show/{student}',[StudentsController::class, 'show'])
+                    ->name('students.student.show')->where('id', '[0-9]+');
+               Route::get('/{student}/edit',[StudentsController::class, 'edit'])
+                    ->name('students.student.edit')->where('id', '[0-9]+');
+               Route::post('/', [StudentsController::class, 'store'])
+                    ->name('students.student.store');
+               Route::any('student/{student}', [StudentsController::class, 'update'])
+                    ->name('students.student.update')->where('id', '[0-9]+');
+
+               Route::delete('/student/{student}',[StudentsController::class, 'destroy'])
+                    ->name('students.student.destroy')->where('id', '[0-9]+');
+                   });
+
+                   Route::patch('student/status/{student}', [StudentsController::class, 'change'])
+                    ->name('students.student.change')->where('id', '[0-9]+');
 });
 
 require __DIR__ . '/auth.php';

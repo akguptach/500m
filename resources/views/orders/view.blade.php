@@ -181,7 +181,7 @@ $(function() {
         ],
         "processing": true,
         "serverSide": true,
-        "ajax": "<?php echo URL::to('orders');; ?>"
+        "ajax": "<?php if($studentId) { echo URL::to('orders').'/'.$studentId;} else {echo URL::to('orders');}?>"
     });
     document.querySelector('div.toolbar').innerHTML =
         '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';

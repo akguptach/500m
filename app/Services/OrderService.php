@@ -23,8 +23,9 @@ use Illuminate\Support\Facades\Mail;
  */
 class OrderService
 {
-    public function getOrders()
+    public function getOrders($studentId='')
     {
+        
         $req_record['data'] = array();
         $query = Orders::query();
         if (!empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
@@ -56,6 +57,10 @@ class OrderService
                 $query->where('orders.website_id', $website->id);
             }
 
+            if($studentId){
+                $query->where('orders.student_id', $studentId);
+            }
+
             if (!empty($_GET['search']['value'])) {
                 $query->where(function ($q) {
                     $q->orWhere('subjects.subject_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
@@ -75,7 +80,7 @@ class OrderService
             $pages = $arrD;
         } else {
 
-            $arrD = DB::table('orders')
+            $query = DB::table('orders')
                 ->join('student', 'student.id', '=', 'orders.student_id')
                 ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
                 ->join('websites', 'websites.id', '=', 'orders.website_id')
@@ -84,8 +89,13 @@ class OrderService
                 ->join('grades', 'grades.id', '=', 'orders.grade_id')
                 ->join('referencing_style', 'referencing_style.id', '=', 'orders.referencing_style_id')
                 ->select('orders.*', 'subjects.subject_name', 'websites.website_type', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
-                ->orderBy('id', 'desc')
-                ->get();
+                ->orderBy('id', 'desc');
+
+                if($studentId){
+                    $query->where('orders.student_id', $studentId);
+                }
+
+                $arrD = $query->get();
 
             $req_record['data'] = json_decode(json_encode($arrD), true);
 

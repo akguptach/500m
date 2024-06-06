@@ -19,12 +19,15 @@ class OrdersController extends Controller
     {
     }
 
-    public function index()
+    public function index($studentId = '')
     {
+
+        
         if (isset($_GET) && !empty($_GET['columns'])) {
-            return response($this->orderService->getOrders());
+            //echo "===="; echo $studentId; die;
+            return response($this->orderService->getOrders($studentId));
         } else {
-            return view('orders/view');
+            return view('orders/view',compact('studentId'));
         }
     }
 

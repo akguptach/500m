@@ -13,7 +13,7 @@
     <div class="form-group">
         <label for="start_date" class="col-form-label text-lg-end col-lg-2 col-xl-3">Start Date</label>
         <div class="col-lg-10 col-xl-9">
-            <input class="datepicker form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date"
+            <input readonly class="datepicker form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date"
                 type="text" id="start_date" value="{{ old('start_date', optional($coupon)->start_date) }}"
                 placeholder="Enter start date here...">
             {!! $errors->first('start_date', '<div class="invalid-feedback">:message</div>') !!}
@@ -23,7 +23,7 @@
     <div class="form-group">
         <label for="end_date" class="col-form-label text-lg-end col-lg-2 col-xl-3">End Date</label>
         <div class="col-lg-10 col-xl-9">
-            <input class="datepicker form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" type="text"
+            <input readonly class="enddatepicker form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" type="text"
                 id="end_date" value="{{ old('end_date', optional($coupon)->end_date) }}"
                 placeholder="Enter end date here...">
             {!! $errors->first('end_date', '<div class="invalid-feedback">:message</div>') !!}
@@ -126,7 +126,48 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 
 <script> 
+/*var date = new Date();
+var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 $('.datepicker').datepicker({
     format: 'yyyy-mm-dd',
+    startDate: today
+});
+
+
+var date = new Date();
+date.setDate(date.getDate() + 1)
+var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+$('.enddatepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    startDate: today
+});*/
+
+$(document).ready(function(){
+
+    
+
+    var date = new Date();
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  $("#start_date").datepicker({
+      todayBtn:  1,
+      autoclose: true,
+      startDate: today,
+      format: 'yyyy-mm-dd',
+  }).on('changeDate', function (selected) {
+      var minDate = new Date(selected.date.valueOf());
+      $('#end_date').datepicker('setStartDate', minDate);
+  });
+  $("#end_date").datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+})
+      .on('changeDate', function (selected) {
+          var minDate = new Date(selected.date.valueOf());
+          $('#start_date').datepicker('setEndDate', minDate);
+      });
+
+      $('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
+
+    $('#start_date').datepicker('setEndDate', new Date("{{ old('end_date', optional($coupon)->end_date) }}"));
 });
 </script>

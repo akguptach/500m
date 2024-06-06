@@ -223,14 +223,14 @@
                     </a>
                 </li>
 				<li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('students.student.index') }}"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Students</p>
                     </a>
                 </li>
 				<li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('payments') }}"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Payment History</p>
@@ -250,20 +250,42 @@
                         <p>Coupon code</p>
                     </a>
                 </li>
-				<li class="nav-item">
-                    <a href="#"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Expert Profile</p>
-                    </a>
-                </li>
-				<li class="nav-item">
-                    <a href="#"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Expert Profile</p>
-                    </a>
-                </li>
+				
+				
+                <li class="nav-item">
+					<a href="#" class="nav-link">
+                    <i class=" nav-icon fa-solid fa-bell"></i>
+						<p>
+						Expert Profile
+						<i class="right fas fa-angle-left"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="display: none;">
+					     <li class="nav-item">
+							<a href="#"
+								class="nav-link ">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									Add Expert
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#"
+								class="nav-link">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									View Expert
+								</p>
+							</a>
+						</li>
+						
+						
+					</ul>
+				</li>
+
+
+
 				<li class="nav-item">
                     <a href="#"
                         class="nav-link ">
