@@ -20,21 +20,8 @@ div:has(> ul.pagination) {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Payment History</h3>
+                                <h3 class="card-title">Notifications</h3>
                                 <div class="float-right" style="display: flex;">
-
-                                    <?php HtmlHelper::WebsiteTypeDropdown('website_type', $website, false, 'width:150px;', 'website_type') ?>
-
-                                    &nbsp;&nbsp;
-
-                                    <select name="payment_filter" id="payment_filter" class="form-control"
-                                        style="width:150px;">
-                                        <option value="">All</option>
-                                        <option value="Success" @if($paymentStatus=='Success' ) selected="selected" @endif>
-                                            Success</option>
-                                        <option value="Failed" @if($paymentStatus=='Failed' ) selected="selected" @endif>Fail
-                                        </option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -47,36 +34,53 @@ div:has(> ul.pagination) {
                                     <thead>
                                         <tr>
                                             <th>Order id</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Website</th>
-                                            <th>Transaction Id</th>
-                                            <th>Payment status</th>
+                                            <th>Sender</th>
+                                            <th>Message</th>
+                                            <th>Receiver</th>
+                                            <th>Action</th>
+                                            
                                         </tr>
                                     </thead>
+                                   
                                     <tbody>
-                                        @foreach($payments as $payment)
+                                        @foreach($data as $item)
                                         <tr>
-                                            <td>MAS{{$payment->order->id}}</td>
-                                            <td>{{$payment->order->student->first_name}}</td>
-                                            <td>{{$payment->order->student->email}}</td>
-                                            <td>{{$payment->order->student->phone_number}}</td>
-                                            <td>{{$payment->order->website->website_type}}</td>
+                                            <td>MAS{{$item->order_id}}</td>
+                                            <td>
+                                            @if ($item['sendertable_type']== 'App\Models\Tutor')
+                                            {{$item['sendertable']['tutor_first_name']}} ({{$item->message_type}})
+                                            @elseif ($item['sendertable_type']== 'App\Models\Student')
+                                            {{$item['sendertable']['first_name']}} ({{$item->message_type}})
+                                            @elseif ($item['sendertable_type']== 'App\Models\User')
+                                            {{$item['sendertable']['name']}}
+                                            @endif
+                                            
+                                            </td>
                                             <td width="250px"><span
-                                                    style="overflow-wrap: anywhere;">{{$payment->transaction_id}}</span>
+                                                    style="overflow-wrap: anywhere;">{{$item->message}}</span>
+                                                    <span style="overflow-wrap: anywhere;"><a href="{{$item['attachment']}}" target="_blank" >{{$item['attachment']}}</a></span>
                                             </td>
                                             <td>
-                                                {{$payment->payment_status}}
+                                            @if ($item['receivertable_type']== 'App\Models\Tutor')
+                                            {{$item['receivertable']['tutor_first_name']}} ({{$item->message_type}})
+                                            @elseif ($item['receivertable_type']== 'App\Models\Student')
+                                            {{$item['receivertable']['first_name']}} ({{$item->message_type}})
+                                            @elseif ($item['receivertable_type']== 'App\Models\User')
+                                            {{$item['receivertable']['name']}}
+                                            @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{route('orders.view',$item->order_id)}}">View</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
+                                    
                                 </table>
                             </div>
                             <div class="clearfix mt-2 pagination-div">
                                 <div style="width: 100%;">
-                                    {!! $payments->appends(request()->input())->links('pagination::bootstrap-5') !!}
+                                    {!! $data->appends(request()->input())->links('pagination::bootstrap-5') !!}
                                 </div>
                             </div>
                         </div>
@@ -99,39 +103,4 @@ div:has(> ul.pagination) {
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-<script>
-function generateParamsurl(params) {
-    let paramString = '';
-    Object.keys(params).forEach(function(key, index) {
-        if (params[key] !== undefined && params[key] !== 'undefined') {
-            paramString += (index > 0) ? '&' + key + '=' + params[key] : '?' + key + '=' + params[key]
-        }
-    })
-    return paramString;
-}
-
-$(document).ready(function() {
-
-    const searchParams = new URLSearchParams(window.location.search);
-    var paramsList = {};
-    for (const param of searchParams) {
-        paramsList[param[0]] = param[1];
-    }
-    $('#payment_filter').change(function() {
-        if (paramsList['page'])
-        paramsList['page'] = 1;
-        paramsList['payment_status'] = $(this).val();
-        window.location.href = "{{route('payments')}}/"+generateParamsurl(paramsList);
-    })
-    $('#website_type').change(function() {
-        if (paramsList['page'])
-        paramsList['page'] = 1;
-        paramsList['website'] = $(this).val();
-        window.location.href = "{{route('payments')}}/"+generateParamsurl(paramsList);
-    })
-
-
-})
-</script>
-
 @endsection

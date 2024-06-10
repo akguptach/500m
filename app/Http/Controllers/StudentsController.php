@@ -16,10 +16,19 @@ class StudentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::orderBy('first_name','asc')->paginate(15);
-        return view('student/view', compact('students'));
+        $website = '';
+        if ($request->has('website')) {
+            $website = $request->input('website');
+        }
+
+        $query = Student::orderBy('first_name','asc');
+        if($website){
+            $query->where('website_id', $website);
+        }
+        $students = $query->paginate(15);
+        return view('student/view', compact('students','website'));
         
     }
 

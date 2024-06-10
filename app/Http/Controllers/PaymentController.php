@@ -22,14 +22,38 @@ class PaymentController extends Controller
         
     }
 
-    public function index($status='')
+    public function index(Request $request)
     {
-        if($status){
-            $payments = Payment::where('payment_status', $status)->orderBy('id','desc')->paginate(15);
+
+        $website = '';
+        $paymentStatus = '';
+        if ($request->has('payment_status')) {
+            $paymentStatus = $request->input('payment_status');
+        }
+        if ($request->has('website')) {
+            $website = $request->input('website');
+        }
+
+
+        $query = Payment::orderBy('id','desc');
+        if($paymentStatus){
+            $query->where('payment_status', $paymentStatus);
+        }
+        if($website){
+            $query->whereHas('order', function($q) use ($website){
+                $q->where('website_id', $website);
+            });
+        }
+
+
+        /*if($paymentStatus){
+            $payments = Payment::where('payment_status', $paymentStatus)->orderBy('id','desc')->paginate(15);
         }else{
             $payments = Payment::orderBy('id','desc')->paginate(15);
-        }
-        return view('payment/view',compact('payments','status'));
+        }*/
+        $status = '';
+        $payments = $query->paginate(15);
+        return view('payment/view',compact('payments','paymentStatus','website'));
         
     }
 

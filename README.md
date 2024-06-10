@@ -64,3 +64,14 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+CREATE VIEW view_order_notifications AS
+(
+select `sendertable_id`, `sendertable_type`,`message`, `receivertable_id`, `receivertable_type`, `order_id`, `attachment`, `created_at`, `updated_at`, `read`, `url`, "QC" as message_type from qc_order_messages
+UNION
+select `sendertable_id`, `sendertable_type`,`message`, `receivertable_id`, `receivertable_type`, `order_id`, `attachment`, `created_at`, `updated_at`, `read`, `url`, "student" as message_type from student_order_messages
+union
+select `sendertable_id`, `sendertable_type`,`message`, `receivertable_id`, `receivertable_type`, `order_id`, `attachment`, `created_at`, `updated_at`, `read`, `url`, "teacher" as message_type from teacher_order_messages
+);
+

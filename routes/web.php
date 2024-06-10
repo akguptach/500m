@@ -23,6 +23,9 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AddExpertController;
+use App\Http\Controllers\ViewExpertController;
+use App\Http\Controllers\ExpertsController;
 
 
 
@@ -152,7 +155,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/subscription/delete', [MediaController::class, 'subscriptionDelete'])->name('subscriptionDelete');
 
 
-    Route::get('/payments/{status?}', [PaymentController::class, 'index'])->name('payments');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
 
 
     Route::group([
@@ -196,6 +199,34 @@ Route::middleware('auth')->group(function () {
 
                    Route::patch('student/status/{student}', [StudentsController::class, 'change'])
                     ->name('students.student.change')->where('id', '[0-9]+');
+
+
+
+
+                    Route::post('/addexpert', [AddExpertController::class, 'index'])->name('addexpert');
+                    Route::get('/viewexpert', [ViewExpertController::class, 'index'])->name('viewexpert');
+                    
+                    Route::group([
+                         'prefix' => 'experts',
+                     ], function () {
+                         Route::get('/', [ExpertsController::class, 'index'])
+                              ->name('experts.expert.index');
+                         Route::get('/create', [ExpertsController::class, 'create'])
+                              ->name('experts.expert.create');
+                         Route::get('/show/{expert}',[ExpertsController::class, 'show'])
+                              ->name('experts.expert.show')->where('id', '[0-9]+');
+                         Route::get('/{expert}/edit',[ExpertsController::class, 'edit'])
+                              ->name('experts.expert.edit')->where('id', '[0-9]+');
+                         Route::post('/', [ExpertsController::class, 'store'])
+                              ->name('experts.expert.store');
+                         Route::put('expert/{expert}', [ExpertsController::class, 'update'])
+                              ->name('experts.expert.update')->where('id', '[0-9]+');
+                         Route::delete('/expert/{expert}',[ExpertsController::class, 'destroy'])
+                              ->name('experts.expert.destroy')->where('id', '[0-9]+');
+                     });
+
+                     Route::get('/notificationslist', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');
+                         
 });
 
 require __DIR__ . '/auth.php';

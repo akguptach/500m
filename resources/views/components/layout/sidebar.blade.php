@@ -237,7 +237,7 @@
                     </a>
                 </li>
 				<li class="nav-item">
-                    <a href="#"
+                    <a href="{{route('notifications')}}"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Notification</p>
@@ -252,6 +252,7 @@
                 </li>
 				
 				
+                
                 <li class="nav-item">
 					<a href="#" class="nav-link">
                     <i class=" nav-icon fa-solid fa-bell"></i>
@@ -262,7 +263,7 @@
 					</a>
 					<ul class="nav nav-treeview" style="display: none;">
 					     <li class="nav-item">
-							<a href="#"
+							<a href="{{route('experts.expert.create')}}"
 								class="nav-link ">
 								<i class="nav-icon fa-solid fa-image"></i>
 								<p>
@@ -271,7 +272,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#"
+							<a href="{{route('experts.expert.index')}}"
 								class="nav-link">
 								<i class="nav-icon fa-solid fa-image"></i>
 								<p>

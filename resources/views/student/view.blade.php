@@ -22,9 +22,7 @@ div:has(> ul.pagination) {
                             <div class="card-header">
                                 <h3 class="card-title">Student</h3>
                                 <div class="float-right">
-                                    <!-- <a href="{{ route('students.student.create') }}">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> Add
-                                </a> -->
+                                <?php HtmlHelper::WebsiteTypeDropdown('website_type', $website, false, 'width:150px;', 'website_type') ?>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -41,6 +39,7 @@ div:has(> ul.pagination) {
                                             <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Mobile Number</th>
+                                            <th>Website</th>
                                             <th>view</th>
 
 
@@ -55,6 +54,7 @@ div:has(> ul.pagination) {
                                             <td>{{$student->last_name}}</td>
                                             <td>{{$student->email}}</td>
                                             <td>{{$student->phone_number}}</td>
+                                            <td>{{$student->website->website_type}}</td>
                                             <td> <a href="{{route('orders', $student->id)}}" class="btn-sm btn-primary">View Orders <i
                                                         class="fas fa-arrow-right"></i></a></td>
 
@@ -121,7 +121,7 @@ div:has(> ul.pagination) {
                             </div>
                             <div class="clearfix mt-2 pagination-div">
                                 <div style="width: 100%;">
-                                    {!! $students->appends([])->links('pagination::bootstrap-5') !!}
+                                    {!! $students->appends(request()->input())->links('pagination::bootstrap-5') !!}
                                 </div>
                             </div>
                         </div>
@@ -145,5 +145,29 @@ div:has(> ul.pagination) {
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+<script>
+function generateParamsurl(params) {
+    let paramString = '';
+    Object.keys(params).forEach(function(key, index) {
+        if (params[key] !== undefined && params[key] !== 'undefined') {
+            paramString += (index > 0) ? '&' + key + '=' + params[key] : '?' + key + '=' + params[key]
+        }
+    })
+    return paramString;
+}
 
+$(document).ready(function() {
+    const searchParams = new URLSearchParams(window.location.search);
+    var paramsList = {};
+    for (const param of searchParams) {
+        paramsList[param[0]] = param[1];
+    }
+    $('#website_type').change(function() {
+        if (paramsList['page'])
+        paramsList['page'] = 1;
+        paramsList['website'] = $(this).val();
+        window.location.href = "{{route('students.student.index')}}/"+generateParamsurl(paramsList);
+    })
+})
+</script>
 @endsection

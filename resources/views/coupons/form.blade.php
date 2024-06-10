@@ -166,8 +166,19 @@ $(document).ready(function(){
           $('#start_date').datepicker('setEndDate', minDate);
       });
 
-      $('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
+    //$('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
 
-    $('#start_date').datepicker('setEndDate', new Date("{{ old('end_date', optional($coupon)->end_date) }}"));
+    //$('#start_date').datepicker('setEndDate', new Date("{{ old('end_date', optional($coupon)->end_date) }}"));
 });
 </script>
+
+
+
+@if(isset($coupon->id))
+<script>
+    $(document).ready(function(){
+    $('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
+    $('#start_date').datepicker('setEndDate', new Date("{{ old('end_date', optional($coupon)->end_date) }}"));
+    });
+</script>
+@endif

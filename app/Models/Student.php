@@ -12,4 +12,9 @@ class Student extends Model
     use SoftDeletes;
     protected $table = 'student';
     protected $fillable = ['first_name', 'last_name', 'email', 'status', 'phone_number'];
+
+    public function website()
+	{
+		return $this->belongsTo('App\Models\Website', 'website_id');
+	}
 }

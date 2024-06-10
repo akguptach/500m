@@ -92,4 +92,33 @@ class HtmlHelper
         $html .= '</select></div>';
         echo $html;
     }
+
+
+    static function WebsiteTypeDropdown($name, $default = '', $label = true, $style = '', $id = '', $hideOptions = [])
+    {
+        $websites = \App\Models\Website::get();
+        $html = '<div>';
+
+        if ($label)
+            $html .= '<label>Website</label>';
+
+        if ($style) {
+            $style = 'style="' . $style . '"';
+        }
+
+        $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select website</option>';
+        if (!empty($websites))
+            foreach ($websites as $website) {
+                if (!in_array($website->website_type, $hideOptions)) {
+                    $selected = '';
+                    if ($default == $website->id) {
+                        $selected = 'selected="selected"';
+                    }
+                    $html .= '<option ' . $selected . ' value="' . $website->id . '">' . $website->website_type . '</option>';
+                }
+            }
+        $html .= '</select></div>';
+        echo $html;
+    }
+
 }
