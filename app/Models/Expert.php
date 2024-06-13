@@ -28,11 +28,22 @@ class Expert extends Model
      * @var array
      */
     protected $fillable = [
-                  'name',
                   'first_name',
-                  'last_name',
-                  'email',
-                  'dob'
+                  'competences',
+                  'description',
+                  'image',
+                  'language',
+                  'online_status',
+                  'paper_number',
+                  'qualification',
+                  'rating_numbers',
+                  'ratings',
+                  'subject',
+                  'subject_number',
+                  'success_rate',
+                  'total_orders',
+                  'type_of_paper',
+                  'status'
               ];
 
     /**

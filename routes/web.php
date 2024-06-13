@@ -223,6 +223,11 @@ Route::middleware('auth')->group(function () {
                               ->name('experts.expert.update')->where('id', '[0-9]+');
                          Route::delete('/expert/{expert}',[ExpertsController::class, 'destroy'])
                               ->name('experts.expert.destroy')->where('id', '[0-9]+');
+                         Route::get('/addreview', [ExpertsController::class, 'addreview'])
+                              ->name('experts.expert.addreview');
+
+                              Route::patch('experts/status/{expert}', [ExpertsController::class, 'change'])
+                    ->name('experts.expert.change')->where('id', '[0-9]+');
                      });
 
                      Route::get('/notificationslist', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');

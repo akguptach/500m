@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Expert;
 use Illuminate\Http\Request;
 use Exception;
+use App\Http\Requests\ExpertRequest;
 
 class ExpertsController extends Controller
 {
@@ -18,7 +19,6 @@ class ExpertsController extends Controller
     public function index()
     {
         $experts = Expert::paginate(25);
-
         return view('experts.index', compact('experts'));
     }
 
@@ -29,10 +29,16 @@ class ExpertsController extends Controller
      */
     public function create()
     {
-        
-        
         return view('experts.create');
     }
+
+
+    public function addreview()
+    {
+        return view('experts.addreview');
+    }
+
+    
 
     /**
      * Store a new expert in the storage.
@@ -41,13 +47,18 @@ class ExpertsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse | \Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(ExpertRequest $request)
     {
-        
-        $data = $this->getData($request);
-        
+        $data = $request->all();
+        $image = '';
+        if ($request->has("image")) {
+            $image = request()->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/uploads/attachment/'), $imageName);
+            $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
+        }
+        $data['image'] = $image;
         Expert::create($data);
-
         return redirect()->route('experts.expert.index')
             ->with('success_message', 'Expert was successfully added.');
     }
@@ -76,8 +87,6 @@ class ExpertsController extends Controller
     public function edit($id)
     {
         $expert = Expert::findOrFail($id);
-        
-
         return view('experts.edit', compact('expert'));
     }
 
@@ -92,9 +101,17 @@ class ExpertsController extends Controller
     public function update($id, Request $request)
     {
         
-        $data = $this->getData($request);
-        
+        $data = $request->all();
         $expert = Expert::findOrFail($id);
+
+        $image = $expert->image;
+        if ($request->has("image")) {
+            $image = request()->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/uploads/attachment/'), $imageName);
+            $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
+        }
+        $data['image'] = $image;
         $expert->update($data);
 
         return redirect()->route('experts.expert.index')
@@ -123,27 +140,21 @@ class ExpertsController extends Controller
         }
     }
 
-    
-    /**
-     * Get the request's data from the request.
-     *
-     * @param Illuminate\Http\Request\Request $request 
-     * @return array
-     */
-    protected function getData(Request $request)
+    public function change($id, Request $request)
     {
-        $rules = [
-                'name' => 'string|min:1|max:255|nullable',
-            'first_name' => 'string|min:1|nullable',
-            'last_name' => 'string|min:1|nullable',
-            'email' => 'nullable',
-            'dob' => 'string|min:1|nullable', 
-        ];
-        
-        $data = $request->validate($rules);
-
-
-        return $data;
+        try {
+            $expert = Expert::findOrFail($id);
+            $expert->status = $request->status;
+            $expert->save();
+            return redirect()->route('experts.expert.index')
+                ->with('status', 'Expert was successfully activated.');
+        } catch (\Exception $exception) {
+            return back()->withInput()
+                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        }
     }
+
+    
+    
 
 }

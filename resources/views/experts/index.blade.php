@@ -1,88 +1,143 @@
 @extends('layouts.app')
-
 @section('content')
+<style>
+p.small {
+    font-size: 16px;
+    margin-left: 24px;
+    color: black !important;
+}
 
-    @if(Session::has('success_message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            {!! session('success_message') !!}
+div:has(> ul.pagination) {
+    float: right;
+    margin-right: 20px;
+}
+</style>
+<section class="content-header">
+    <div class="container-fluid">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Experts</h3>
+                            </div>
+                            <div class="card-body">
+                                @if (session('status'))
+                                <div class="alert alert-success" id="success_message">
+                                    {{ session('status') }}
+                                </div>
+                                @endif
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Image</th>
+                                            <th>Language</th>
+                                            <th>Rating</th>
+                                            <th>Qualification</th>
+                                            <th>Subject Number</th>
+                                            <th>Paper Number</th>
+                                            <th>Add Review</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($experts as $expert)
+                                        <tr>
+                                            <td class="align-middle">{{$expert->first_name}}</td>
+                                            <td class="align-middle"><img src="{{$expert->image}}" width="50px"></td>
+                                            <td class="align-middle">{{$expert->language}}</td>
+                                            <td class="align-middle">{{$expert->ratings}}</td>
+                                            <td class="align-middle">{{$expert->qualification}}</td>
+                                            <td class="align-middle">{{$expert->subject_number}}</td>
+                                            <td class="align-middle">{{$expert->paper_number}}</td>
+                                            <td class="align-middle">
+                                                <a href="{{ route('experts.expert.addreview') }}"
+                                                    class="btn-sm btn-primary">Add Review </a>
+                                            </td>
+                                            <td class="align-middle">
+                                                <a href="{{route('experts.expert.edit',$expert->id)}}"
+                                                    class="edit-link">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form method="POST"
+                                                    action="{!! route('experts.expert.change', $expert->id) !!}"
+                                                    accept-charset="UTF-8" style="display:inline">
+                                                    <input name="_method" value="PATCH" type="hidden">
+                                                    <input name="status" value="active" type="hidden">
+                                                    {{ csrf_field() }}
+                                                    <button @if($expert->status=='active') disabled="disabled" @endif
+                                                        type="submit" class="btn btn-link " title="Inactivate Expert"
+                                                        onclick="return confirm(&quot;Click Ok to activate
+                                                        Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </button>
 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+                                                </form>
 
-    <div class="card text-bg-theme">
 
-        <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <h4 class="m-0">Experts</h4>
-            <div>
-                <a href="{{ route('experts.expert.create') }}" class="btn btn-secondary" title="Create New Expert">
-                    <span class="fa-solid fa-plus" aria-hidden="true"></span>
-                </a>
+                                                <form method="POST"
+                                                    action="{!! route('experts.expert.change', $expert->id) !!}"
+                                                    accept-charset="UTF-8" style="display:inline">
+                                                    <input name="_method" value="PATCH" type="hidden">
+                                                    <input name="status" value="inactive" type="hidden">
+                                                    {{ csrf_field() }}
+                                                    <button @if($expert->status=='inactive') disabled="disabled" @endif
+                                                        type="submit" class="btn btn-link " title="Activate Expert"
+                                                        onclick="return confirm(&quot;Click Ok to Inactive
+                                                        Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
+                                                        <i class="fas fa-times-circle"></i>
+                                                    </button>
+
+                                                </form>
+
+
+
+                                                <form method="POST"
+                                                    action="{!! route('experts.expert.destroy', $expert->id) !!}"
+                                                    accept-charset="UTF-8" style="display:inline">
+                                                    <input name="_method" value="DELETE" type="hidden">
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-link " title="Delete Student"
+                                                        onclick="return confirm(&quot;Click Ok to delete Expert.&quot;)"
+                                                        style="padding: 0px;padding-bottom:3px;">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="clearfix mt-2 pagination-div">
+                                <div style="width: 100%;">
+                                    {!! $experts->appends(request()->input())->links('pagination::bootstrap-5') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        @if(count($experts) == 0)
-            <div class="card-body text-center">
-                <h4>No Experts Available.</h4>
-            </div>
-        @else
-        <div class="card-body p-0">
-            <div class="table-responsive">
-
-                <table class="table table-striped ">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Dob</th>
-
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($experts as $expert)
-                        <tr>
-                            <td class="align-middle">{{ $expert->name }}</td>
-                            <td class="align-middle">{{ $expert->first_name }}</td>
-                            <td class="align-middle">{{ $expert->last_name }}</td>
-                            <td class="align-middle">{{ $expert->email }}</td>
-                            <td class="align-middle">{{ $expert->dob }}</td>
-
-                            <td class="text-end">
-
-                                <form method="POST" action="{!! route('experts.expert.destroy', $expert->id) !!}" accept-charset="UTF-8">
-                                <input name="_method" value="DELETE" type="hidden">
-                                {{ csrf_field() }}
-
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <a href="{{ route('experts.expert.show', $expert->id ) }}" class="btn btn-info" title="Show Expert">
-                                            <span class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></span>
-                                        </a>
-                                        <a href="{{ route('experts.expert.edit', $expert->id ) }}" class="btn btn-primary" title="Edit Expert">
-                                            <span class="fa-regular fa-pen-to-square" aria-hidden="true"></span>
-                                        </a>
-
-                                        <button type="submit" class="btn btn-danger" title="Delete Expert" onclick="return confirm(&quot;Click Ok to delete Expert.&quot;)">
-                                            <span class="fa-regular fa-trash-can" aria-hidden="true"></span>
-                                        </button>
-                                    </div>
-
-                                </form>
-                                
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
-            </div>
-
-            {!! $experts->links('pagination') !!}
-        </div>
-        
-        @endif
-    
+        </section>
     </div>
+
+</section>
+<script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('js/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('js/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+
 @endsection

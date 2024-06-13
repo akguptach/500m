@@ -3,19 +3,6 @@
 @section('content')
 
     <div class="card text-bg-theme">
-  
-         <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <h4 class="m-0">{{ !empty($expert->name) ? $expert->name : 'Expert' }}</h4>
-            <div>
-                <a href="{{ route('experts.expert.index') }}" class="btn btn-primary" title="Show All Expert">
-                    <span class="fa-solid fa-table-list" aria-hidden="true"></span>
-                </a>
-
-                <a href="{{ route('experts.expert.create') }}" class="btn btn-secondary" title="Create New Expert">
-                    <span class="fa-solid fa-plus" aria-hidden="true"></span>
-                </a>
-            </div>
-        </div>
 
         <div class="card-body">
 
@@ -29,7 +16,7 @@
                 </div>
             @endif
 
-            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" >
+            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" enctype="multipart/form-data">
             {{ csrf_field() }}
             <input name="_method" type="hidden" value="PUT">
             @include ('experts.form', [

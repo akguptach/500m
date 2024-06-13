@@ -94,12 +94,12 @@ div:has(> ul.pagination) {
                                                 
                                                 </form>
 
-                                                <!--<a href="#" class="deactive-link">
-                                                    <i class="fas fa-times-circle"></i>
-                                                </a>-->
-                                                <!--<a href="#" class="delete-link">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>-->
+                                                <!--  <a href="#" class="deactive-link">
+                                                      <i class="fas fa-times-circle"></i>
+                                                      </a>-->
+                                                      <!--<a href="#" class="delete-link">
+                                                      <i class="fas fa-trash-alt"></i>
+                                                      </a>                                    -->
 
                                                 <form method="POST"
                                                     action="{!! route('students.student.destroy', $student->id) !!}"
