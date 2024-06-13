@@ -288,14 +288,47 @@
 
 
 				<li class="nav-item">
-                    <a href="#"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Student Market Place</p>
-                    </a>
-                </li>
+					<a href="#" class="nav-link">
+                    <i class=" nav-icon fa-solid fa-bell"></i>
+						<p>
+						Student Market Place 
+						<i class="right fas fa-angle-left"></i>
+						</p>
+					</a>
+                    <ul class="nav nav-treeview" style="display: none;">
+					     <li class="nav-item">
+							<a href="{{route('studentmarket.student.deals_category')}}"
+								class="nav-link ">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									Deals Category
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('studentmarket.student.add_deals')}}"
+								class="nav-link">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									Add Deals
+								</p>
+							</a>
+						</li>
+                        <li class="nav-item">
+							<a href="{{route('studentmarket.student.view_deals')}}"
+								class="nav-link">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									View Deals
+								</p>
+							</a>
+						</li>
+						
+						
+					</ul>
+				</li>
 				<li class="nav-item">
-                    <a href="#"
+                    <a href="{{route('affiliateuser.affiliate.add')}}"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Affiliate Users</p>

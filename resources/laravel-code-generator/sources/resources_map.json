@@ -2,5 +2,9 @@
     {
         "model-name": "Expert",
         "resource-file": "experts.json"
+    },
+    {
+        "model-name": "ExpertReview",
+        "resource-file": "expert_reviews.json"
     }
 ]

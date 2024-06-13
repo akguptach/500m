@@ -53,7 +53,7 @@ div:has(> ul.pagination) {
                                             <td class="align-middle">{{$expert->subject_number}}</td>
                                             <td class="align-middle">{{$expert->paper_number}}</td>
                                             <td class="align-middle">
-                                                <a href="{{ route('experts.expert.addreview') }}"
+                                                <a href="{{ route('expert_reviews.expert_review.index',$expert->id) }}"
                                                     class="btn-sm btn-primary">Add Review </a>
                                             </td>
                                             <td class="align-middle">

@@ -26,6 +26,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddExpertController;
 use App\Http\Controllers\ViewExpertController;
 use App\Http\Controllers\ExpertsController;
+use App\Http\Controllers\ExpertReviewsController;
+use App\Http\Controllers\StudentMarketController;
+use App\Http\Controllers\AffiliateUserController;
 
 
 
@@ -230,8 +233,59 @@ Route::middleware('auth')->group(function () {
                     ->name('experts.expert.change')->where('id', '[0-9]+');
                      });
 
+                     Route::group([
+                         'prefix' => 'affiliateuser',
+                     ], function () {
+                         Route::get('/addaffiliate', [AffiliateUserController::class, 'index'])
+                              ->name('affiliateuser.affiliate.add');
+                              Route::get('/viewaffiliate', [AffiliateUserController::class, 'view'])
+                              ->name('affiliateuser.affiliate.view');     
+                        
+                     });
+
+
+                     Route::group([
+                         'prefix' => 'studentmarket',
+                     ], function () {
+                         Route::get('/dealscategory', [StudentMarketController::class, 'deals_category'])
+                              ->name('studentmarket.student.deals_category');
+                       
+                         Route::get('/adddeals', [StudentMarketController::class, 'add_deals'])
+                              ->name('studentmarket.student.add_deals');
+                         Route::get('/viewdeals', [StudentMarketController::class, 'view_deals'])
+                              ->name('studentmarket.student.view_deals');     
+                     });
+                     
+
                      Route::get('/notificationslist', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');
                          
 });
 
 require __DIR__ . '/auth.php';
+Route::group([
+    'prefix' => 'expert_reviews',
+], function () {
+    Route::get('/expert-reviews/{id}', [ExpertReviewsController::class, 'index'])
+         ->name('expert_reviews.expert_review.index');
+
+    Route::get('/create', [ExpertReviewsController::class, 'create'])
+         ->name('expert_reviews.expert_review.create');
+    Route::get('/show/{expertReview}',[ExpertReviewsController::class, 'show'])
+         ->name('expert_reviews.expert_review.show')->where('id', '[0-9]+');
+    Route::get('/{expertReview}/edit',[ExpertReviewsController::class, 'edit'])
+         ->name('expert_reviews.expert_review.edit')->where('id', '[0-9]+');
+
+    Route::post('/{id}', [ExpertReviewsController::class, 'store'])
+         ->name('expert_reviews.expert_review.store');
+
+    Route::put('expert_review/{expertReview}', [ExpertReviewsController::class, 'update'])
+         ->name('expert_reviews.expert_review.update')->where('id', '[0-9]+');
+    Route::delete('/expert_review/{expertReview}',[ExpertReviewsController::class, 'destroy'])
+         ->name('expert_reviews.expert_review.destroy')->where('id', '[0-9]+');
+
+         Route::patch('expert_review/expert_review/{review}', [ExpertReviewsController::class, 'change'])
+                    ->name('experts.review.change')->where('id', '[0-9]+');
+                    
+
+         
+});
