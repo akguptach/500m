@@ -7,6 +7,8 @@ use App\Models\Expert;
 use Illuminate\Http\Request;
 use Exception;
 use App\Http\Requests\ExpertRequest;
+use App\Models\Subject;
+use App\Models\ExpertSubject;
 
 class ExpertsController extends Controller
 {
@@ -29,7 +31,8 @@ class ExpertsController extends Controller
      */
     public function create()
     {
-        return view('experts.create');
+        $subjects  =   Subject::all();
+        return view('experts.create',compact('subjects'));
     }
 
 
@@ -50,6 +53,9 @@ class ExpertsController extends Controller
     public function store(ExpertRequest $request)
     {
         $data = $request->all();
+
+        
+
         $image = '';
         if ($request->has("image")) {
             $image = request()->file('image');
@@ -58,7 +64,13 @@ class ExpertsController extends Controller
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
         $data['image'] = $image;
-        Expert::create($data);
+        $expert = Expert::create($data);
+        foreach ($request->expert_subject as $subject) {
+            ExpertSubject::Create([
+                'expert_id' => $expert->id,
+                'subject_id' => $subject
+            ]);
+        }
         return redirect()->route('experts.expert.index')
             ->with('success_message', 'Expert was successfully added.');
     }
@@ -87,7 +99,8 @@ class ExpertsController extends Controller
     public function edit($id)
     {
         $expert = Expert::findOrFail($id);
-        return view('experts.edit', compact('expert'));
+        $subjects  =   Subject::all();
+        return view('experts.edit', compact('expert','subjects'));
     }
 
     /**
@@ -112,6 +125,15 @@ class ExpertsController extends Controller
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
         $data['image'] = $image;
+
+        ExpertSubject::where('expert_id',$expert->id)->delete();
+        foreach ($request->expert_subject as $subject) {
+            ExpertSubject::Create([
+                'expert_id' => $expert->id,
+                'subject_id' => $subject
+            ]);
+        }
+
         $expert->update($data);
 
         return redirect()->route('experts.expert.index')

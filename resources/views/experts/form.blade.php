@@ -43,8 +43,10 @@
         <select id="status" class="form-control{{ $errors->has('online_status') ? ' is-invalid' : '' }}"
             name="online_status">
 
-            <option value="Online" @if(old('online_status', optional($expert)->online_status) == 'Online') selected="selected" @endif >Online</option>
-            <option value="Offline" @if(old('online_status', optional($expert)->online_status) == 'Offline') selected="selected" @endif >Offline</option>
+            <option value="Online" @if(old('online_status', optional($expert)->online_status) == 'Online')
+                selected="selected" @endif >Online</option>
+            <option value="Offline" @if(old('online_status', optional($expert)->online_status) == 'Offline')
+                selected="selected" @endif >Offline</option>
         </select>
         {!! $errors->first('online_status', '<div class="invalid-feedback">:message</div>') !!}
     </div>
@@ -95,8 +97,10 @@
     <div class="col-lg-10 col-xl-9">
         <select id="status" class="form-control{{ $errors->has('language') ? ' is-invalid' : '' }}" name="language">
 
-            <option value="English" @if(old('language', optional($expert)->language) == 'English') selected="selected" @endif>English</option>
-            <option value="Hindi" @if(old('language', optional($expert)->language) == 'Hindi') selected="selected" @endif>Hindi</option>
+            <option value="English" @if(old('language', optional($expert)->language) == 'English') selected="selected"
+                @endif>English</option>
+            <option value="Hindi" @if(old('language', optional($expert)->language) == 'Hindi') selected="selected"
+                @endif>Hindi</option>
         </select>
         {!! $errors->first('language', '<div class="invalid-feedback">:message</div>') !!}
     </div>
@@ -110,17 +114,52 @@
         {!! $errors->first('competences', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+
+
 <div class="mb-3 row">
     <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Subject</label>
     <div class="col-lg-10 col-xl-9">
-        <select id="subject" class="form-control{{ $errors->has('subject') ? ' is-invalid' : '' }}" name="subject">
+    
+        @php($selectedString = [])
+        @php($subjectsList = [])
+        @if($expert && $expert->subjects)
+        @foreach($expert->subjects as $selected)
+        @php($subjectsList[] = $selected->subject_id)
+        @endforeach
+        @endif
 
-            <option value="english" @if(old('subject', optional($expert)->subject) == 'english') selected="selected" @endif>English</option>
-            <option value="hindi" @if(old('subject', optional($expert)->subject) == 'hindi') selected="selected" @endif>Hindi</option>
+        
+
+        <select class="form-control" name="expert_subject[]" id="expert_subject" multiple="multiple">
+            @if(!empty($subjects))
+            @foreach ($subjects as $subject)
+
+            @if(in_array($subject->id, $subjectsList))
+                            @php($selectedString[] = $subject->subject_name)
+                            <option selected="selected  " value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                            @else
+                            <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                            @endif
+
+
+            
+            @endforeach
+            @endif
         </select>
-        {!! $errors->first('subject', '<div class="invalid-feedback">:message</div>') !!}
+
+
+        <?php /*<select id="subject" class="form-control{{ $errors->has('subject') ? ' is-invalid' : '' }}" name="subject">
+
+            <option value="english" @if(old('subject', optional($expert)->subject) == 'english') selected="selected"
+                @endif>English</option>
+            <option value="hindi" @if(old('subject', optional($expert)->subject) == 'hindi') selected="selected"
+                @endif>Hindi</option>
+        </select>*/ ?>
+        {!! $errors->first('expert_subject', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+
+
 
 <div class="mb-3 row">
     <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Subject number</label>
@@ -151,3 +190,44 @@
         {!! $errors->first('paper_number', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+@php($selectedString = implode(',',$selectedString))
+
+<link href="{{ asset('css/multi-select.css') }}" rel="stylesheet" />
+<script src="{{asset('js/jquery.multi-select.min.js')}}"></script>
+<style>
+.multi-select-button {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 5px;
+}
+.multi-select-container {
+    width: 100% !important;
+}
+.expert-subjects .multi-select-container {
+    width: 100%;
+}
+.expert-subjects .multi-select-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid #d2d6da;
+    border-radius: .5rem;
+    color: #495057;
+    display: block;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    padding: .5rem .75rem;
+    transition: box-shadow .15s ease, border-color .15s ease;
+    width: 100%;
+    max-width: 100%;
+}
+</style>
+<script>
+$(document).ready(function() {
+    $('#expert_subject').multiSelect();
+    $('.multi-select-button').html('{{$selectedString}}')
+});
+</script>

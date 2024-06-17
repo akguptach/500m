@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expert extends Model
+class DealCategory extends Model
 {
     
 
@@ -13,7 +13,7 @@ class Expert extends Model
      *
      * @var string
      */
-    protected $table = 'experts';
+    protected $table = 'deal_categories';
 
     /**
     * The database primary key value.
@@ -28,21 +28,7 @@ class Expert extends Model
      * @var array
      */
     protected $fillable = [
-                  'first_name',
-                  'competences',
-                  'description',
-                  'image',
-                  'language',
-                  'online_status',
-                  'paper_number',
-                  'qualification',
-                  'rating_numbers',
-                  'ratings',
-                  'subject',
-                  'subject_number',
-                  'success_rate',
-                  'total_orders',
-                  'type_of_paper',
+                  'category_name',
                   'status'
               ];
 
@@ -60,11 +46,6 @@ class Expert extends Model
      */
     protected $casts = [];
     
-
-    public function subjects()
-    {
-        return $this->hasMany('App\Models\ExpertSubject', 'expert_id');
-    }
 
 
 

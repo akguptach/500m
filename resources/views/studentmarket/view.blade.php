@@ -1,81 +1,97 @@
 @extends('layouts.app')
 @section('content')
+<style>
+p.small {
+    font-size: 16px;
+    margin-left: 24px;
+    color: black !important;
+}
 
-<div class="card text-bg-theme">
+div:has(> ul.pagination) {
+    float: right;
+    margin-right: 20px;
+}
+</style>
+<section class="content-header">
+    <div class="container-fluid">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Deals</h3>
+                            </div>
+                            <div class="card-body">
+                                @if (session('status'))
+                                <div class="alert alert-success" id="success_message">
+                                    {{ session('status') }}
+                                </div>
+                                @endif
 
-        <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <h4 class="m-0">View Deals</h4>
-            <div class="ml-auto">
-       <a href="{{ route('studentmarket.student.add_deals') }}" class="btn btn-primary" title="Show All Expert">
-           <span aria-hidden="true"></span>Add Deal
-       </a>
-   </div>
-           
-         </div>
-        
-        
-       <div class="card-body p-0">
-            <div class="table-responsive">
-
-                <table class="table table-striped ">
-                    <thead>
-                        <tr>
-                            <th> Title  </th>
-                            <th>Image</th>
-                            <th>short description</th>
-                            <th>Long Description</th>
-                            <th> URL  </th>
-                            <th>Price</th>
-                            <th>Offer Price</th>
-                            
-                        
-                            <th>Action</th>
-                            
-                           
-
-                            <th></th>
-                        </tr>
-                     </thead>
-                                    <tbody>
+                                <table class="table table-striped ">
+                                    <thead>
                                         <tr>
-                                            <td class="align-middle">Rapido</td>
-                                            <td class="align-middle">Alto.jpg</td>
-                                            <td class="align-middle">Here Short content</td>
-                                            <td class="align-middle">Here Long Content...</td>
-                                            <td class="align-middle">Http://AjjjThgvhgj12kkk./ajio.com</td>
-                                            <td class="align-middle">500/- INR</td>
-                                            <td class="align-middle">200/- INR</td>
-                                           
-                                            
-                                            <td class="align-middle">
-                            
-                                                    <a href="#" class="edit-link">
-                                                    <i class="fas fa-edit"></i>
-                                                      </a>
-                                                      <a>
-                                                      <i class="fas fa-times-circle"></i>
-                                                      </a>
-                                                      
-                                                     <a href="#" class="deactive-link">
-                                                      <i class="fas fa-check-circle"></i>
-                                                      </a>
-                                                      <a href="#" class="delete-link">
-                                                      <i class="fas fa-trash-alt"></i>
-                                                      </a> 
-                                                     
-                                                     
-                            </td>
-                                        
-                                        </tr> 
-                                    </tbody>
-                </table>
+                                            <th>Title</th>
+                                            <th>Short Description</th>
+                                            <th>Long Description</th>
+                                            <th>Url</th>
+                                            <th>Price</th>
+                                            <th>Other Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($deals as $deal)
+                                        <tr>
+                                            <td class="align-middle">{{ $deal->title }}</td>
+                                            <td class="align-middle">{{ $deal->short_description }}</td>
+                                            <td class="align-middle">{{ $deal->long_description }}</td>
+                                            <td class="align-middle">{{ $deal->url }}</td>
+                                            <td class="align-middle">{{ $deal->price }}</td>
+                                            <td class="align-middle">{{ $deal->other_price }}</td>
 
+                                            <td class="text-end">
+
+                                                <form method="POST"
+                                                    action="{!! route('deals.deal.destroy', $deal->id) !!}"
+                                                    accept-charset="UTF-8">
+                                                    <input name="_method" value="DELETE" type="hidden">
+                                                    {{ csrf_field() }}
+
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        
+                                                        <a style="padding: 0px;padding-bottom:3px;margin-right:5px;" href="{{ route('deals.deal.edit', $deal->id ) }}"
+                                                            class="edit-link" title="Edit Deal">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+
+                                                        <button style="padding: 0px;padding-bottom:3px;" type="submit" class="btn btn-link" title="Delete Deal"
+                                                            onclick="return confirm(&quot;Click Ok to delete Deal.&quot;)">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>
+
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
             </div>
-         
-        </div>
-            
-       
-    
+        </section>
     </div>
+</section>
+
 
 @endsection

@@ -304,8 +304,8 @@
 									Deals Category
 								</p>
 							</a>
-						</li>
-						<li class="nav-item">
+						 </li>
+						 <li class="nav-item">
 							<a href="{{route('studentmarket.student.add_deals')}}"
 								class="nav-link">
 								<i class="nav-icon fa-solid fa-image"></i>
@@ -313,7 +313,7 @@
 									Add Deals
 								</p>
 							</a>
-						</li>
+						  </li>
                         <li class="nav-item">
 							<a href="{{route('studentmarket.student.view_deals')}}"
 								class="nav-link">
@@ -328,12 +328,35 @@
 					</ul>
 				</li>
 				<li class="nav-item">
-                    <a href="{{route('affiliateuser.affiliate.add')}}"
+                    <a href="#"
                         class="nav-link ">
                         <i class=" nav-icon fa-solid fa-bell"></i>
                         <p>Affiliate Users</p>
+                        <i class="right fas fa-angle-left"></i>
                     </a>
-                </li>
+					
+                
+				<ul class="nav nav-treeview" style="display: none;">
+					     <li class="nav-item">
+							<a href="{{route('affiliateuser.affiliate.add')}}"
+								class="nav-link ">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									Add Affiliate User
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('affiliateuser.affiliate.view')}}"
+								class="nav-link">
+								<i class="nav-icon fa-solid fa-image"></i>
+								<p>
+									View Affiliate User
+								</p>
+							</a>
+						</li>
+				</ul>
+				</li>
 				
                 
             </ul>

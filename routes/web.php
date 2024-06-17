@@ -29,6 +29,8 @@ use App\Http\Controllers\ExpertsController;
 use App\Http\Controllers\ExpertReviewsController;
 use App\Http\Controllers\StudentMarketController;
 use App\Http\Controllers\AffiliateUserController;
+use App\Http\Controllers\DealCategoriesController;
+use App\Http\Controllers\DealsController;
 
 
 
@@ -247,15 +249,40 @@ Route::middleware('auth')->group(function () {
                      Route::group([
                          'prefix' => 'studentmarket',
                      ], function () {
-                         Route::get('/dealscategory', [StudentMarketController::class, 'deals_category'])
-                              ->name('studentmarket.student.deals_category');
+
+                         Route::get('/dealscategory', [StudentMarketController::class, 'deals_category'])->name('studentmarket.student.deals_category');
+                         Route::post('/', [StudentMarketController::class, 'store'])->name('deal_categories.deal_category.store');
+                         Route::get('/{dealCategory}/edit',[StudentMarketController::class, 'edit'])->name('deal_categories.deal_category.edit')->where('id', '[0-9]+');
+
+                         Route::post('deal_category/update/{dealCategory}', [StudentMarketController::class, 'update'])->name('deal_categories.deal_category.update')->where('id', '[0-9]+');
+
+                         Route::any('/deal_category/{dealCategory}',[StudentMarketController::class, 'destroyCategory'])->name('deal_categories.deal_category.destroy')->where('id', '[0-9]+');
+
                        
                          Route::get('/adddeals', [StudentMarketController::class, 'add_deals'])
                               ->name('studentmarket.student.add_deals');
+
+
+                              Route::post('/storeDeals', [StudentMarketController::class, 'storeDeals'])
+         ->name('deals.deal.store');
+
                          Route::get('/viewdeals', [StudentMarketController::class, 'view_deals'])
                               ->name('studentmarket.student.view_deals');     
                      });
                      
+                     Route::delete('/deal/{deal}',[StudentMarketController::class, 'destroy'])
+         ->name('deals.deal.destroy')->where('id', '[0-9]+');
+
+         Route::get('/{deal}/edit',[StudentMarketController::class, 'edit_deals'])
+         ->name('deals.deal.edit')->where('id', '[0-9]+');
+
+         Route::post('deal/{deal}', [StudentMarketController::class, 'update_deals'])
+         ->name('deals.deal.update')->where('id', '[0-9]+');
+
+         Route::delete('/deal/{deal}',[StudentMarketController::class, 'destroy'])
+         ->name('deals.deal.destroy')->where('id', '[0-9]+');
+         
+
 
                      Route::get('/notificationslist', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');
                          

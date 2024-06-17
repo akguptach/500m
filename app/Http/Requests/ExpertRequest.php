@@ -22,7 +22,7 @@ class ExpertRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name'=> 'required',
+            /*'first_name'=> 'required',
             'competences'=> 'required',
             'description'=> 'required',
             'image'=> 'required',
@@ -36,7 +36,7 @@ class ExpertRequest extends FormRequest
             'subject_number'=> 'required',
             'success_rate'=> 'required',
             'total_orders'=> 'required',
-            'type_of_paper'=> 'required'
+            'type_of_paper'=> 'required'*/
         ];
     }
 }

@@ -6,5 +6,13 @@
     {
         "model-name": "ExpertReview",
         "resource-file": "expert_reviews.json"
+    },
+    {
+        "model-name": "DealCategory",
+        "resource-file": "deal_categories.json"
+    },
+    {
+        "model-name": "Deal",
+        "resource-file": "deals.json"
     }
 ]
