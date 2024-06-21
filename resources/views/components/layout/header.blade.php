@@ -152,7 +152,7 @@
                         @foreach($studentOrderMessages as $message)
                         <div class="notifications-item">
                             <div class="text" style="width: 88%;word-wrap: break-word;">
-                                <h4>{{$message['sendertable']['first_name']}} {{$message['sendertable']['last_name']}}
+                                <h4>{{@$message['sendertable']['first_name']}} {{@$message['sendertable']['last_name']}}
                                 </h4>
                                 <p>{{$message['message']}}</p>
                                 <p><a href="{{$message['attachment']}}" target="_blank">{{$message['attachment']}}</a>

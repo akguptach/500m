@@ -37,13 +37,13 @@ class Expert extends Model
                   'paper_number',
                   'qualification',
                   'rating_numbers',
-                  'ratings',
                   'subject',
                   'subject_number',
                   'success_rate',
                   'total_orders',
                   'type_of_paper',
-                  'status'
+                  'status',
+                  'website_type'
               ];
 
     /**
@@ -64,6 +64,11 @@ class Expert extends Model
     public function subjects()
     {
         return $this->hasMany('App\Models\ExpertSubject', 'expert_id');
+    }
+
+    public function papers()
+    {
+        return $this->hasMany('App\Models\ExpertPaper', 'expert_id');
     }
 
 

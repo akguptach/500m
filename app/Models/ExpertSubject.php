@@ -9,7 +9,7 @@ class ExpertSubject extends Model
 {
     use HasFactory;
     protected $table = 'expert_subjects';
-    protected $fillable = ['expert_id', 'subject_id'];
+    protected $fillable = ['expert_id', 'subject_id','subject_number'];
 
     public function subject()
     {

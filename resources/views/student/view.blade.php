@@ -54,7 +54,7 @@ div:has(> ul.pagination) {
                                             <td>{{$student->last_name}}</td>
                                             <td>{{$student->email}}</td>
                                             <td>{{$student->phone_number}}</td>
-                                            <td>{{$student->website->website_type}}</td>
+                                            <td>{{@$student->website->website_type}}</td>
                                             <td> <a href="{{route('orders', $student->id)}}" class="btn-sm btn-primary">View Orders <i
                                                         class="fas fa-arrow-right"></i></a></td>
 

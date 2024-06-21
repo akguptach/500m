@@ -8,6 +8,30 @@
     </div>
 </div>
 
+
+
+<div class="mb-3 row">
+    <label for="title_number" class="col-form-label text-lg-end col-lg-2 col-xl-3">Title Number</label>
+    <div class="col-lg-10 col-xl-9">
+        <input class="form-control{{ $errors->has('title_number') ? ' is-invalid' : '' }}" name="title_number" type="number" id="title_number"
+            value="{{ old('title_number', optional($expertReview)->title_number) }}" minlength="1" maxlength="255"
+            placeholder="">
+        {!! $errors->first('title_number', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
+
+<div class="mb-3 row">
+    <label for="star_rating_number" class="col-form-label text-lg-end col-lg-2 col-xl-3">Star Rating</label>
+    <div class="col-lg-10 col-xl-9">
+        <input class="form-control{{ $errors->has('star_rating_number') ? ' is-invalid' : '' }}" name="star_rating_number" type="number" id="star_rating_number"
+            value="{{ old('star_rating_number', optional($expertReview)->star_rating_number) }}" minlength="1" maxlength="255"
+            placeholder="">
+        {!! $errors->first('star_rating_number', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
+
 <div class="mb-3 row">
     <label for="description" class="col-form-label text-lg-end col-lg-2 col-xl-3">Description</label>
     <div class="col-lg-10 col-xl-9">

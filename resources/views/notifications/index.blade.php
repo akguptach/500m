@@ -50,7 +50,7 @@ div:has(> ul.pagination) {
                                             @if ($item['sendertable_type']== 'App\Models\Tutor')
                                             {{$item['sendertable']['tutor_first_name']}} ({{$item->message_type}})
                                             @elseif ($item['sendertable_type']== 'App\Models\Student')
-                                            {{$item['sendertable']['first_name']}} ({{$item->message_type}})
+                                            {{@$item['sendertable']['first_name']}} ({{@$item->message_type}})
                                             @elseif ($item['sendertable_type']== 'App\Models\User')
                                             {{$item['sendertable']['name']}}
                                             @endif

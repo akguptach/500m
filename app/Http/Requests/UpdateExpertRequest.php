@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExpertRequest extends FormRequest
+class UpdateExpertRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class ExpertRequest extends FormRequest
             'first_name'=> 'required',
             'competences'=> 'required|array',
             'description'=> 'required',
-            'image'=> 'required',
             'language'=> 'required',
             'online_status'=> 'required',
             'qualification'=> 'required',
@@ -37,6 +36,7 @@ class ExpertRequest extends FormRequest
             'addMoreSubject.*.subject_number' => 'required',
             'addMorePaper.*.paper_number' => 'required',
             'addMorePaper.*.type_of_paper' => 'required',
+
         ];
     }
 

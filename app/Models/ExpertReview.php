@@ -18,7 +18,9 @@ class ExpertReview extends Model
                   'expert_id',
                   'review_date',
                   'review_code',
-                  'status'
+                  'status',
+                  'title_number',
+                  'star_rating_number'
               ];
 
     

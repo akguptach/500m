@@ -8,7 +8,7 @@ class HtmlHelper
         echo "Hii";
     }
 
-    static function WebsiteDropdown($name, $default = '', $label = true, $style = '', $id = '', $hideOptions = [])
+    static function WebsiteDropdown($name, $default = '', $label = true, $style = '', $id = '', $hideOptions = [],$blankValueText='')
     {
         $websites = \App\Models\Website::get();
         $html = '<div>';
@@ -20,7 +20,11 @@ class HtmlHelper
             $style = 'style="' . $style . '"';
         }
 
-        $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select website</option>';
+        $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '>';
+        if($blankValueText)
+        $html .= '<option value="">'.$blankValueText.'</option>';
+        else
+        $html .= '<option value="">Select website</option>';
         if (!empty($websites))
             foreach ($websites as $website) {
                 if (!in_array($website->website_type, $hideOptions)) {

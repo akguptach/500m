@@ -15,7 +15,7 @@
             <option selected="selected" value="">Please Select Category</option>
             @if(!empty($dealCategories))
             @foreach ($dealCategories as $dealCategory)
-            <option value="{{$dealCategory->id}}" @if($deal->deal_category == $dealCategory->id) selected="selected" @endif>{{$dealCategory->category_name}}</option>
+            <option value="{{$dealCategory->id}}" @if(@$deal->deal_category == $dealCategory->id) selected="selected" @endif>{{$dealCategory->category_name}}</option>
             @endforeach
             @endif
         </select>

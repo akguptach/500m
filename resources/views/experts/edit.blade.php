@@ -6,7 +6,7 @@
 
         <div class="card-body">
 
-            @if ($errors->any())
+            <?php /*@if ($errors->any())
                 <div class="alert alert-danger" role="alert">
                     <ul class="list-unstyled mb-0">
                         @foreach ($errors->all() as $error)
@@ -14,7 +14,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif*/ ?>
 
             <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" enctype="multipart/form-data">
             {{ csrf_field() }}

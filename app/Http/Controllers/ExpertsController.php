@@ -7,8 +7,10 @@ use App\Models\Expert;
 use Illuminate\Http\Request;
 use Exception;
 use App\Http\Requests\ExpertRequest;
+use App\Http\Requests\UpdateExpertRequest;
 use App\Models\Subject;
 use App\Models\ExpertSubject;
+use App\Models\ExpertPaper;
 
 class ExpertsController extends Controller
 {
@@ -18,10 +20,27 @@ class ExpertsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $experts = Expert::paginate(25);
-        return view('experts.index', compact('experts'));
+
+        $limit = 10;
+        $websiteType = '';
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+        }
+
+        
+
+        if ($request->has('website_type')) {
+            $websiteType = $request->input('website_type');
+        }
+
+        if($websiteType)
+        $experts = Expert::where('website_type', $websiteType)->paginate($limit);
+        else
+        $experts = Expert::paginate($limit);
+        
+        return view('experts.index', compact('experts','limit','websiteType'));
     }
 
     /**
@@ -55,7 +74,7 @@ class ExpertsController extends Controller
         $data = $request->all();
 
         
-
+        //echo "<pre>"; print_r($data); die;
         $image = '';
         if ($request->has("image")) {
             $image = request()->file('image');
@@ -64,13 +83,25 @@ class ExpertsController extends Controller
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
         $data['image'] = $image;
+        $data['language'] = implode(',', $data['language']);
+        $data['competences'] = implode(',', $data['competences']);
         $expert = Expert::create($data);
-        foreach ($request->expert_subject as $subject) {
+        foreach ($request->addMoreSubject as $item) {
             ExpertSubject::Create([
                 'expert_id' => $expert->id,
-                'subject_id' => $subject
+                'subject_id' => $item['expert_subject'],
+                'subject_number' => $item['subject_number']
             ]);
         }
+
+        foreach ($request->addMorePaper as $item) {
+            ExpertPaper::Create([
+                'expert_id' => $expert->id,
+                'type_of_paper' => $item['type_of_paper'],
+                'paper_number' => $item['paper_number']
+            ]);
+        }
+
         return redirect()->route('experts.expert.index')
             ->with('success_message', 'Expert was successfully added.');
     }
@@ -111,10 +142,11 @@ class ExpertsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse | \Illuminate\Routing\Redirector
      */
-    public function update($id, Request $request)
+    public function update($id, UpdateExpertRequest $request)
     {
         
         $data = $request->all();
+        
         $expert = Expert::findOrFail($id);
 
         $image = $expert->image;
@@ -125,12 +157,26 @@ class ExpertsController extends Controller
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
         $data['image'] = $image;
+        $data['language'] = implode(',', $data['language']);
+        $data['competences'] = implode(',', $data['competences']);
 
         ExpertSubject::where('expert_id',$expert->id)->delete();
-        foreach ($request->expert_subject as $subject) {
+        ExpertPaper::where('expert_id',$expert->id)->delete();
+        if($request->addMoreSubject)
+        foreach ($request->addMoreSubject as $item) {
             ExpertSubject::Create([
                 'expert_id' => $expert->id,
-                'subject_id' => $subject
+                'subject_id' => $item['expert_subject'],
+                'subject_number' => $item['subject_number']
+            ]);
+        }
+
+        if($request->addMorePaper)
+        foreach ($request->addMorePaper as $item) {
+            ExpertPaper::Create([
+                'expert_id' => $expert->id,
+                'type_of_paper' => $item['type_of_paper'],
+                'paper_number' => $item['paper_number']
             ]);
         }
 

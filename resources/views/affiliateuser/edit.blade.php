@@ -22,12 +22,12 @@
 
                             <div class="card-body">
 
-                                <form method="get" class="needs-validation" novalidate
-                                    action="{{ route('affiliateuser.affiliate.store') }}" accept-charset="UTF-8" id=""
+                                <form method="POST" class="needs-validation" novalidate
+                                    action="{{ route('affiliateuser.affiliate.update',$user->id) }}" accept-charset="UTF-8" id=""
                                     name="">
                                     {{ csrf_field() }}
                                     @include ('affiliateuser.form', [
-                                    'user' => null,
+                                    'user' => $user,
                                     ])
                                 </form>
                             </div>

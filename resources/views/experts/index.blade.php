@@ -28,6 +28,26 @@ div:has(> ul.pagination) {
                                     {{ session('status') }}
                                 </div>
                                 @endif
+                                <form id="page-limit-form">
+                                    <div style="display: flex;">
+                                        <div>
+
+                                            <labe>Item Per Page</labe>
+                                            <select id="limit" name="limit">
+                                                <option value="5" @if(@$limit==5) selected @endif>5</option>
+                                                <option value="10" @if(@$limit==10) selected @endif>10</option>
+                                                <option value="25" @if(@$limit==25) selected @endif>25</option>
+                                                <option value="50" @if(@$limit==50) selected @endif>50</option>
+                                                <option value="100" @if(@$limit==100) selected @endif>100</option>
+                                            </select>
+
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            {{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type',[],'All') }}
+                                        </div>
+                                    </div>
+                                </form>
+                                <br>
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -115,6 +135,7 @@ div:has(> ul.pagination) {
                             </div>
                             <div class="clearfix mt-2 pagination-div">
                                 <div style="width: 100%;">
+
                                     {!! $experts->appends(request()->input())->links('pagination::bootstrap-5') !!}
                                 </div>
                             </div>
@@ -139,5 +160,19 @@ div:has(> ul.pagination) {
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+<script>
+$(document).ready(function() {
+    $('#limit').change(function() {
 
+        $('#page-limit-form').submit();
+    })
+
+    $('#website_type').change(function() {
+
+        $('#page-limit-form').submit();
+    })
+
+
+})
+</script>
 @endsection

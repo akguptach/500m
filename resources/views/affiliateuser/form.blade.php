@@ -1,84 +1,81 @@
+<div class="card-body">
+
+    <div class="mb-3 row">
+        <label>First name</label>
+        <input type="text" name="first_name" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}"
+            placeholder="Enter first name" value="{{ old('first_name', optional($user)->first_name) }}">
+        {!! $errors->first('first_name', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
 
 
 
-<div class="mb-3 row">
-    <label for="name" class="col-form-label text-lg-end col-lg-2 col-xl-3">Name</label>
-    <div class="col-lg-10 col-xl-9">
-        <input class="form-control"  name="Reviewtitle" type="text" id="" value=""  placeholder="Enter name">
-        
-    </div>
-</div>
-
-<div class="mb-3 row">
-    <label for="email" class="col-form-label text-lg-end col-lg-2 col-xl-3">Email</label>
-    <div class="col-lg-10 col-xl-9">
-    <input type="email" class="form-control" name=""  id="" value=""  placeholder="Enter email" id="">      
-    </div>
-</div>
-<div class="mb-3 row">
-    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Password</label>
-    <div class="col-lg-10 col-xl-9">
-    <input type="password" class="form-control" name="password"  id="" value=""  placeholder="Enter Password" id="">      
-    </div>
+    <div class="mb-3 row">
+        <label>Last name</label>
+        <input type="text" name="last_name" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="Enter last name"
+            value="{{ old('last_name', optional($user)->last_name) }}"">
+            {!! $errors->first('last_name', '<div class=" invalid-feedback">:message
+    </div>') !!}
 </div>
 
 
+
 <div class="mb-3 row">
-    <label for="date" class="col-form-label text-lg-end col-lg-2 col-xl-3">About</label>
-    <div class="col-lg-10 col-xl-9">
-    <input type="text" class="form-control" id="" name="">    
-    </div>
-</div>
-<div class="mb-3 row">
-    <label for="date" class="col-form-label text-lg-end col-lg-2 col-xl-3">Location</label>
-    <div class="col-lg-10 col-xl-9">
-    <input type="text" class="form-control" id="" name="">    
-    </div>
-</div>
-<div class="mb-3 row">
-    <label for="type" class="col-form-label text-lg-end col-lg-2 col-xl-3">Type</label>
-    <div class="col-lg-10 col-xl-9">
-    <select name="" id="" class="form-control">
-    <option value="volvo">Student</option>
-    <option value="saab">Affiliate User</option>
-    
-  </select>   
-    </div>
-</div>
-<div class="mb-3 row">
-    <label for="refral" class="col-form-label text-lg-end col-lg-2 col-xl-3">Refral link</label>
-    <div class="col-lg-10 col-xl-9">
-    <input type="text" class="form-control" id="" name="">    
-    </div>
+    <label>Email</label>
+    <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Enter email"
+        value="{{ old('email', optional($user)->email) }}"">
+            {!! $errors->first('email', '<div class=" invalid-feedback">:message
+</div>') !!}
 </div>
 
 
 
 
-<!--
+@if(!$user)
 <div class="mb-3 row">
-    <label for="last_name" class="col-form-label text-lg-end col-lg-2 col-xl-3">Last Name</label>
-    <div class="col-lg-10 col-xl-9">
-        <input class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" type="text" id="last_name" value="{{ old('last_name', optional($expert)->last_name) }}" minlength="1" placeholder="Enter last name here...">
-        {!! $errors->first('last_name', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
+    <label>Password</label>
+    <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="" value="" placeholder="Enter Password" id="">
+    {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
+</div>
+@endif
+
+
+
+<div class="mb-3 row">
+    <label>About</label>
+    <input type="text" name="about" class="form-control{{ $errors->has('about') ? ' is-invalid' : '' }}" placeholder=""
+        value="{{ old('about', optional($user)->about) }}"">
+            {!! $errors->first('about', '<div class=" invalid-feedback">:message
+</div>') !!}
 </div>
 
 
-<div class="mb-3 row">
-    <label for="email" class="col-form-label text-lg-end col-lg-2 col-xl-3">Email</label>
-    <div class="col-lg-10 col-xl-9">
-        <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" id="email" value="{{ old('email', optional($expert)->email) }}" placeholder="Enter email here...">
-        {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
-</div>
+
 
 <div class="mb-3 row">
-    <label for="dob" class="col-form-label text-lg-end col-lg-2 col-xl-3">Dob</label>
-    <div class="col-lg-10 col-xl-9">
-        <input class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" name="dob" type="text" id="dob" value="{{ old('dob', optional($expert)->dob) }}" minlength="1" placeholder="Enter dob here...">
-        {!! $errors->first('dob', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
+    <label>Location</label>
+    <input type="text" name="location" class="form-control{{ $errors->has('location') ? ' is-invalid' : '' }}" placeholder="Enter location"
+        value="{{ old('location', optional($user)->location) }}"">
+            {!! $errors->first('location', '<div class=" invalid-feedback">:message
+</div>') !!}
 </div>
--->
 
+
+
+<div class="mb-3 row">
+    <label>Referal Link</label>
+    <input type="text" name="referal_link" class="form-control{{ $errors->has('referal_link') ? ' is-invalid' : '' }}" placeholder="Enter referal link"
+        value="{{ old('referal_link', optional($user)->referal_link) }}"">
+            {!! $errors->first('referal_link', '<div class=" invalid-feedback">:message
+</div>') !!}
+</div>
+
+
+
+
+
+
+
+<div class="card-footer">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{{route('students.student.index')}}" class="btn btn-primary">Back</a>
+</div>

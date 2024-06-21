@@ -240,6 +240,29 @@ Route::middleware('auth')->group(function () {
                      ], function () {
                          Route::get('/addaffiliate', [AffiliateUserController::class, 'index'])
                               ->name('affiliateuser.affiliate.add');
+
+
+                              Route::get('/storeaffiliate', [AffiliateUserController::class, 'store'])
+                              ->name('affiliateuser.affiliate.store');
+
+
+
+                              Route::get('/{id}/editaffiliate', [AffiliateUserController::class, 'edit'])
+                              ->name('affiliateuser.affiliate.edit');
+
+                              Route::post('/{id}/updateaffiliate', [AffiliateUserController::class, 'update'])
+                              ->name('affiliateuser.affiliate.update');
+
+
+
+                              Route::delete('/affilate/{affilate}',[AffiliateUserController::class, 'destroy'])
+                    ->name('affilate.destroy')->where('id', '[0-9]+');
+                   
+
+                   Route::patch('affilate/status/{affilate}', [AffiliateUserController::class, 'change'])
+                    ->name('affilate.change')->where('id', '[0-9]+');
+                    
+
                               Route::get('/viewaffiliate', [AffiliateUserController::class, 'view'])
                               ->name('affiliateuser.affiliate.view');     
                         
