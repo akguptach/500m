@@ -59,10 +59,10 @@ div:has(> ul.pagination) {
                                         @foreach($payments as $payment)
                                         <tr>
                                             <td>MAS{{$payment->order->id}}</td>
-                                            <td>{{$payment->order->student->first_name}}</td>
-                                            <td>{{$payment->order->student->email}}</td>
-                                            <td>{{$payment->order->student->phone_number}}</td>
-                                            <td>{{$payment->order->website->website_type}}</td>
+                                            <td>{{@$payment->order->student->first_name}}</td>
+                                            <td>{{@$payment->order->student->email}}</td>
+                                            <td>{{@$payment->order->student->phone_number}}</td>
+                                            <td>{{@$payment->order->website->website_type}}</td>
                                             <td width="250px"><span
                                                     style="overflow-wrap: anywhere;">{{$payment->transaction_id}}</span>
                                             </td>

@@ -23,7 +23,8 @@ class DealCategoryRequest extends FormRequest
     {
         return [
             'category_name'=> 'required',
-            'status'=> 'required'
+            'status'=> 'required',
+            'website_type'=>'required'
         ];
     }
 }

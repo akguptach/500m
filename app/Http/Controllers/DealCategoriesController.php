@@ -17,8 +17,7 @@ class DealCategoriesController extends Controller
      */
     public function index()
     {
-        $dealCategories = DealCategory::paginate(25);
-
+        $dealCategories = DealCategory::orderBy('id','desc')->paginate(25);
         return view('deal_categories.index', compact('dealCategories'));
     }
 

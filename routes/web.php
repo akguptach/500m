@@ -178,7 +178,7 @@ Route::middleware('auth')->group(function () {
              ->name('coupons.coupon.store');
         Route::any('coupon/{coupon}', [CouponsController::class, 'update'])
              ->name('coupons.coupon.update')->where('id', '[0-9]+');
-        Route::delete('/coupon/{coupon}',[CouponsController::class, 'destroy'])
+        Route::any('/coupon/{coupon}/destroy',[CouponsController::class, 'destroy'])
              ->name('coupons.coupon.destroy')->where('id', '[0-9]+');
             });
 
@@ -292,8 +292,10 @@ Route::middleware('auth')->group(function () {
                          Route::get('/viewdeals', [StudentMarketController::class, 'view_deals'])
                               ->name('studentmarket.student.view_deals');     
                      });
+
                      
-                     Route::delete('/deal/{deal}',[StudentMarketController::class, 'destroy'])
+                     
+                     Route::any('/deal/{deal}/destroy',[StudentMarketController::class, 'destroy'])
          ->name('deals.deal.destroy')->where('id', '[0-9]+');
 
          Route::get('/{deal}/edit',[StudentMarketController::class, 'edit_deals'])
@@ -302,8 +304,8 @@ Route::middleware('auth')->group(function () {
          Route::post('deal/{deal}', [StudentMarketController::class, 'update_deals'])
          ->name('deals.deal.update')->where('id', '[0-9]+');
 
-         Route::delete('/deal/{deal}',[StudentMarketController::class, 'destroy'])
-         ->name('deals.deal.destroy')->where('id', '[0-9]+');
+         //Route::delete('/deal/{deal}',[StudentMarketController::class, 'destroy'])
+         //->name('deals.deal.destroy')->where('id', '[0-9]+');
          
 
 

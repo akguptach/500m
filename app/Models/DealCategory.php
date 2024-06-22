@@ -29,7 +29,8 @@ class DealCategory extends Model
      */
     protected $fillable = [
                   'category_name',
-                  'status'
+                  'status',
+                  'website_type'
               ];
 
     /**

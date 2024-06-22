@@ -31,6 +31,26 @@ div:has(> ul.pagination) {
                                     {{ session('status') }}
                                 </div>
                                 @endif
+
+                                <form id="page-limit-form">
+                                <div style="display: flex;" class="card-header d-flex justify-content-between align-items-center p-3">
+                                    <div>
+                                        <labe>Item Per Page</labe>
+                                        <select id="limit" name="limit">
+                                            <option value="5" @if(@$limit==5) selected @endif>5</option>
+                                            <option value="10" @if(@$limit==10) selected @endif>10</option>
+                                            <option value="25" @if(@$limit==25) selected @endif>25</option>
+                                            <option value="50" @if(@$limit==50) selected @endif>50</option>
+                                            <option value="100" @if(@$limit==100) selected @endif>100</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-left: auto;">
+                                        {{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type_filter',[],'All') }}
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -73,7 +93,27 @@ div:has(> ul.pagination) {
                                                             <i class="fas fa-edit" title="Edit"></i>
                                                         </a>
 
-                                                        <button type="submit" class="btn btn-link" title="Delete Coupon"
+                                                        @if($coupon->status=='active')
+                                                        <button style="padding: 0px;padding-bottom:3px;margin-left: 7px;" name="action"
+                                                            value="inactive" type="submit" class="btn btn-link "
+                                                            title="Inactivate Deal Category"
+                                                            onclick="return confirm('Click Ok to Inactivate Coupon.')">
+                                                            <i class="fas fa-check-circle"></i>
+                                                        </button>
+                                                        @endif
+
+                                                        @if($coupon->status=='inactive')
+                                                        <button style="padding: 0px;padding-bottom:3px;margin-left: 7px;" name="action"
+                                                            value="active" type="submit" class="btn btn-link "
+                                                            title="activate Deal"
+                                                            onclick="return confirm('Click Ok to activate Coupon.')">
+                                                            
+                                                            <i class="fas fa-times-circle"></i>
+                                                        </button>
+                                                        @endif
+
+                                                        <button name="action"
+                                                        value="delete" type="submit" class="btn btn-link" title="Delete Coupon"
                                                             onclick="return confirm(&quot;Click Ok to delete Coupon.&quot;)">
                                                             <i class="fas fa-trash" title="Delete"></i>
                                                         </button>
@@ -97,5 +137,16 @@ div:has(> ul.pagination) {
         </section>
     </div>
 </section>
+<script>
+$(document).ready(function() {
+    $('#limit').change(function() {
+        $('#page-limit-form').submit();
+    })
+    $('#website_type_filter').change(function() {
+        $('#page-limit-form').submit();
+    })
 
+
+})
+</script>
 @endsection

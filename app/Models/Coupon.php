@@ -38,7 +38,9 @@ class Coupon extends Model
                   'reduction_target',
                   'reduction_type',
                   'reduction_amount',
-                  'limit_per_users'
+                  'limit_per_users',
+                  'website_type',
+                  'status'
               ];
 
     

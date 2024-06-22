@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DealRequest extends FormRequest
+class DealUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class DealRequest extends FormRequest
         return [
             'title'=> 'required',
             'deal_category'=> 'required',
-            'image'=> 'required',
+            //'image'=> 'required',
             'short_description'=> 'required',
             'long_description'=> 'required',
             'url'=> 'required',

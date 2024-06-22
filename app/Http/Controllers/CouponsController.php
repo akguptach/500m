@@ -16,11 +16,23 @@ class CouponsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $coupons = Coupon::paginate(10);
 
-        return view('coupons.index', compact('coupons'));
+
+        $limit = 10;
+        $websiteType = '';
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+        }
+        if ($request->has('website_type')) {
+            $websiteType = $request->input('website_type');
+        }
+        if($websiteType)
+        $coupons = Coupon::orderBy('id','desc')->where('website_type', $websiteType)->paginate($limit);
+        else
+        $coupons = Coupon::orderBy('id','desc')->paginate($limit);
+        return view('coupons.index', compact('coupons','limit','websiteType'));
     }
 
     /**
@@ -91,10 +103,10 @@ class CouponsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse | \Illuminate\Routing\Redirector
      */
-    public function update($id, Request $request)
+    public function update($id, CouponsRequest $request)
     {
         
-        $data = $this->getData($request);
+        $data = $request->all();
         
         $coupon = Coupon::findOrFail($id);
         $coupon->update($data);
@@ -110,9 +122,9 @@ class CouponsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse | \Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
-        try {
+       /*try {
             $coupon = Coupon::findOrFail($id);
             $coupon->delete();
 
@@ -120,6 +132,33 @@ class CouponsController extends Controller
                 ->with('success_message', 'Coupon was successfully deleted.');
         } catch (Exception $exception) {
 
+            return back()->withInput()
+                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        }*/
+        try {
+            $data = $request->all();
+            $action = isset($data['action'])?$data['action']:'';
+            if($action == 'delete'){
+                $deal = Coupon::findOrFail($id);
+                $deal->delete();
+                $message = 'Coupon was deleted successfully.';
+            }else if($action == 'active'){
+                $deal = Coupon::findOrFail($id);
+                $deal->status = 'active';
+                $deal->save();
+                $message = 'Coupon was activated.';
+            }
+            else if($action == 'inactive'){
+                
+                $deal = Coupon::findOrFail($id);
+                $deal->status = 'inactive';
+                $deal->save();
+                $message = 'Coupon was inactivated.';
+            }
+            return redirect()->route('coupons.coupon.index')
+            ->with('success_message', $message);
+
+        } catch (Exception $exception) {
             return back()->withInput()
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }

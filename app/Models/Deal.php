@@ -35,7 +35,12 @@ class Deal extends Model
                   'long_description',
                   'url',
                   'price',
-                  'other_price'
+                  'other_price',
+                  'voucher_code',
+                  'offer_price',
+                  'price_type',
+                  'website_type',
+                  'status'
               ];
 
     /**

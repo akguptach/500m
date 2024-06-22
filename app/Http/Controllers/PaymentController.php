@@ -35,7 +35,7 @@ class PaymentController extends Controller
         }
 
 
-        $query = Payment::orderBy('id','desc');
+        $query = Payment::whereHas('order.student')->orderBy('id','desc');
         if($paymentStatus){
             $query->where('payment_status', $paymentStatus);
         }

@@ -16,6 +16,8 @@ use App\Models\DealCategory;
 use App\Http\Requests\DealCategoryRequest;
 use App\Models\Deal;
 use App\Http\Requests\DealRequest;
+use App\Http\Requests\DealUpdateRequest;
+
 
 class StudentMarketController extends Controller
 {
@@ -24,10 +26,25 @@ class StudentMarketController extends Controller
         
     }
 
-    public function deals_category()
+    public function deals_category(Request $request)
     {
-        $dealCategories = DealCategory::paginate(25);
-        return view('studentmarket/category',compact('dealCategories'));
+        $dealCategories = DealCategory::orderBy('id','desc')->paginate(25);
+
+
+        $limit = 10;
+        $websiteType = '';
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+        }
+        if ($request->has('website_type')) {
+            $websiteType = $request->input('website_type');
+        }
+
+        if($websiteType)
+        $dealCategories = DealCategory::orderBy('id','desc')->where('website_type', $websiteType)->paginate($limit);
+        else
+        $dealCategories = DealCategory::orderBy('id','desc')->paginate($limit);
+        return view('studentmarket/category',compact('dealCategories','limit','websiteType'));
         
     }
 
@@ -121,7 +138,7 @@ class StudentMarketController extends Controller
         return view('studentmarket/edit', compact('deal','dealCategories'));
     }
 
-    public function update_deals($id, DealRequest $request)
+    public function update_deals($id, DealUpdateRequest $request)
     {
         
         $data = $request->all();
@@ -144,9 +161,9 @@ class StudentMarketController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        try {
+        /*try {
             $deal = Deal::findOrFail($id);
             $deal->delete();
 
@@ -156,14 +173,60 @@ class StudentMarketController extends Controller
 
             return back()->withInput()
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        }*/
+
+        try {
+            $data = $request->all();
+            $action = isset($data['action'])?$data['action']:'';
+            if($action == 'delete'){
+                $deal = Deal::findOrFail($id);
+                $deal->delete();
+                $message = 'Deal was deleted successfully.';
+            }else if($action == 'active'){
+                $deal = Deal::findOrFail($id);
+                $deal->status = 'active';
+                $deal->save();
+                $message = 'Deal was activated.';
+            }
+            else if($action == 'inactive'){
+                
+                $deal = Deal::findOrFail($id);
+                $deal->status = 'inactive';
+                $deal->save();
+                $message = 'Deal was inactivated.';
+            }
+            return redirect()->route('studentmarket.student.view_deals')
+            ->with('success_message', $message);
+
+        } catch (Exception $exception) {
+            return back()->withInput()
+                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }
     }
 
 
-    public function view_deals()
+    
+
+
+    public function view_deals(Request $request)
     {
-        $deals = Deal::paginate(25);
-        return view('studentmarket/view',compact('deals'));
+
+        $limit = 10;
+        $websiteType = '';
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+        }
+        if ($request->has('website_type')) {
+            $websiteType = $request->input('website_type');
+        }
+        
+
+        if($websiteType)
+            $deals = Deal::orderBy('id','desc')->where('website_type', $websiteType)->paginate($limit);
+        else
+            $deals = Deal::orderBy('id','desc')->paginate($limit);
+
+        return view('studentmarket/view',compact('deals','limit','websiteType'));
         
     }
 

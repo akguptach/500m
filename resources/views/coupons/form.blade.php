@@ -1,4 +1,13 @@
 <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+<style>
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+</style>
 <div class="card-body">
 
     <div class="form-group">
@@ -11,11 +20,19 @@
     </div>
 
     <div class="form-group">
+        <label for="rating" class="col-form-label text-lg-end col-lg-2 col-xl-3">Website Type</label>
+        <div class="col-lg-10 col-xl-9">
+            {{ HtmlHelper::WebsiteDropdown('website_type', old('website_type', optional($coupon)->website_type), false, '', 'website_type') }}
+            {!! $errors->first('website_type', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+
+    <div class="form-group">
         <label for="start_date" class="col-form-label text-lg-end col-lg-2 col-xl-3">Start Date</label>
         <div class="col-lg-10 col-xl-9">
-            <input readonly class="datepicker form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date"
-                type="text" id="start_date" value="{{ old('start_date', optional($coupon)->start_date) }}"
-                placeholder="Enter start date here...">
+            <input readonly class="datepicker form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}"
+                name="start_date" type="text" id="start_date"
+                value="{{ old('start_date', optional($coupon)->start_date) }}" placeholder="Enter start date here...">
             {!! $errors->first('start_date', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -23,8 +40,8 @@
     <div class="form-group">
         <label for="end_date" class="col-form-label text-lg-end col-lg-2 col-xl-3">End Date</label>
         <div class="col-lg-10 col-xl-9">
-            <input readonly class="enddatepicker form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" type="text"
-                id="end_date" value="{{ old('end_date', optional($coupon)->end_date) }}"
+            <input readonly class="enddatepicker form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}"
+                name="end_date" type="text" id="end_date" value="{{ old('end_date', optional($coupon)->end_date) }}"
                 placeholder="Enter end date here...">
             {!! $errors->first('end_date', '<div class="invalid-feedback">:message</div>') !!}
         </div>
@@ -87,12 +104,13 @@
     <div class="form-group">
         <label for="reduction_type" class="col-form-label text-lg-end col-lg-2 col-xl-3">Reduction Type</label>
         <div class="col-lg-10 col-xl-9">
-                <select class="form-control{{ $errors->has('reduction_type') ? ' is-invalid' : '' }}" name="reduction_type">
-                    <option value="">--Select--</option>
-                    @foreach([['label'=>'Percentage','value'=>'PERCENTAGE'],['label'=>'Fixed','value'=>'FIXED']] as $item)
-                        <option @if(old('reduction_type', optional($coupon)->reduction_type) == $item['value']) selected="selected" @endif value="{{$item['value']}}">{{$item['label']}}</option>
-                    @endforeach
-                </select>
+            <select class="form-control{{ $errors->has('reduction_type') ? ' is-invalid' : '' }}" name="reduction_type">
+                <option value="">--Select--</option>
+                @foreach([['label'=>'Percentage','value'=>'PERCENTAGE'],['label'=>'Fixed','value'=>'FIXED']] as $item)
+                <option @if(old('reduction_type', optional($coupon)->reduction_type) == $item['value'])
+                    selected="selected" @endif value="{{$item['value']}}">{{$item['label']}}</option>
+                @endforeach
+            </select>
             {!! $errors->first('reduction_type', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -125,7 +143,7 @@
 </div>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 
-<script> 
+<script>
 /*var date = new Date();
 var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 $('.datepicker').datepicker({
@@ -142,29 +160,29 @@ $('.enddatepicker').datepicker({
     startDate: today
 });*/
 
-$(document).ready(function(){
+$(document).ready(function() {
 
-    
+
 
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  $("#start_date").datepicker({
-      todayBtn:  1,
-      autoclose: true,
-      startDate: today,
-      format: 'yyyy-mm-dd',
-  }).on('changeDate', function (selected) {
-      var minDate = new Date(selected.date.valueOf());
-      $('#end_date').datepicker('setStartDate', minDate);
-  });
-  $("#end_date").datepicker({
-    format: 'yyyy-mm-dd',
-    autoclose: true,
-})
-      .on('changeDate', function (selected) {
-          var minDate = new Date(selected.date.valueOf());
-          $('#start_date').datepicker('setEndDate', minDate);
-      });
+    $("#start_date").datepicker({
+        todayBtn: 1,
+        autoclose: true,
+        startDate: today,
+        format: 'yyyy-mm-dd',
+    }).on('changeDate', function(selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('#end_date').datepicker('setStartDate', minDate);
+    });
+    $("#end_date").datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+        })
+        .on('changeDate', function(selected) {
+            var minDate = new Date(selected.date.valueOf());
+            $('#start_date').datepicker('setEndDate', minDate);
+        });
 
     //$('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
 
@@ -176,9 +194,10 @@ $(document).ready(function(){
 
 @if(isset($coupon->id))
 <script>
-    $(document).ready(function(){
-    $('#end_date').datepicker('setStartDate', new Date("{{ old('start_date', optional($coupon)->start_date) }}"));
+$(document).ready(function() {
+    $('#end_date').datepicker('setStartDate', new Date(
+        "{{ old('start_date', optional($coupon)->start_date) }}"));
     $('#start_date').datepicker('setEndDate', new Date("{{ old('end_date', optional($coupon)->end_date) }}"));
-    });
+});
 </script>
 @endif

@@ -20,8 +20,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{route('deal_categories.deal_category.store')}}" class="needs-validation" novalidate action="" accept-charset="UTF-8"
-                                    id="" name="">
+                                <form method="POST" action="{{route('deal_categories.deal_category.store')}}"
+                                    class="needs-validation" novalidate action="" accept-charset="UTF-8" id="" name="">
                                     {{ csrf_field() }}
                                     @include ('studentmarket.form', [
                                     'dealCategory' => null,
@@ -39,12 +39,33 @@
                                 <h4 class="m-0">Deal Category list</h4>
 
                             </div>
+                            <form id="page-limit-form">
+                                <div style="display: flex;" class="card-header d-flex justify-content-between align-items-center p-3">
+                                    <div>
+                                        <labe>Item Per Page</labe>
+                                        <select id="limit" name="limit">
+                                            <option value="5" @if(@$limit==5) selected @endif>5</option>
+                                            <option value="10" @if(@$limit==10) selected @endif>10</option>
+                                            <option value="25" @if(@$limit==25) selected @endif>25</option>
+                                            <option value="50" @if(@$limit==50) selected @endif>50</option>
+                                            <option value="100" @if(@$limit==100) selected @endif>100</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-left: auto;">
+                                        {{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type_filter',[],'All') }}
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+
                             <div class="card-body p-0">
                                 <div class="table-responsive">
+
                                     <table class="table table-striped ">
                                         <thead>
                                             <tr>
                                                 <th> Deal Category Name </th>
+                                                <th> Website Type</th>
                                                 <th> Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -53,6 +74,7 @@
                                             @foreach($dealCategories as $dealCategory)
                                             <tr>
                                                 <td class="align-middle">{{ $dealCategory->category_name }}</td>
+                                                <td class="align-middle">{{ ucfirst($dealCategory->website_type) }}</td>
                                                 <td class="align-middle">{{ ucfirst($dealCategory->status) }}</td>
                                                 <td class="align-middle" style="display: flex;">
 
@@ -67,27 +89,28 @@
                                                         action="{!! route('deal_categories.deal_category.destroy', $dealCategory->id) !!}">
                                                         {{ csrf_field() }}
 
-                                                        <button style="padding: 0px;padding-bottom:3px;" name="action" value="inactive"
-                                                            type="submit" class="btn btn-link "
+                                                        @if($dealCategory->status=='active')
+                                                        <button style="padding: 0px;padding-bottom:3px;" name="action"
+                                                            value="inactive" type="submit" class="btn btn-link "
                                                             title="Inactivate Deal Category"
-                                                            onclick="return confirm('Click Ok to Inactivate Deal Category.')"
-                                                            @if($dealCategory->status=='inactive')
-                                                            disabled="disabled" @endif>
-                                                            <i class="fas fa-times-circle"></i>
-                                                        </button>
-
-                                                        <button style="padding: 0px;padding-bottom:3px;" name="action" value="active"
-                                                            type="submit" class="btn btn-link "
-                                                            title="Delete Deal Category"
-                                                            onclick="return confirm('Click Ok to activate Deal Category.')"
-                                                            @if($dealCategory->status=='active')
-                                                            disabled="disabled" @endif>
+                                                            onclick="return confirm('Click Ok to Inactivate Deal Category.')">
                                                             <i class="fas fa-check-circle"></i>
                                                         </button>
+                                                        @endif
+
+                                                        @if($dealCategory->status=='inactive')
+                                                        <button style="padding: 0px;padding-bottom:3px;" name="action"
+                                                            value="active" type="submit" class="btn btn-link "
+                                                            title="activate Deal Category"
+                                                            onclick="return confirm('Click Ok to activate Deal Category.')">
+                                                            
+                                                            <i class="fas fa-times-circle"></i>
+                                                        </button>
+                                                        @endif
 
 
-                                                        <button style="padding: 0px;padding-bottom:3px;" name="action" value="delete"
-                                                            type="submit" class="btn btn-link "
+                                                        <button style="padding: 0px;padding-bottom:3px;" name="action"
+                                                            value="delete" type="submit" class="btn btn-link "
                                                             title="Delete Deal Category"
                                                             onclick="return confirm('Click Ok to delete Deal Category.')">
                                                             <i class="fas fa-trash-alt"></i>
@@ -100,6 +123,11 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="clearfix mt-2 pagination-div d-flex justify-content-between align-items-center p-3">
+                                <div style="width: 100%;">
+                                    {!! $dealCategories->appends(request()->input())->links('pagination::bootstrap-5') !!}
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -108,5 +136,17 @@
         </section>
     </div>
 </section>
+<script>
+$(document).ready(function() {
+    $('#limit').change(function() {
+        $('#page-limit-form').submit();
+    })
+    $('#website_type_filter').change(function() {
+        $('#page-limit-form').submit();
+    })
+
+
+})
+</script>
 
 @endsection
