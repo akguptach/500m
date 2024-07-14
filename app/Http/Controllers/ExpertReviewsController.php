@@ -76,8 +76,8 @@ class ExpertReviewsController extends Controller
     public function edit($id)
     {
         $expertReview = ExpertReview::findOrFail($id);
-        $experts = Expert::pluck('subject','id')->all();
-
+        //$experts = Expert::pluck('subject','id')->all();
+        $experts = [];
         return view('expert_reviews.edit', compact('expertReview','experts'));
     }
 

@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label >Subject</label>
                                     <select class="form-control" style="width: 100%;" name="tutor_subject">
-                                      <option selected="selected">Please Select Subject</option>
+                                      <option selected="selected" value="">Please Select Subject</option>
                                       @if(!empty($subjects))
                                         @foreach ($subjects as $subject)
                                           <option value="{{$subject->id}}" @if($subject->id == $data->tutor_subject) selected
