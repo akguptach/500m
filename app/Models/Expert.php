@@ -43,7 +43,8 @@ class Expert extends Model
                   'total_orders',
                   'type_of_paper',
                   'status',
-                  'website_type'
+                  'website_type',
+                  'satisfied_students'
               ];
 
     /**

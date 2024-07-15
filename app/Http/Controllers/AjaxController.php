@@ -7,18 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\OrderRequest;
 use App\Models\QcOrderRequest;;
-
+use Illuminate\Http\Request;
 use App\Models\Tutor;
 
 use App\Http\Requests\QcAssignRequest;
 use App\Http\Requests\TutorAssignRequest;
 use App\Services\OrderRequestService;
+use App\Services\TaskTypeService;
 
 class AjaxController extends Controller
 {
 
 
-    public function __construct(protected OrderRequestService $orderRequestService)
+    public function __construct(protected OrderRequestService $orderRequestService,
+    protected TaskTypeService $taskTypeService)
     {
     }
 
@@ -45,6 +47,22 @@ class AjaxController extends Controller
     {
         try {
             return response($this->orderRequestService->sendRequest($request, 'qc'));
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+    }
+
+    public function getTaskTypes(Request $request)
+    {
+        try {
+            $dataList = $this->taskTypeService->getTaskTypesByWebsite($request->website_type);
+            $competences = $request->competences;
+            return view('ajax.task_type_multiselect', compact('dataList','competences'));
+            /*$html = '';
+            foreach($dataList as $list){
+                $html .=  '<option value="'.$list->id.'">'.$list->type_name.'</option>';
+            }
+            echo $html;*/
         } catch (\Exception $e) {
             return response($e->getMessage());
         }

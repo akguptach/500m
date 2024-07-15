@@ -56,6 +56,17 @@
     </div>
 </div>
 
+
+<div class="mb-3 row">
+    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Satisfied Students</label>
+    <div class="col-lg-10 col-xl-9">
+        <input value="{{ old('satisfied_students', optional($expert)->satisfied_students) }}" type="text"
+            class="form-control{{ $errors->has('satisfied_students') ? ' is-invalid' : '' }}" name="satisfied_students" id="satisfied_students"
+            value="" placeholder="Enter satisfied students number" id="">
+        {!! $errors->first('satisfied_students', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
 <div class="mb-3 row">
     <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Online Status</label>
     <div class="col-lg-10 col-xl-9">
@@ -127,24 +138,21 @@
         {!! $errors->first('language', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+
 <div class="mb-3 row competences">
-    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Competences</label>
+    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Help To</label>
     <div class="col-lg-10 col-xl-9">
 
         @php($competences = old('competences', optional($expert)->competences))
         @if(is_array($competences))
         @php($competences = implode(',', $competences))
         @endif
-
+        <div class="competences-ajax">
         <select class="form-control{{ $errors->has('competences') ? ' is-invalid' : '' }}" name="competences[]"
             id="competences" multiple="multiple">
-            @if(!empty($subjects))
-            @foreach ($subjects as $subject)
-            <option @if(str_contains($competences, $subject->subject_name)) selected="selected" @endif
-                value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-            @endforeach
-            @endif
+            
         </select>
+        </div>
         {!! $errors->first('competences', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
@@ -155,13 +163,28 @@
 
 @php($oldArray = [])
 @if(old('addMoreSubject') && count(old('addMoreSubject')) > 0)
-    @php($oldArray = old('addMoreSubject'))
+@php($oldArray = old('addMoreSubject'))
 @elseif($expert && $expert->subjects && count($expert->subjects) >0)
-    @php($oldArray = $expert->subjects)
+@php($oldArray = $expert->subjects)
 @endif
 
 @php($i = 0)
 
+
+<div class="mb-3 row">
+    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3"></label>
+    <div class="col-lg-1 col-xl-1">
+        Show on home
+    </div>
+    <div class="col-lg-6 col-xl-2 expert_subject1">
+
+    </div>
+    <div class="col-lg-4 col-xl-3 expert_subject1">
+
+    </div>
+    <div class="col-lg-4 col-xl-3 expert_subject1">
+    </div>
+</div>
 
 <div id="subject-container">
     @if(count($oldArray)>0)
@@ -169,21 +192,22 @@
     @php($i = count($oldArray)-1)
     @foreach($oldArray as $index=>$filed)
     <div class="mb-3 row subject-row">
-        <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">@if($index == 0) Subject @endif
+        <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">@if($index == 0) Skills @endif
         </label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
+        <div class="col-lg-1 col-xl-1">
+            <input type="checkbox" name="addMoreSubject[{{$index}}][show_on_home]" @if(@$filed['show_on_home']==1)
+                checked="checked" @endif>
+        </div>
+        <div class="col-lg-6 col-xl-2 expert_subject1">
 
-
-
-    
             <select class="form-control" name="addMoreSubject[{{$index}}][expert_subject]">
                 @if(!empty($subjects))
                 @foreach ($subjects as $subject)
 
                 @if(@$filed['subject_id'] == $subject->id)
-                    <option value="{{$subject->id}}" selected="selected">{{$subject->subject_name}}</option>
+                <option value="{{$subject->id}}" selected="selected">{{$subject->subject_name}}</option>
                 @else
-                    <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                 @endif
 
                 @endforeach
@@ -217,14 +241,19 @@
     @else
     <div class="mb-3 row">
         <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Subject</label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
-                <select class="form-control" name="addMoreSubject[0][expert_subject]">
-                    @if(!empty($subjects))
-                    @foreach ($subjects as $subject)
-                    <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
-                    @endforeach
-                    @endif
-                </select>
+
+        <div class="col-lg-1 col-xl-1">
+            <input type="checkbox" name="addMoreSubject[0][show_on_home]">
+        </div>
+
+        <div class="col-lg-7 col-xl-2 expert_subject1">
+            <select class="form-control" name="addMoreSubject[0][expert_subject]">
+                @if(!empty($subjects))
+                @foreach ($subjects as $subject)
+                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                @endforeach
+                @endif
+            </select>
         </div>
         <div class="col-lg-4 col-xl-3 expert_subject1">
             <input type="text" class="form-control" name="addMoreSubject[0][subject_number]"
@@ -240,68 +269,9 @@
 
 <hr>
 
-@php($oldPaperArray = [])
-@if(old('addMorePaper') && count(old('addMorePaper')) > 0)
-    @php($oldPaperArray = old('addMorePaper'))
-@elseif($expert && $expert->papers && count($expert->papers) >0)
-    @php($oldPaperArray = $expert->papers)
-@endif
 
-@php($j = 0)
-<div id="paper-type-container">
 
-    @if(count($oldPaperArray)>0)
 
-    @php($j = count($oldPaperArray)-1)
-    @foreach($oldPaperArray as $p_index=>$filed)
-    <div class="mb-3 row paper-row">
-        <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">@if($p_index == 0) Paper
-            @endif</label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
-            <input value="{{@$filed['type_of_paper']}}" type="text" class="form-control"
-                name="addMorePaper[{{$p_index}}][type_of_paper]" placeholder="Enter paper type">
-            @php($e = 'addMorePaper.'.$p_index.'.type_of_paper')
-            @error($e)
-            <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            <input value="{{@$filed['paper_number']}}" type="text" class="form-control"
-                name="addMorePaper[{{$p_index}}][paper_number]" placeholder="Enter paper number">
-            @php($e = 'addMorePaper.'.$p_index.'.paper_number')
-            @error($e)
-            <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            @if($p_index == 0)
-            <button type="button" class="btn btn-outline-primary" id="add-more-paper">Add More</button>
-            @else
-            <button type="button" class="btn btn-outline-danger remove-paper">Remove</button>
-            @endif
-        </div>
-    </div>
-    @endforeach
-    @else
-    <div class="mb-3 row paper-row">
-        <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Paper</label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMorePaper[{{$j}}][type_of_paper]"
-                placeholder="Enter paper type">
-
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMorePaper[{{$j}}][paper_number]"
-                placeholder="Enter paper number">
-
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            <button type="button" class="btn btn-outline-primary" id="add-more-paper">Add More</button>
-        </div>
-    </div>
-    @endif
-
-</div>
 
 
 
@@ -343,12 +313,31 @@
     max-width: 100%;
 }
 </style>
+@php($webType = old('website_type', optional($expert)->website_type))
 <script>
 $(document).ready(function() {
+
+
+    $.ajax({
+            url: "{{route('get_task_types')}}?website_type={{$webType}}&competences={{$competences}}",
+            success: function(html) {
+                $('.competences-ajax').html(html);
+            }
+        });
+        
+    $('#website_type').change(function() {
+        $.ajax({
+            url: "{{route('get_task_types')}}?website_type="+$(this).val()+'&competences={{$competences}}',
+            success: function(html) {
+                $('.competences-ajax').html(html);
+            }
+        });
+    })
+
+
     $('#language').multiSelect();
     $('.language .multi-select-button').html("{{$lang}}")
-    $('#competences').multiSelect();
-    $('.competences .multi-select-button').html("{{$competences}}")
+    //$('.competences .multi-select-button').html("{{$competences}}")
 });
 </script>
 <script>
@@ -360,13 +349,17 @@ $(function() {
 
 $(document).ready(function() {
     var i = '{{$i}}';
-    var j = '{{$j}}';
+    
 
     $('#add-more-subject').click(function() {
         ++i;
         $("#subject-container").append(`<div class="mb-3 row subject-row">
         <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3"></label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
+
+        <div class="col-lg-1 col-xl-1">
+            <input type="checkbox" name="addMoreSubject[${i}][show_on_home]" >
+        </div>
+        <div class="col-lg-7 col-xl-2 expert_subject1">
         <select class="form-control" name="addMoreSubject[${i}][expert_subject]">
             @if(!empty($subjects))
             @foreach ($subjects as $subject)
@@ -388,24 +381,7 @@ $(document).ready(function() {
     });
 
 
-    $('#add-more-paper').click(function() {
-        ++j;
-        $("#paper-type-container").append(`<div class="mb-3 row paper-row">
-        <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3"></label>
-        <div class="col-lg-8 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMorePaper[${j}][type_of_paper]" placeholder="Enter paper type">
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMorePaper[${j}][paper_number]" placeholder="Enter paper number">
-        </div>
-        <div class="col-lg-4 col-xl-3 expert_subject1">
-            <button type="button" class="btn btn-outline-danger remove-paper">Remove</button>
-        </div>
-    </div>`);
-    });
-    $(document).on('click', '.remove-paper', function() {
-        $(this).parents('.paper-row').remove();
-    });
+    
 
 })
 </script>

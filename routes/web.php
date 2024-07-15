@@ -115,6 +115,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/tutor-assign-request', [AjaxController::class, 'tutorAssignRequest'])->name('tutor_assign_request');
     Route::post('/qc-assign-request', [AjaxController::class, 'qcAssignRequest'])->name('qc_assign_request');
 
+
+    Route::get('/get-task-types', [AjaxController::class, 'getTaskTypes'])->name('get_task_types');
+
+
     Route::post('/order/message', [OrdersController::class, 'sendMessage'])->name('send_message');
     Route::post('/request/message', [OrdersController::class, 'sendRequestMessage'])->name('send_request_message');
     Route::post('/request/submit/budget/{id}', [OrdersController::class, 'submitFinalBudget'])->name('submit_budget');

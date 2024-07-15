@@ -94,13 +94,14 @@ class ExpertsController extends Controller
             ]);
         }
 
-        foreach ($request->addMorePaper as $item) {
+        /*foreach ($request->addMorePaper as $item) {
             ExpertPaper::Create([
                 'expert_id' => $expert->id,
                 'type_of_paper' => $item['type_of_paper'],
-                'paper_number' => $item['paper_number']
+                'paper_number' => $item['paper_number'],
+                'show_on_home' => isset($item['show_on_home'])?1:0,
             ]);
-        }
+        }*/
 
         return redirect()->route('experts.expert.index')
             ->with('success_message', 'Expert was successfully added.');
@@ -162,23 +163,26 @@ class ExpertsController extends Controller
 
         ExpertSubject::where('expert_id',$expert->id)->delete();
         ExpertPaper::where('expert_id',$expert->id)->delete();
+
+        
         if($request->addMoreSubject)
         foreach ($request->addMoreSubject as $item) {
             ExpertSubject::Create([
                 'expert_id' => $expert->id,
                 'subject_id' => $item['expert_subject'],
-                'subject_number' => $item['subject_number']
+                'subject_number' => $item['subject_number'],
+                'show_on_home' => isset($item['show_on_home'])?1:0,
             ]);
         }
 
-        if($request->addMorePaper)
+        /*if($request->addMorePaper)
         foreach ($request->addMorePaper as $item) {
             ExpertPaper::Create([
                 'expert_id' => $expert->id,
                 'type_of_paper' => $item['type_of_paper'],
                 'paper_number' => $item['paper_number']
             ]);
-        }
+        }*/
 
         $expert->update($data);
 

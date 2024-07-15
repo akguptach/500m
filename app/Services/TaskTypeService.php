@@ -65,4 +65,10 @@ class TaskTypeService
         $task_type->status          =   $request->status;
         $task_type->save();
     }
+
+    public function getTaskTypesByWebsite($websiteType)
+    {
+        $taskTypes = TaskType::where('website_type',$websiteType)->orderBy('id', 'desc')->get();
+        return $taskTypes;
+    }
 }
