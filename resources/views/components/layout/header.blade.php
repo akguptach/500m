@@ -1,233 +1,703 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Essay Help</title>
+	
+	<!-- Title -->
+	<title>EduMin - Education Admin Dashboard Template | dexignlabs</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="author" content="dexignlabs">
+	<meta name="robots" content="index, follow">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/fontawesome-free/css/all.min.css') }}">
+	<meta name="keywords" content="admin, dashboard, admin dashboard, admin template, template, admin panel, administration, analytics, bootstrap, modern, responsive, creative, retina ready, modern Dashboard responsive dashboard, responsive template, user experience, user interface, Bootstrap Dashboard, Analytics Dashboard, Customizable Admin Panel, EduMin template, ui kit, web app, EduMin, School Management,Dashboard Template, academy, course, courses, e-learning, education, learning, learning management system, lms, school, student, teacher">   
 
-    <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
+	<meta name="description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+	<meta property="og:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+	<meta property="og:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+	
+	<meta property="og:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+	<meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/jqvmap/jqvmap.min.css') }}">
+	<meta name="twitter:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+	<meta name="twitter:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+	<script src="{{ asset('js/pluginsinit/jquery-3.7.1.min.js') }}"></script>
+	<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
 
-    <link rel="stylesheet" href="{{ asset('css/adminlte.min2167.css?v=3.2.0') }}">
+	<meta name="twitter:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	
+	<!-- STYLESHEETS -->
+    <link rel="stylesheet" href="<?php echo asset('/');?>vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+	<link href="<?php echo asset('/');?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <link class="main-css" rel="stylesheet" href="<?php echo asset('/');?>css/style.css">
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/daterangepicker/daterangepicker.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('js/plugins/summernote/summernote-bs4.min.css') }}">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('notifications/notification.css') }}">
-    <script src="{{ asset('js/jquery.min3.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-
-    <style>
-        .notifications {
-            width: 300px;
-            max-height: 400px;
-
-        }
-
-        .notifications h2 {
-            font-size: 14px;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            color: #999
-        }
-
-        .notifications h2 span {
-            color: #f00
-        }
-
-        .notifications-item {
-            display: flex;
-            border-bottom: 1px solid #eee;
-            padding: 6px 9px;
-            margin-bottom: 0px;
-            cursor: pointer
-        }
-
-        .notifications-item:hover {
-            background-color: #eee
-        }
-
-        .notifications-item img {
-            display: block;
-            width: 50px;
-            height: 50px;
-            margin-right: 9px;
-            border-radius: 50%;
-            margin-top: 2px
-        }
-
-        .notifications-item .text h4 {
-            color: #777;
-            font-size: 16px;
-            margin-top: 3px
-        }
-
-        .notifications-item .text p {
-            color: #aaa;
-            font-size: 12px
-        }
-
-        .button__badge {
-            background-color: #fa3e3e;
-            border-radius: 2px;
-            color: white;
-            padding: 0px 4px;
-            font-size: 10px;
-            position: absolute;
-            top: -7%;
-            right: 8%;
-        }
-    </style>
+	
 </head>
+<body>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <div class="animation__shake">Loading</div>
-            <?php /*<img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">*/ ?>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
         </div>
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
 
-                @php( $qcOrderMessages = \App\Models\QcOrderMessage::with(['sendertable'])->where('read',0)
-                ->where('receivertable_id',auth()->user()->id)
-                ->where('receivertable_type','App\Models\User')
-                ->get()->toArray())
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
 
-                @php( $studentOrderMessages =
-                \App\Models\StudentOrderMessage::with(['sendertable'])->where('read',0)
-                ->where('receivertable_id',auth()->user()->id)
-                ->where('receivertable_type','App\Models\User')
-                ->get()->toArray())
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header" style="background-color:white">
+            <a href="{{ url('/dashboard') }}" class="brand-logo">
+                <p style="font-size:32px;color: #6a73fa;" >500M Admin</p>
+                
+            </a>
 
-                @php( $teacherOrderMessages =
-                \App\Models\TeacherOrderMessage::with(['sendertable'])->where('read',0)
-                ->where('receivertable_id',auth()->user()->id)
-                ->where('receivertable_type','App\Models\User')
-                ->get()->toArray())
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
 
+        <!--**********************************
+            Chat box start
+        ***********************************-->
+		<!-- <div class="chatbox">
+			<div class="chatbox-close"></div>
+			<div class="custom-tab-1">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" href="#notes">Notes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" href="#alerts">Alerts</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" data-bs-toggle="tab" href="#chat">Chat</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade active show" id="chat" role="tabpanel">
+						<div class="card mb-sm-3 mb-md-0 contacts_card dlab-chat-user-box">
+							<div class="card-header chat-list-header text-center">
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/><rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"/></g></svg></a>
+								<div>
+									<h6 class="mb-1">Chat List</h6>
+									<p class="mb-0">Show All</p>
+								</div>
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+							</div>
+							<div class="card-body contacts_body p-0 dlab-scroll  " id="DLAB_W_Contacts_Body">
+								<ul class="contacts">
+									<li class="name-first-letter">A</li>
+									<li class="active dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>Archie Parker</span>
+												<p>Kalid is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Alfie Mason</span>
+												<p>Taherah left 7 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>AharlieKane</span>
+												<p>Sami is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Athan Jacoby</span>
+												<p>Nargis left 30 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">B</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Bashid Samim</span>
+												<p>Rashid left 50 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>Breddie Ronan</span>
+												<p>Kalid is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Ceorge Carson</span>
+												<p>Taherah left 7 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">D</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>Darry Parker</span>
+												<p>Sami is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Denry Hunter</span>
+												<p>Nargis left 30 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">J</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Jack Ronan</span>
+												<p>Rashid left 50 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>Jacob Tucker</span>
+												<p>Kalid is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>James Logan</span>
+												<p>Taherah left 7 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span>Joshua Weston</span>
+												<p>Sami is online</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">O</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Oliver Acker</span>
+												<p>Nargis left 30 mins ago</p>
+											</div>
+										</div>
+									</li>
+									<li class="dlab-chat-user">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont">
+												<img src="<?php echo asset('/');?>images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+												<span class="online_icon offline"></span>
+											</div>
+											<div class="user_info">
+												<span>Oscar Weston</span>
+												<p>Rashid left 50 mins ago</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="card chat dlab-chat-history-box d-none">
+							<div class="card-header chat-list-header text-center">
+								<a href="javascript:void(0);" class="dlab-chat-history-back">
+									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
+								</a>
+								<div>
+									<h6 class="mb-1">Chat with Khelesh</h6>
+									<p class="mb-0 text-success">Online</p>
+								</div>							
+								<div class="dropdown">
+									<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+									<ul class="dropdown-menu dropdown-menu-end">
+										<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+										<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+										<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+										<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+									</ul>
+								</div>
+							</div>
+							<div class="card-body msg_card_body dlab-scroll" id="DLAB_W_Contacts_Body3">
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										Hi, how are you samim?
+										<span class="msg_time">8:40 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										Hi Khalid i am good tnx how about you?
+										<span class="msg_time_send">8:55 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+								<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										I am good too, thank you for your chat template
+										<span class="msg_time">9:00 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										You are welcome
+										<span class="msg_time_send">9:05 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+								<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										I am looking for your next templates
+										<span class="msg_time">9:07 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										Ok, thank you have a good day
+										<span class="msg_time_send">9:10 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										Bye, see you
+										<span class="msg_time">9:12 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										Hi, how are you samim?
+										<span class="msg_time">8:40 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										Hi Khalid i am good tnx how about you?
+										<span class="msg_time_send">8:55 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+								<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										I am good too, thank you for your chat template
+										<span class="msg_time">9:00 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										You are welcome
+										<span class="msg_time_send">9:05 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+								<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										I am looking for your next templates
+										<span class="msg_time">9:07 AM, Today</span>
+									</div>
+								</div>
+								<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										Ok, thank you have a good day
+										<span class="msg_time_send">9:10 AM, Today</span>
+									</div>
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+								</div>
+								<div class="d-flex justify-content-start mb-4">
+									<div class="img_cont_msg">
+										<img src="<?php echo asset('/');?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+									</div>
+									<div class="msg_cotainer">
+										Bye, see you
+										<span class="msg_time">9:12 AM, Today</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer type_msg">
+								<div class="input-group">
+									<textarea class="form-control" placeholder="Type your message..."></textarea>
+									<div class="input-group-append">
+										<button type="button" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="alerts" role="tabpanel">
+						<div class="card mb-sm-3 mb-md-0 contacts_card">
+							<div class="card-header chat-list-header text-center">
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+								<div>
+									<h6 class="mb-1">Notications</h6>
+									<p class="mb-0">Show All</p>
+								</div>
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/><path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/></g></svg></a>
+							</div>
+							<div class="card-body contacts_body p-0 dlab-scroll" id="DLAB_W_Contacts_Body1">
+								<ul class="contacts">
+									<li class="name-first-letter">SEVER STATUS</li>
+									<li class="active">
+										<div class="d-flex bd-highlight">
+											<div class="img_cont primary">KK</div>
+											<div class="user_info">
+												<span>David Nester Birthday</span>
+												<p class="text-primary">Today</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">SOCIAL</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="img_cont success">RU</div>
+											<div class="user_info">
+												<span>Perfection Simplified</span>
+												<p>Jame Smith commented on your status</p>
+											</div>
+										</div>
+									</li>
+									<li class="name-first-letter">SEVER STATUS</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="img_cont primary">AU</div>
+											<div class="user_info">
+												<span>AharlieKane</span>
+												<p>Sami is online</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="img_cont info">MO</div>
+											<div class="user_info">
+												<span>Athan Jacoby</span>
+												<p>Nargis left 30 mins ago</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="card-footer"></div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="notes">
+						<div class="card mb-sm-3 mb-md-0 note_card">
+							<div class="card-header chat-list-header text-center">
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/><rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"/></g></svg></a>
+								<div>
+									<h6 class="mb-1">Notes</h6>
+									<p class="mb-0">Add New Nots</p>
+								</div>
+								<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/><path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/></g></svg></a>
+							</div>
+							<div class="card-body contacts_body p-0 dlab-scroll" id="DLAB_W_Contacts_Body2">
+								<ul class="contacts">
+									<li class="active">
+										<div class="d-flex bd-highlight">
+											<div class="user_info">
+												<span>New order placed..</span>
+												<p>10 Aug 2020</p>
+											</div>
+											<div class="ms-auto">
+												<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+												<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="user_info">
+												<span>Youtube, a video-sharing website..</span>
+												<p>10 Aug 2020</p>
+											</div>
+											<div class="ms-auto">
+												<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+												<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="user_info">
+												<span>john just buy your product..</span>
+												<p>10 Aug 2020</p>
+											</div>
+											<div class="ms-auto">
+												<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+												<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="d-flex bd-highlight">
+											<div class="user_info">
+												<span>Athan Jacoby</span>
+												<p>10 Aug 2020</p>
+											</div>
+											<div class="ms-auto">
+												<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+												<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<!--**********************************
+            Chat box End
+        ***********************************-->
 
-                @php( $teacherOrderReqMessages =
-                \App\Models\OrderRequestMessage::with(['sendertable'])->where('read',0)
-                ->where('receivertable_id',auth()->user()->id)
-                ->where('receivertable_type','App\Models\User')
-                ->get())
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>
-                        <span class="button__badge">{{count($studentOrderMessages)+count($qcOrderMessages)+count($teacherOrderMessages)+count($teacherOrderReqMessages)}}</span>
-                    </a>
-
-
-
-
-
-                    <div class="notifications dropdown-menu" id="box" style="overflow: scroll;">
-                        <h2>Notifications -
-                            <span>{{count($studentOrderMessages)+count($qcOrderMessages)+count($teacherOrderMessages)+count($teacherOrderReqMessages)}}</span>
-                        </h2>
-                        @foreach($studentOrderMessages as $message)
-                        <div class="notifications-item">
-                            <div class="text" style="width: 88%;word-wrap: break-word;">
-                                <h4>{{@$message['sendertable']['first_name']}} {{@$message['sendertable']['last_name']}}
-                                </h4>
-                                <p>{{$message['message']}}</p>
-                                <p><a href="{{$message['attachment']}}" target="_blank">{{$message['attachment']}}</a>
-                                </p>
-                            </div>
-                            <div>
-                                <a href="{{route('orders.view',['orders'=>$message['order_id']])}}">View</a>
-                            </div>
-
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <!-- <div class="search_bar dropdown">
+                                <span class="search_icon p-3 c-pointer" data-bs-toggle="dropdown">
+                                    <i class="mdi mdi-magnify"></i>
+                                </span>
+                                <div class="dropdown-menu p-0 m-0">
+                                    <form>
+                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                    </form>
+                                </div>
+                            </div> -->
                         </div>
-                        @endforeach
 
-                        @foreach($teacherOrderMessages as $message)
-                        <div class="notifications-item">
-                            <div class="text" style="width: 88%;word-wrap: break-word;">
-                                <h4>{{$message['sendertable']['tutor_first_name']}}
-                                </h4>
-                                <p>{{$message['message']}}</p>
-                                <p><a href="{{$message['attachment']}}" target="_blank">{{$message['attachment']}}</a>
-                                </p>
-                            </div>
-                            <div>
-                                <a href="{{route('orders.view',['orders'=>$message['order_id']])}}">View</a>
-                            </div>
-                        </div>
-                        @endforeach
-
-                        @foreach($teacherOrderReqMessages as $message)
-                        @if($message->request->type == 'TUTOR')
-                        @php($url = route('tutor_request_sent',['id'=>$message->request->order_id]))
-                        @else
-                        @php($url = route('qc_request_sent',['id'=>$message->request->order_id]))
-                        @endif
-                        <div class="notifications-item">
-                            <div class="text" style="width: 88%;word-wrap: break-word;">
-                                <h4>{{$message['sendertable']['tutor_first_name']}}
-                                </h4>
-                                <p>{{$message['message']}}</p>
-                                <p><a href="{{$message['attachment']}}" target="_blank">{{$message['attachment']}}</a>
-                                </p>
-                            </div>
-                            <div>
-                                <a href="{{$url}}">View</a>
-                            </div>
-                        </div>
-                        @endforeach
-
-
-
-                        @foreach($qcOrderMessages as $message)
-                        <div class="notifications-item">
-                            <div class="text" style="width: 88%;word-wrap: break-word;">
-                                <h4>{{$message['sendertable']['tutor_first_name']}}
-                                </h4>
-                                <p>{{$message['message']}}</p>
-                                <p><a href="{{$message['attachment']}}" target="_blank">{{$message['attachment']}}</a>
-                                </p>
-                            </div>
-                            <div>
-                                <a href="{{route('orders.view',['orders'=>$message['order_id']])}}">View</a>
-                            </div>
-                        </div>
-                        @endforeach
-
-
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link bell dlab-theme-mode p-0" href="javascript:void(0);">
+									<i id="icon-light" class="fas fa-sun"></i>
+                                    <i id="icon-dark" class="fas fa-moon"></i>
+                                </a>
+							</li>
+							
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link bell ai-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                    <svg id="icon-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+										<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+										<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+									</svg>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="list-unstyled">
+                                        <li class="media dropdown-item align-items-center gap-3">
+                                            <span class="success"><i class="ti-user"></i></span>
+                                            <div class="media-body">
+                                                <a href="javascript:void(0);">
+                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item align-items-center gap-3">
+                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
+                                            <div class="media-body">
+                                                <a href="javascript:void(0);">
+                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item align-items-center gap-3">
+                                            <span class="danger"><i class="ti-bookmark"></i></span>
+                                            <div class="media-body">
+                                                <a href="javascript:void(0);">
+                                                    <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item align-items-center gap-3">
+                                            <span class="primary"><i class="ti-heart"></i></span>
+                                            <div class="media-body">
+                                                <a href="javascript:void(0);">
+                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item align-items-center gap-3">
+                                            <span class="success"><i class="ti-image"></i></span>
+                                            <div class="media-body">
+                                                <a href="javascript:void(0);">
+                                                    <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                    </ul>
+                                    <a class="all-notification" href="javascript:void(0);">See all notifications <i
+                                            class="ti-arrow-right"></i></a>
+                                </div>
+                            </li>
+                           
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                    <img src="/images/profile/education/pic1.jpg" width="20" alt=""/>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{{ route('profile.edit') }}" class="dropdown-item ai-icon">
+                                        <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        <span class="ms-2">Profile </span>
+                                    </a>
+                                    <a href="{{ route('logout') }}" class="dropdown-item ai-icon">
+                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                        <span class="ms-2">Logout </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                </li>
-
-
-
-
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link">
-                        <i class="fa fa-cog"></i> 
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                </nav>
+            </div>
+        </div>
+		
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->

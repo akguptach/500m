@@ -7,14 +7,14 @@
     @csrf
     <div class="modal-header">
         <h4 class="modal-title">{{$title}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
 
-        <div class="table-responsive mailbox-messages" style="overflow: scroll;height: 400px;">
-            <table class="table table-hover table-striped">
+        <div class="table-responsive table-bordered mailbox-messages" style="overflow: scroll;height: 400px;">
+            <table class="table table-hover ">
                 <tbody>
                     @foreach($teachers as $qc)
                     <tr>
@@ -38,14 +38,17 @@
             <input type="hidden" name="order_id" value="{{$order_id}}">
             <input type="hidden" name="student_id" value="{{$student_id}}">
             <label for="inputProjectLeader">Delivery Date</label>
-            <input type="date" id="inputProjectLeader" class="form-control" name="delivery_date">
+            <input type="date" id="inputProjectLeader" class="form-control datepicker" name="delivery_date">
             <small class="text-danger" id="delivery_date_error"></small>
         </div>
 
     </div>
 
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Assign</button>
     </div>
 </form>
+
+
+

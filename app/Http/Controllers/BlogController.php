@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Categories;
 use App\Models\Website;
+use Illuminate\Support\Facades\File;
+
 
 
 use App\Services\BlogService;
@@ -91,6 +93,13 @@ class BlogController extends Controller
             return redirect('/blog')->with('status', 'Blog Deleted Successfully');
         } else {
             return redirect('/blog');
+        }
+    }
+
+    public function remove_img($imageurl)
+    {
+        if (File::exists($imageurl)) {
+            File::delete($imageurl);
         }
     }
 }

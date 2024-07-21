@@ -10,7 +10,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Services</h3>
                                 <div class="float-right">
-                                    <a href="{{ route('services.create') }}">
+                                    <a href="{{ route('services.create') }}" class="btn btn-primary">
                                         <i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                                 </div>
                             </div>
@@ -20,7 +20,7 @@
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="services" class="table table-bordered table-striped">
+                                <table id="services" class="table table-bordered table-responsive table-bordered  row-border">
                                     <thead>
                                         <tr>
                                             <th style="width:100px;">Sr.No.</th>

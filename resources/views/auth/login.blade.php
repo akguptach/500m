@@ -1,100 +1,113 @@
-<html>
-	<header>
-		<title>500m Login Form</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-        <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
-        <style>
-			
-			.error{
-				color:#DE3545 !important;
-				width:100%;
-				font-weight:normal !important;
-			}
-			
-			input.error{
-				border-color:#DE3545 !important;
-			}
-			.login-card-body .input-group .form-control
-			{
-				border:1px solid #d9d1d1 !important;
-				border-radius:5px !important;
-			}
-			
-		</style>
-	</header>
-	<body class="hold-transition login-page" style="background-image: url('images/1.jpg');">
-		<div class="login-box">
-  <div class="login-logo">
-    <a href=""><b>Wecome to </b>admin login</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card" style="border-radius: 1rem; ">
-    <div class="card-body login-card-body" style="border-radius: 1rem; ">
-      <p class="login-box-msg">Sign in to start your session</p>
+<!DOCTYPE html>
+<html lang="en">
 
-      <form id="login_form" method="POST"  action="{{ route('login') }}">
-	    @csrf
-	    <x-auth-session-status class="mb-4" :status="session('status')" />
-        
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-		 <x-input-error :messages="$errors->get('email')" class="mt-2 error" />
-          
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-          
-		  <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
+<head>
+
+    <!-- Title -->
+    <title>500m Login Form</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="dexignlabs">
+    <meta name="robots" content="index, follow">
+
+    <meta name="keywords" content="admin, dashboard, admin dashboard, admin template, template, admin panel, administration, analytics, bootstrap, modern, responsive, creative, retina ready, modern Dashboard responsive dashboard, responsive template, user experience, user interface, Bootstrap Dashboard, Analytics Dashboard, Customizable Admin Panel, EduMin template, ui kit, web app, EduMin, School Management,Dashboard Template, academy, course, courses, e-learning, education, learning, learning management system, lms, school, student, teacher">
+
+    <meta name="description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+
+    <meta property="og:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+    <meta property="og:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+
+    <meta property="og:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="twitter:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+    <meta name="twitter:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+
+    <meta name="twitter:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+
+    <!-- STYLESHEETS -->
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <link class="main-css" rel="stylesheet" href="css/style.css">
+    <!-- STYLESHEETS -->
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link class="main-css" rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link class="main-css" rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="fix-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-6">
+                    <div class="card mb-0 h-auto">
+                        <div class="card-body">
+                            <div class="text-center mb-2">
+                                <a href="index.html">
+                                    <h1>500M</h1>
+                                </a>
+                            </div>
+                            <h4 class="text-center mb-4">Sign in your account</h4>
+                            <form id="login_form" method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="form-label" for="username">Email</label>
+                                    <input type="email" name="email" class="form-control" placeholder="email" id="" required>
+                                </div>
+                                <div class="mb-4 position-relative">
+                                    <label class="form-label" for="dlabPassword">Password</label>
+                                    <input type="password" name="password" id="dlabPassword" class="form-control" required>
+                                    <span class="show-pass eye">
+                                        <i class="fa fa-eye-slash"></i>
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                                <div class="form-row d-flex flex-wrap justify-content-between mt-4 mb-2">
+                                    <div class="form-group">
+                                        <div class="form-check custom-checkbox ms-1">
+                                            <input type="checkbox" class="form-check-input" id="basic_checkbox_1">
+                                            <label class="form-check-label" for="basic_checkbox_1">Remember my preference</label>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                @if($errors->any())
+    {!! implode('', $errors->all('<div style="color:red;" class="mb-3">:message</div>')) !!}
+@endif
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-block">Sign Me In</button>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-          <!-- /.col -->
         </div>
-      </form>
-
     </div>
-    <!-- /.login-card-body -->
-  </div>
-</div>
-		
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-		<script>
-			$(document).ready(function () {
- 
-				$("#login_form").validate({
-			 
-					// In 'rules' user have to specify all the 
-					// constraints for respective fields
-					rules: {
-                        email: {
-							required: true,
-							email: true
-						},
-						password: {
-							required: true,
-							minlength: 5
-						},
-					},
-				});
-			});
-		</script>
-        
-	</body>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="vendor/global/global.min.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    <script src="js/custom.min.js"></script>
+    <script src="js/dlabnav-init.js"></script>
+
+
+
+</body>
+
 </html>

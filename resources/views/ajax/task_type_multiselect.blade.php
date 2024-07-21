@@ -12,8 +12,7 @@
     @endforeach
 </select>
 <script>
-$('#competences').multiSelect();
-$('.competences .multi-select-button').html("{{@$competencesString}}")
+$('#competences').selectpicker('refresh');
+// $('#competences').multiselect();
+// $('.competences .multi-select-button').html("{{@$competencesString}}")
 </script>
-<link href="{{ asset('css/multi-select.css') }}" rel="stylesheet" />
-<script src="{{asset('js/jquery.multi-select.min.js')}}"></script>

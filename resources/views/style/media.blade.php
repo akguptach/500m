@@ -10,7 +10,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Media</h3>
                                 <div class="float-right">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
                                         <i class="fa fa-plus" aria-hidden="true"></i> Add
                                     </button>
                                 </div>
@@ -21,7 +21,7 @@
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered ">
                                     <thead>
                                         <tr>
                                             <th>Sr.No.</th>
@@ -41,22 +41,24 @@
     </div>
     <!-- Button trigger modal -->
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Image Upload</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button> -->
                 </div>
                 <form id="uploadForm" enctype="multipart/form-data" method="post" action="{{ route('media.store') }}">
                     @csrf <!-- Include CSRF token field -->
                     <div class="modal-body">
-                        <input type="file" id="image" name="image" required>
+                        <input type="file" class="form-control" id="image" name="image" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <!-- Corrected the typo in the 'Submit' button -->
                     </div>
@@ -132,6 +134,7 @@
                 }
             });
         });
+
     });
 </script>
 @endsection

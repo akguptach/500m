@@ -2,33 +2,45 @@
 
 @section('content')
 
-    <div class="card text-bg-theme">
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Expert</h3>
+                        <div class="ml-auto">
+                            <a href="{{ route('experts.expert.index') }}" class="btn btn-primary" title="Show All Expert">
+                                <span aria-hidden="true"></span>View Expert
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (session('status'))
+                        <div class="alert alert-success" id="success_message">
+                            {{ session('status') }}
+                        </div>
+                        @endif
+                        <div class="form-validation">
 
-        <div class="card-body">
+                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                @method('PUT')
+                                @include ('experts.form', [
+                                'expert' => $expert,
+                                ])
 
-            <?php /*@if ($errors->any())
-                <div class="alert alert-danger" role="alert">
-                    <ul class="list-unstyled mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                                <div class="form-group row">
+                                    <div class="col-lg-8 ml-auto">
+                                        <input type="submit"  class="btn btn-primary" value="Update">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            @endif*/ ?>
-
-            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <input name="_method" type="hidden" value="PUT">
-            @include ('experts.form', [
-                                        'expert' => $expert,
-                                      ])
-
-                <div class="col-lg-10 col-xl-9 offset-lg-2 offset-xl-3">
-                    <input class="btn btn-primary" type="submit" value="Update">
-                </div>
-            </form>
-
+            </div>
         </div>
     </div>
-
+</section>
 @endsection

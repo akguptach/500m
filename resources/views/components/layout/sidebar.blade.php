@@ -1,370 +1,146 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <div class="sidebar">
-       
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-               
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-link {{ ( request()->is('dashboard') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
-				
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="nav-icon fas fa-tachometer-alt"></i>
-						<p>
-						Pricing Calculator
-						<i class="right fas fa-angle-left"></i>
-						</p>
-					</a>
-					<ul class="nav nav-treeview" style="display: none;">
-						<li class="nav-item">
-							
-							<a href="{{ route('subject.index') }}"
-                        class="nav-link {{ (request()->is('subject') || request()->is('subject/create') || request()->is('subject/*/edit') )? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Subject
-                        </p>
-                    </a>
-               
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('tasktype.index') }}"
-								class="nav-link {{ ( request()->is('tasktype') || request()->is('tasktype/create') || request()->is('tasktype/*/edit')  ) ? 'active' : '' }}">
-								<i class="nav-icon fas fa-columns"></i>
-								<p>
-									Task Type
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('level_study.index') }}"
-							class="nav-link {{ (request()->is('level_study') || request()->is('level_study/create') || request()->is('level_study/*/edit') ) ? 'active' : '' }}">
-							<i class="nav-icon fas fa-circle"></i>
-							<p>Level of Study {{ request()->is('/level_study') ? 'active' : '' }}</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('grade.index') }}"
-							class="nav-link {{ (request()->is('grade') || request()->is('grade/create') || request()->is('grade/*/edit') ) ? 'active' : '' }}">
-							<i class="nav-icon fas fa-file"></i>
-							<p>
-								Grades {{ request()->is('/grade') ? 'active' : '' }}
-							</p>
-							</a>
-						</li>
-						<li class="nav-item">
-						      <a href="{{ route('referencing.index') }}"
-							class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
-							<i class="nav-icon fas fa-bolt"></i>
-							<p>Referencing Style {{ request()->is('/referencing') ? 'active' : '' }}</p>
-							</a>
-						</li>
-                    </a>
-					</ul>
-				</li>
-				
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="nav-icon fas fa-tachometer-alt"></i>
-						<p>
-						Content Management
-						<i class="right fas fa-angle-left"></i>
-						</p>
-					</a>
-					<ul class="nav nav-treeview" style="display: none;">
-					     <li class="nav-item">
-							<a href="{{route('media.save')}}"
-								class="nav-link ">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									Media
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('pages') }}"
-								class="nav-link {{ (request()->is('pages')  || request()->is('pages/*/edit') ) ? 'active' : '' }}">
-								<i class="nav-icon fas fa-book"></i>
-								<p>
-									Pages {{ request()->is('/grade') ? 'active' : '' }}
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('services_index') }}"
-								class="nav-link {{ (request()->is('services_index')  || request()->is('services_index/*/edit') ) ? 'active' : '' }}">
-								<i class="nav-icon fas fa-pen-nib"></i>
-								<p>
-									Services {{ request()->is('/services_index') ? 'active' : '' }}
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-								<a href="{{ route('faq.index') }}"
-									class="nav-link {{ (request()->is('faq') || request()->is('faq/create') || request()->is('faq/*/edit') ) ? 'active' : '' }}">
-									<i class="nav-icon fas fa-question"></i>
-									<p>
-										FAQ {{ request()->is('/faq') ? 'active' : '' }}
-									</p>
-								</a>
-						</li>
-					</ul>
-				</li>
-
-                <li class="nav-item">
-                    <a href="{{ route('role.index') }}"
-                        class="nav-link {{ ( request()->is('role')  || request()->is('role/create') || request()->is('role/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Role
-                        </p>
-                    </a>
-                </li>
-                
-                <!--<li class="nav-item">
-                <a href="{{ route('studylabel.index') }}" class="nav-link {{ (request()->is('studylabel') || request()->is('studylabel/create') || request()->is('studylabel/*/edit')  ) ? 'active' : '' }}">
-                <i class="nav-icon fas fa-file"></i>
-                    <p>
-                        Study Label
-                    </p>
-                </a>
-            </li>-->
-                <li class="nav-item">
-                    <a href="{{ route('website.index') }}"
-                        class="nav-link {{ (request()->is('website') || request()->is('website/create') || request()->is('website/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Website Manager
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('contact.form.store') }}"
-                        class="nav-link {{ (request()->is('referencing') || request()->is('referencing/create') || request()->is('referencing/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                        Enquery Form List {{ request()->is('/referencing') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="{{route('subscription')}}"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>
-                        Subscription
-                        </p>
-                    </a>
-                </li>
-                <li
-                    class="nav-item   {{ (request()->is('tutor') || request()->is('tutor_view/*') ) ? 'menu-is-opening menu-open':''}}">
-                    <a href="{{ route('tutor.index') }}"
-                        class="nav-link {{ (request()->is('tutor') || request()->is('tutor/*') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Tutor {{ request()->is('/tutor') ? 'active' : '' }}
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('tutor_view.profile_status',['profile_status'=>'approved']) }}"
-                                class="nav-link {{request()->is('tutor_view/approved') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Approved</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('tutor_view.profile_status',['profile_status'=>'pending']) }}"
-                                class="nav-link {{request()->is('tutor_view/pending') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pending</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('tutor_view.profile_status',['profile_status'=>'baned']) }}"
-                                class="nav-link {{request()->is('tutor_view/baned') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Baned</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('tutor_view.profile_status',['profile_status'=>'incompelte']) }}"
-                                class="nav-link {{request()->is('tutor_view/incompelte') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Incompelte</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="{{ route('orders') }}"
-                        class="nav-link {{ (request()->is('orders') || request()->is('orders/create') || request()->is('orders/*/edit') ) ? 'active' : '' }}"><i
-                            class="nav-icon fas fa-question"></i>
-                        <p>Orders {{ request()->is('/orders') ? 'active' : '' }}</p>
-                    </a>
-                </li>
-               
-                <li class="nav-item">
-                    <a href="{{ route('blog.index') }}"
-                        class="nav-link {{ (request()->is('blog') || request()->is('blog/create') || request()->is('blog/*/edit') ) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-blog"></i>
-                        <p>
-                            Blog {{ request()->is('/blog') ? 'active' : '' }}
-                        </p>
-                    </a>
-                </li>
-				<li class="nav-item">
-                    <a href="{{ route('students.student.index') }}"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Students</p>
-                    </a>
-                </li>
-				<li class="nav-item">
-                    <a href="{{ route('payments') }}"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Payment History</p>
-                    </a>
-                </li>
-				<li class="nav-item">
-                    <a href="{{route('notifications')}}"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Notification</p>
-                    </a>
-                </li>
-				<li class="nav-item">
-                    <a href="{{ route('coupons.coupon.index') }}"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Coupon code</p>
-                    </a>
-                </li>
-				
-				
-                
-                <li class="nav-item">
-					<a href="#" class="nav-link">
-                    <i class=" nav-icon fa-solid fa-bell"></i>
-						<p>
-						Expert Profile
-						<i class="right fas fa-angle-left"></i>
-						</p>
-					</a>
-					<ul class="nav nav-treeview" style="display: none;">
-					     <li class="nav-item">
-							<a href="{{route('experts.expert.create')}}"
-								class="nav-link ">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									Add Expert
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{route('experts.expert.index')}}"
-								class="nav-link">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									View Expert
-								</p>
-							</a>
-						</li>
-						
-						
-					</ul>
-				</li>
-
-
-
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-                    <i class=" nav-icon fa-solid fa-bell"></i>
-						<p>
-						Student Market Place 
-						<i class="right fas fa-angle-left"></i>
-						</p>
-					</a>
-                    <ul class="nav nav-treeview" style="display: none;">
-					     <li class="nav-item">
-							<a href="{{route('studentmarket.student.deals_category')}}"
-								class="nav-link ">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									Deals Category
-								</p>
-							</a>
-						 </li>
-						 <li class="nav-item">
-							<a href="{{route('studentmarket.student.add_deals')}}"
-								class="nav-link">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									Add Deals
-								</p>
-							</a>
-						  </li>
-                        <li class="nav-item">
-							<a href="{{route('studentmarket.student.view_deals')}}"
-								class="nav-link">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									View Deals
-								</p>
-							</a>
-						</li>
-						
-						
-					</ul>
-				</li>
-				<li class="nav-item">
-                    <a href="#"
-                        class="nav-link ">
-                        <i class=" nav-icon fa-solid fa-bell"></i>
-                        <p>Affiliate Users</p>
-                        <i class="right fas fa-angle-left"></i>
-                    </a>
+<div class="dlabnav">
+            <div class="dlabnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li><a class="ai-icon" href="{{ route('dashboard') }}" aria-expanded="false">
+						<i class="nav-icon fas fa-copy"></i>
+						<span class="nav-text"> Dashboard </span>
+					  </a>
+				    </li>
 					
-                
-				<ul class="nav nav-treeview" style="display: none;">
-					     <li class="nav-item">
-							<a href="{{route('affiliateuser.affiliate.add')}}"
-								class="nav-link ">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									Add Affiliate User
-								</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{route('affiliateuser.affiliate.view')}}"
-								class="nav-link">
-								<i class="nav-icon fa-solid fa-image"></i>
-								<p>
-									View Affiliate User
-								</p>
-							</a>
-						</li>
-				</ul>
-				</li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i class="nav-icon fas fa-indian-rupee-sign"></i>
+							<span class="nav-text">Pricing Calculator</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('subject.index') }}">Subject</a></li>
+                            <li><a href="{{ route('tasktype.index') }}">Task Type</a></li>
+                            <li><a href="{{ route('level_study.index') }}">Level of Study</a></li>
+                            <li><a href="{{ route('grade.index') }}">Grades</a></li>
+							<li><a href="{{ route('referencing.index') }}">Refrencing Style</a></li>
+                        </ul>
+                    </li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i class="nav-icon fas fa-money-check"></i>
+							<span class="nav-text">Content Management</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('media.save')}}">Media</a></li>
+                            <li><a href="{{ route('pages') }}">Pages</a></li>
+                            <li><a href="{{ route('services_index') }}">Services</a></li>
+                            <li><a href="{{ route('faq.index') }}">FAQ</a></li>
+                        </ul>
+                    </li>
+					<li><a class="ai-icon" href="{{ route('role.index') }}" aria-expanded="false">
+						<i class="nav-icon fas fas fa-cogs"></i>
+						<span class="nav-text"> Role</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('website.index') }}" aria-expanded="false">
+						<i class="nav-icon fas fas fa-coins">
+						<span class="nav-text"></i> Website Manager</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('contact.form.store') }}" aria-expanded="false">
+						<i class="nav-icon fas fa-book">
+						<span class="nav-text"> </i>Enquery Form List</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{route('subscription')}}" aria-expanded="false">
+						<i class=" nav-icon fa-solid fa-bell">
+						<span class="nav-text"></i>Subscription</span>
+					  </a>
+				    </li>
+				    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i class="nav-icon fas fa-user">
+						<span class="nav-text"> </i>Tutor</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'approved']) }}"> Approved</a></li>
+						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'pending']) }}">Pending</a></li>
+						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'baned']) }}"> Banned</a></li>
+						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'incompelte']) }}">Incomplete</a></li>
+						
+					</ul>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('orders') }}" aria-expanded="false">
+						<i class="nav-icon fas fa-question"></i>
+						<span class="nav-text">Order</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('blog.index') }}" aria-expanded="false">
+						<i class="nav-icon fas fa-blog">
+						<span class="nav-text">  </i>Blog</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('students.student.index') }}" aria-expanded="false">
+						<i class=" nav-icon fa-solid fa-user-check">
+						<span class="nav-text"></i>Student</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('payments') }}" aria-expanded="false">
+						<i class=" nav-icon fa-solid fa-credit-card">
+						<span class="nav-text"></i>Payment History</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{route('notifications')}}" aria-expanded="false">
+						<i class=" nav-icon fa-solid fa-bell">
+						<span class="nav-text"> </i>Notification</span>
+					  </a>
+				    </li>
+					<li><a class="ai-icon" href="{{ route('coupons.coupon.index') }}" aria-expanded="false">
+						<i class=" nav-icon fa-solid  fa-gift">
+						<span class="nav-text"></i>Coupon Code</span>
+					  </a>
+				    </li>
+					
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+							<i class="fas fa-user-check	"></i>
+							<span class="nav-text">Expert Profile</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('experts.expert.create')}}">Add Expert</a></li>
+                            <li><a href="{{route('experts.expert.index')}}">View Expert</a></li>
+                            
+                        </ul>
+                    </li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i class=" nav-icon fa-solid fas fa-map-marked"></i>
+						<span class="nav-text"> </i>Student Market Place</span>
+					  </a>
+					 <ul aria-expanded="false">
+						<li><a href="{{route('studentmarket.student.deals_category')}}">Deals Category</a></li>
+						<li><a href="{{route('studentmarket.student.add_deals')}}">Add Deals</a></li>
+						<li><a href="{{route('studentmarket.student.view_deals')}}">View Deals</a></li>
+						
+					 </ul>
+				    </li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+							<i class="la la-users"></i>
+							<span class="nav-text">Affiliate User</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('affiliateuser.affiliate.add')}}">Add Affiliate User</a></li>
+                            <li><a href="{{route('affiliateuser.affiliate.view')}}">View Affiliate User</a></li>
+                            
+                        </ul>
+                    </li>
+					
+					
+                    
+                   
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                   
+                    
+                    
 				
-                
-            </ul>
-        </nav>
 
-    </div>
-</aside>
 
-<script>
-$.widget.bridge('uibutton', $.ui.button)
-</script>
+				
+            </div>
+        </div>

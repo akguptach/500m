@@ -125,6 +125,16 @@ class StudentMarketController extends Controller
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
         $data['image'] = $image;
+
+        $dealLogo = '';
+        if ($request->has("deal_logo")) {
+            $dealLogo = request()->file('deal_logo');
+            $dealLogoImageName = time() . '.' . $dealLogo->getClientOriginalExtension();
+            $dealLogo->move(public_path('images/uploads/attachment/'), $dealLogoImageName);
+            $dealLogo = env('APP_URL') . '/images/uploads/attachment/' . $dealLogoImageName;
+        }
+        $data['deal_logo'] = $dealLogo;
+
         Deal::create($data);
         return redirect()->route('studentmarket.student.view_deals')
             ->with('success_message', 'Deal was successfully added.');
@@ -154,6 +164,17 @@ class StudentMarketController extends Controller
             
         }
         $data['image'] = $image;
+
+        $dealLogo = $deal->deal_logo;
+        if ($request->has("deal_logo")) {
+            $dealLogo = request()->file('deal_logo');
+            $dealLogoImageName = time() . '.' . $dealLogo->getClientOriginalExtension();
+            $dealLogo->move(public_path('images/uploads/attachment/'), $dealLogoImageName);
+            $dealLogo = env('APP_URL') . '/images/uploads/attachment/' . $dealLogoImageName;
+        }
+        $data['deal_logo'] = $dealLogo;
+
+
         $deal->update($data);
 
         return redirect()->route('studentmarket.student.view_deals')

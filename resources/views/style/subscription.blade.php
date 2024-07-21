@@ -16,7 +16,7 @@
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="subscription" class="table table-bordered table-striped">
+                                <table id="subscription"  class="table table-responsive table-bordered  row-border">
                                     <thead>
                                         <tr>
                                             <th>Sr.No.</th>

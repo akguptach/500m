@@ -1,29 +1,27 @@
-<footer class="main-footer">
-    <strong>Copyright.</strong>
-    All rights reserved.
-</footer>
-<aside class="control-sidebar control-sidebar-dark"></aside>
-
+<div class="footer">
+    <!-- <div class="copyright">
+        <p>Copyright © Designed &amp; Developed by <a href="http://dexignlab.com/" target="_blank">DexignLab</a> 2023
+        </p>
+    </div> -->
 </div>
 
-<script src="{{ asset('notifyjs/dist/notify.js') }}"></script>
-<script src="{{ asset('notifications/notify-metro.js') }}"></script>
-<script src="{{ asset('notifications/notifications.js') }}"></script>
-<script src="{{ asset('js/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('js/plugins/chart.js/Chart.min.js') }}"></script>
-<script src="{{ asset('js/plugins/sparklines/sparkline.js') }}"></script>
-<script src="{{ asset('js/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('js/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-<script src="{{ asset('js/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-<script src="{{ asset('js/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<script src="{{ asset('js/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-<script src="{{ asset('js/plugins/summernote/summernote-bs4.min.js') }}"></script>
-<script src="{{ asset('js/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ asset('js/adminlte2167.js?v=3.2.0') }}"></script>
-<script src="{{ asset('js/demo.js') }}"></script>
-<script src="{{ asset('js/dashboard.js') }}"></script>
 
+
+<script src="<?php echo asset('/'); ?>vendor/global/global.min.js"></script>
+<script src="<?php echo asset('/'); ?>vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<!-- Datatable -->
+<script src="<?php echo asset('/'); ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo asset('/'); ?>js/pluginsinit/datatables.init.js"></script>
+
+<!-- Svganimation scripts -->
+<script src="<?php echo asset('/'); ?>vendor/svganimation/vivus.min.js"></script>
+<script src="<?php echo asset('/'); ?>vendor/svganimation/svg.animation.js"></script>
+
+<script src="<?php echo asset('/'); ?>js/custom.min.js"></script>
+<script src="<?php echo asset('/'); ?>js/dlabnav-init.js"></script>
+
+
+<!-- JS confirm Override -->
 </body>
-
 </html>

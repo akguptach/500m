@@ -54,10 +54,10 @@ class CouponsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse | \Illuminate\Routing\Redirector
      */
-    public function store(CouponsRequest $request)
+    public function store(CouponsRequest $reques)
     {
         
-        $data = $this->getData($request);
+        $data = $this->getData($reques);
         
         Coupon::create($data);
 

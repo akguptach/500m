@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <style>
 p.small {
     font-size: 16px;
@@ -30,7 +31,7 @@ div:has(> ul.pagination) {
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-responsive table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Order id</th>

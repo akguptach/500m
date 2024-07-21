@@ -2,52 +2,44 @@
 
 @section('content')
 
-<section class="content-header">
+<section class="content">
     <div class="container-fluid">
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Create New Expert</h3>
+                        <div class="ml-auto">
+                            <a href="{{ route('experts.expert.index') }}" class="btn btn-primary" title="Show All Expert">
+                                <span aria-hidden="true"></span>View Expert
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (session('status'))
+                        <div class="alert alert-success" id="success_message">
+                            {{ session('status') }}
+                        </div>
+                        @endif
+                        <div class="form-validation">
+                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.store') }}" accept-charset="UTF-8" id="create_expert_form" name="create_expert_form" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                @include ('experts.form', [
+                                'expert' => null,
+                                ])
 
-                                <div class="card-header d-flex justify-content-between align-items-center p-3">
-                                    <h4 class="m-0">Create New Expert</h4>
-                                    <div class="ml-auto">
-                                        <a href="{{ route('experts.expert.index') }}" class="btn btn-primary" title="Show All Expert">
-                                            <span aria-hidden="true"></span>View Expert
-                                        </a>
+                                <div class="form-group row">
+                                    <div class="col-lg-8 ml-auto">
+                                        <input type="submit" name="save" class="btn btn-primary" value="submit">
                                     </div>
                                 </div>
-
-
-
-                                <div class="card-body">
-
-       
-
-                                        <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.store') }}"
-                                            accept-charset="UTF-8" id="create_expert_form" name="create_expert_form" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            @include ('experts.form', [
-                                            'expert' => null,
-                                            ])
-                                            <div class="col-lg-10 col-xl-9 offset-lg-2 offset-xl-3">
-                                                <input class="btn btn-primary" type="submit" value="Add">
-                                            </div>
-
-                                        </form>
-
-                                </div>
-
-
-
-
-                        </div>    
-
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-       </div>
-   </div>
-</section>              
-@endsection          
+        </div>
+    </div>
+</section>
+
+@endsection

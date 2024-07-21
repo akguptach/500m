@@ -1,6 +1,6 @@
 <x-header />
 <x-sidebar/>
-<div class="content-wrapper">
+<div class="content-body">
     @yield('content')
 </div>
 

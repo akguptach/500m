@@ -34,7 +34,7 @@ div:has(> ul.pagination) {
                                 </div>
                                 @endif
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post" id="myform" >
+                                    <form class="form-valide" action="{{route('experts.store')}}" method="post" id="myform" >
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" >Name <span class="text-danger">*</span>
                                             </label>

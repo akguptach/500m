@@ -27,9 +27,9 @@
             </div>
         @else
         <div class="card-body p-0">
-            <div class="table-responsive">
+            <div class="table-responsive table-bordered">
 
-                <table class="table table-striped ">
+                <table class="table table-responsive table-bordered row-border">
                     <thead>
                         <tr>
                             <th>Category Name</th>

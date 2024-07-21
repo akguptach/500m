@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Mail;
  */
 class OrderService
 {
-    public function getOrders($studentId='')
+    public function getOrders($studentId = '')
     {
-        
+
         $req_record['data'] = array();
         $query = Orders::query();
         if (!empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
@@ -57,7 +57,7 @@ class OrderService
                 $query->where('orders.website_id', $website->id);
             }
 
-            if($studentId){
+            if ($studentId) {
                 $query->where('orders.student_id', $studentId);
             }
 
@@ -72,12 +72,45 @@ class OrderService
 
             $query->select('orders.*', 'subjects.subject_name', 'websites.website_type', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
                 ->orderBy('id', 'desc');
+            if (isset($_GET['start']) && isset($_GET['length'])) {
+                $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc');
+            }
             $arrD = $query->get();
             $req_record['data'] = json_decode(json_encode($arrD), true);
 
             //$req_record['data'] = Orders::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             //$pages = Orders::orderBy('id', 'desc')->get()->toArray();
             $pages = $arrD;
+
+            $pages = Orders::query();
+            // $pages = DB::table('orders');
+            $pages = Orders::join('student', 'student.id', '=', 'orders.student_id')
+            ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
+            ->join('websites', 'websites.id', '=', 'orders.website_id')
+            ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
+            ->join('level_study', 'level_study.id', '=', 'orders.studylabel_id')
+            ->join('grades', 'grades.id', '=', 'orders.grade_id')
+            ->join('referencing_style', 'referencing_style.id', '=', 'orders.referencing_style_id');
+            if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
+                $website  = Website::where('website_type', $_GET['columns'][2]['search']['value'])->first();
+                $pages->where('orders.website_id', $website->id);
+            }
+
+            if ($studentId) {
+                $pages->where('orders.student_id', $studentId);
+            }
+
+            if (!empty($_GET['search']['value'])) {
+                $pages->where(function ($q) {
+                    $q->orWhere('subjects.subject_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('student.first_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('student.last_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                });
+            }
+            if ($studentId) {
+                $pages->where('orders.student_id', $studentId);
+            }
+            $pages = $pages->get();
         } else {
 
             $query = DB::table('orders')
@@ -91,17 +124,37 @@ class OrderService
                 ->select('orders.*', 'subjects.subject_name', 'websites.website_type', 'websites.website_name', 'task_types.type_name', 'level_study.level_name', 'grades.grade_name', 'referencing_style.style', 'student.first_name')
                 ->orderBy('id', 'desc');
 
-                if($studentId){
-                    $query->where('orders.student_id', $studentId);
-                }
+            if ($studentId) {
+                $query->where('orders.student_id', $studentId);
+            }
+            if (isset($_GET['start']) && isset($_GET['length'])) {
+                $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc');
+            }
 
-                $arrD = $query->get();
+
+            $arrD = $query->get();
 
             $req_record['data'] = json_decode(json_encode($arrD), true);
 
+
+            //count 
+            $pages = Orders::query();
+            $pages = DB::table('orders')
+            ->join('student', 'student.id', '=', 'orders.student_id')
+            ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
+            ->join('websites', 'websites.id', '=', 'orders.website_id')
+            ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
+            ->join('level_study', 'level_study.id', '=', 'orders.studylabel_id')
+            ->join('grades', 'grades.id', '=', 'orders.grade_id')
+            ->join('referencing_style', 'referencing_style.id', '=', 'orders.referencing_style_id');
+            if ($studentId) {
+                $pages->where('orders.student_id', $studentId);
+            }
+            $pages = $pages->get();
+            //    echo "<pre>".var_export($pages,true);die();
             //$req_record['data'] = Orders::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             //$pages = Orders::orderBy('id', 'desc')->get()->toArray();
-            $pages = $arrD;
+            // $pages = $arrD;
         }
         if (!empty($pages))
             $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($pages);
@@ -124,45 +177,44 @@ class OrderService
 
         $edit_page = 'orders/' . $page['id'] . '/view';
         //$req_page_id = '"' . $page['id'] . '"';
-        
-		if($page['status']=='ENQUIRIES')
-		{ 
-	         $actionsLinks = '<div class="dropdown">
-        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+        if ($page['status'] == 'ENQUIRIES') {
+            $actionsLinks = '<div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           ENQUIRIES
         </button></div>';
-		}else{
-        $tutorCompleted = OrderAssign::where('order_id', $page['id'])
-            ->where('status', 'COMPLETED')
-            ->count();
+        } else {
+            $tutorCompleted = OrderAssign::where('order_id', $page['id'])
+                ->where('status', 'COMPLETED')
+                ->count();
 
-        $tutorOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'TUTOR')->orderBy('id', 'desc')->first();
+            $tutorOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'TUTOR')->orderBy('id', 'desc')->first();
 
 
-        $qcOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'QC')->orderBy('id', 'desc')->first();
- 
-        $actionsLinks = '<div class="dropdown">
-        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            $qcOrderRequest = OrderRequest::where('order_id', $page['id'])->where('type', 'QC')->orderBy('id', 'desc')->first();
+
+            $actionsLinks = '<div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Actions
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-        $actionsLinks .= '<a class="dropdown-item" href="' . url($edit_page) . '">Order Details</a>';
+            $actionsLinks .= '<a class="dropdown-item" href="' . url($edit_page) . '">Order Details</a>';
 
-        if ($tutorOrderRequest && $tutorOrderRequest->status != 'REJECTED') {
-            $actionsLinks .= '<a class="dropdown-item" href="' . route('tutor_request_sent', ['id' => $page['id']]) . '">Tutor Request</a>';
-        } else {
-            $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal" data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'tutor']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Tutor Request</a>';
-        }
-
-        if ($tutorCompleted > 0) {
-            if ($qcOrderRequest && $qcOrderRequest->status != 'REJECTED') {
-                $actionsLinks .= '<a class="dropdown-item" href="' . route('qc_request_sent', ['id' => $page['id']]) . '">Qc Request</a>';
+            if ($tutorOrderRequest && $tutorOrderRequest->status != 'REJECTED') {
+                $actionsLinks .= '<a class="dropdown-item" href="' . route('tutor_request_sent', ['id' => $page['id']]) . '">Tutor Request</a>';
             } else {
-                $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Qc Request</a>';
+                $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-bs-toggle="modal" data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'tutor']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Tutor Request</a>';
             }
+
+            if ($tutorCompleted > 0) {
+                if ($qcOrderRequest && $qcOrderRequest->status != 'REJECTED') {
+                    $actionsLinks .= '<a class="dropdown-item" href="' . route('qc_request_sent', ['id' => $page['id']]) . '">Qc Request</a>';
+                } else {
+                    $actionsLinks .= '<a class="dropdown-item assign-teacher" href="#" data-bs-toggle="modal"  data-student-id="' . $page['student_id'] . '" data-order-id="' . $page['id'] . '" data-ajax-url="' . route('get_teachers', ['student_id' => $page['student_id'], 'order_id' => $page['id'], 'type' => 'qc']) . '" data-modal-id="modal-assign-teacher" data-model-body="teachers-modal-body">Send Qc Request</a>';
+                }
+            }
+            $actionsLinks .= '</div></div>';
         }
-        $actionsLinks .= '</div></div>';
-		}
         return $actionsLinks;
     }
 
@@ -257,7 +309,7 @@ class OrderService
 
                 $receiver = Student::find($request->receiver_id);
                 $toEmail = $receiver->email;
-                $url = env('EDUCRAFTER_URL','https://mywriters.in').'/vieworder/'.$request->order_id;
+                $url = env('EDUCRAFTER_URL', 'https://mywriters.in') . '/vieworder/' . $request->order_id;
                 StudentOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -266,16 +318,15 @@ class OrderService
                     'receivertable_type' => Student::class,
                     'message' => $request->message,
                     'attachment' => $attachment,
-                    'url'=>$url
+                    'url' => $url
                 ]);
-                
             } else if ($request->type == 'TUTOR') {
 
                 $receiver = Tutor::find($request->receiver_id);
                 $toEmail = $receiver->tutor_email;
-                $orderAssign = OrderAssign::where('order_id',$request->order_id)
-                ->where('tutor_id',$request->receiver_id)->first();
-                $url = env('TUTOR_URL','https://mywriters.in').'/open/order/details/'.$orderAssign->id;
+                $orderAssign = OrderAssign::where('order_id', $request->order_id)
+                    ->where('tutor_id', $request->receiver_id)->first();
+                $url = env('TUTOR_URL', 'https://mywriters.in') . '/open/order/details/' . $orderAssign->id;
                 TeacherOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -284,16 +335,15 @@ class OrderService
                     'receivertable_type' => Tutor::class,
                     'message' => $request->message,
                     'attachment' => $attachment,
-                    'url'=>$url
+                    'url' => $url
                 ]);
-
             } else if ($request->type == 'QC') {
 
                 $receiver = Tutor::find($request->receiver_id);
                 $toEmail = $receiver->tutor_email;
-                $orderAssign = QcAssign::where('order_id',$request->order_id)
-                ->where('qc_id',$request->receiver_id)->first();
-                $url = env('TUTOR_URL','https://mywriters.in').'/qc/open/order/details/'.$orderAssign->id;
+                $orderAssign = QcAssign::where('order_id', $request->order_id)
+                    ->where('qc_id', $request->receiver_id)->first();
+                $url = env('TUTOR_URL', 'https://mywriters.in') . '/qc/open/order/details/' . $orderAssign->id;
                 QcOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
@@ -302,23 +352,21 @@ class OrderService
                     'receivertable_type' => Tutor::class,
                     'message' => $request->message,
                     'attachment' => $attachment,
-                    'url'=>$url
+                    'url' => $url
                 ]);
-
             }
 
 
 
-            
-            
-            $data = ['url'=>$url,'messageContent'=>$request->message];
+
+
+            $data = ['url' => $url, 'messageContent' => $request->message];
             try {
                 Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $toEmail) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->subject("Message Received");
                     $message->to(env('APP_TEST_EMAIL', $toEmail));
                 });
-
             } catch (\Exception $e) {
                 //echo $e; die;
             }
@@ -354,19 +402,19 @@ class OrderService
                 'attachment' => $attachment
             ]);
 
-        $tutor = Tutor::find($request->receiver_id);
-        $url = env('TUTOR_URL','https://mywriters.in').'/request/details/'.$request->request_id;
-        $data = ['url'=>$url,'messageContent'=>$request->message];
-        try {
-            Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
-                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                $message->subject("Message received");
-                $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
-            });
-
-        } catch (\Exception $e) {
-            echo $e; die;
-        }
+            $tutor = Tutor::find($request->receiver_id);
+            $url = env('TUTOR_URL', 'https://mywriters.in') . '/request/details/' . $request->request_id;
+            $data = ['url' => $url, 'messageContent' => $request->message];
+            try {
+                Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Message received");
+                    $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+                });
+            } catch (\Exception $e) {
+                echo $e;
+                die;
+            }
 
 
             return ['message' => 'Message sent', 'status' => 'success'];
@@ -388,7 +436,7 @@ class OrderService
                 'tutor_price' => $budget,
                 'message' => ''
             ]);
-            $url = env('TUTOR_URL','https://mywriters.in').'/open/order/details/'.$assigned->id;
+            $url = env('TUTOR_URL', 'https://mywriters.in') . '/open/order/details/' . $assigned->id;
             $tutor = Tutor::find($orderRequest->tutor_id);
         } else if ($orderRequest->type == 'QC') {
             $assigned = QcAssign::Create([
@@ -397,11 +445,11 @@ class OrderService
                 'qc_id' => $orderRequest->tutor_id,
                 'qc_price' => $budget,
             ]);
-            $url = env('TUTOR_URL','https://mywriters.in').'/qc/open/order/details/'.$assigned->id;
+            $url = env('TUTOR_URL', 'https://mywriters.in') . '/qc/open/order/details/' . $assigned->id;
             $tutor = Tutor::find($orderRequest->tutor_id);
         }
 
-       // print_r($tutor['tutor_email ']); die;
+        // print_r($tutor['tutor_email ']); die;
         OrderRequestMessage::Create([
             'request_id' => $orderRequest->id,
             'sendertable_id' => Auth::user()->id,
@@ -409,22 +457,22 @@ class OrderService
             'receivertable_id' => $tutor->id,
             'receivertable_type' => Tutor::class,
             'message' => 'You are assigned on order',
-            'url'=>$url,
-            'type'=>'notification'
+            'url' => $url,
+            'type' => 'notification'
         ]);
 
-    
-    $data = ['url'=>$url,'messageContent'=>'You are assigned on order'];
-    try {
-        Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
-            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-            $message->subject("Order assigned");
-            $message->to(env('APP_TEST_EMAIL', $tutor['tutor_email ']));
-        });
 
-    } catch (\Exception $e) {
-        echo $e; die;
-    }
+        $data = ['url' => $url, 'messageContent' => 'You are assigned on order'];
+        try {
+            Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->subject("Order assigned");
+                $message->to(env('APP_TEST_EMAIL', $tutor['tutor_email ']));
+            });
+        } catch (\Exception $e) {
+            echo $e;
+            die;
+        }
 
 
         return ['message' => 'Order assigned', 'status' => 'success'];
@@ -515,7 +563,7 @@ class OrderService
 
         $receiver = Student::find($order->student_id);
         $toEmail = $receiver->email;
-        $url = env('EDUCRAFTER_URL','https://mywriters.in').'/vieworder/'.$id;
+        $url = env('EDUCRAFTER_URL', 'https://mywriters.in') . '/vieworder/' . $id;
         StudentOrderMessage::Create([
             'order_id' => $id,
             'sendertable_id' => Auth::user()->id,
@@ -523,24 +571,24 @@ class OrderService
             'receivertable_id' => $receiver->id,
             'receivertable_type' => Student::class,
             'message' => 'Your order has been delivered',
-            'url'=>$url,
-            'type'=>'notification'
+            'url' => $url,
+            'type' => 'notification'
         ]);
 
-    
-        $data = ['url'=>$url,'messageContent'=>'Your order has been delivered'];
+
+        $data = ['url' => $url, 'messageContent' => 'Your order has been delivered'];
         try {
             Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $toEmail) {
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                 $message->subject("Order Delivered");
                 $message->to(env('APP_TEST_EMAIL', $toEmail));
             });
-
         } catch (\Exception $e) {
-            echo $e; die;
+            echo $e;
+            die;
         }
 
-    
+
         return ['message' => 'Order Delivered to student', 'status' => 'success'];
     }
 }

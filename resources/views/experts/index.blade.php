@@ -14,8 +14,16 @@ div:has(> ul.pagination) {
 </style>
 <section class="content-header">
     <div class="container-fluid">
+
+    @if(Session::has('success_message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {!! session('success_message') !!}
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    
         <section class="content">
-            <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -53,7 +61,9 @@ div:has(> ul.pagination) {
                                         <tr>
                                             <th>Name</th>
                                             <th>Image</th>
+                                            <th>Show on Home</th>
                                             <th>Language</th>
+                                            <th>Skills</th>
                                             <th>Rating</th>
                                             <th>Qualification</th>
                                             <th>Subject Number</th>
@@ -67,14 +77,22 @@ div:has(> ul.pagination) {
                                         <tr>
                                             <td class="align-middle">{{$expert->first_name}}</td>
                                             <td class="align-middle"><img src="{{$expert->image}}" width="50px"></td>
+                                            <td class="align-middle">
+                                                @if($expert->show_on_home)
+                                                Yes
+                                                @else
+                                                No
+                                                @endif
+                                            </td>
                                             <td class="align-middle">{{$expert->language}}</td>
-                                            <td class="align-middle">{{$expert->ratings}}</td>
+                                            <td class="align-middle">{{count($expert->subjects)}}</td>
+                                            <td class="align-middle">{{$expert->rating_numbers}}</td>
                                             <td class="align-middle">{{$expert->qualification}}</td>
                                             <td class="align-middle">{{$expert->subject_number}}</td>
                                             <td class="align-middle">{{$expert->paper_number}}</td>
                                             <td class="align-middle">
                                                 <a href="{{ route('expert_reviews.expert_review.index',$expert->id) }}"
-                                                    class="btn-sm btn-primary">Add Review </a>
+                                                type="button" class="btn-xs btn-primary" style="color: white;">Add Review </a>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{route('experts.expert.edit',$expert->id)}}"
@@ -89,7 +107,7 @@ div:has(> ul.pagination) {
                                                     {{ csrf_field() }}
                                                     <button @if($expert->status=='active') disabled="disabled" @endif
                                                         type="submit" class="btn btn-link " title="Inactivate Expert"
-                                                        onclick="return confirm(&quot;Click Ok to activate
+                                                        onclick="return new_modal(event, &quot;Click Ok to activate
                                                         Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
                                                         <i class="fas fa-check-circle"></i>
                                                     </button>
@@ -105,8 +123,8 @@ div:has(> ul.pagination) {
                                                     {{ csrf_field() }}
                                                     <button @if($expert->status=='inactive') disabled="disabled" @endif
                                                         type="submit" class="btn btn-link " title="Activate Expert"
-                                                        onclick="return confirm(&quot;Click Ok to Inactive
-                                                        Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
+                                                        onclick="return new_modal(event, &quot;Click Ok to Inactivate
+                                                            Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
                                                         <i class="fas fa-times-circle"></i>
                                                     </button>
 
@@ -120,7 +138,7 @@ div:has(> ul.pagination) {
                                                     <input name="_method" value="DELETE" type="hidden">
                                                     {{ csrf_field() }}
                                                     <button type="submit" class="btn btn-link " title="Delete Student"
-                                                        onclick="return confirm(&quot;Click Ok to delete Expert.&quot;)"
+                                                    onclick="return new_modal(event, &quot;Click Ok to delete Expert.&quot;)" 
                                                         style="padding: 0px;padding-bottom:3px;">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
@@ -142,7 +160,6 @@ div:has(> ul.pagination) {
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </div>
 
@@ -174,5 +191,62 @@ $(document).ready(function() {
 
 
 })
+</script>
+
+<script>
+    async function new_modal(event, msg) {
+        event.preventDefault(); // Prevent form submission
+
+        if (await confirm(msg)) {
+            event.target.closest('form').submit(); // Submit the form if confirmed
+        }
+    }
+
+    // Function to show Bootstrap modal as confirmation
+    function showBootstrapConfirm(msg, callback) {
+        // Create modal markup
+        var modalMarkup = `
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation</h5>
+                    <button type="button" class="close btn border" style="padding: 1% 2%;" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <p>${msg}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Yes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        `;
+        var modalElement = $(modalMarkup).appendTo('body');
+        $(modalElement).modal('show');
+        $(modalElement).find('.btn-primary').click(function() {
+            callback(true); // Call callback with true indicating confirmation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).find('.btn-secondary').click(function() {
+            callback(false); // Call callback with false indicating cancellation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).on('hidden.bs.modal', function() {
+            $(this).remove(); // Remove modal from DOM when closed
+        });
+    }
+
+    window.confirm = function(msg) {
+        return new Promise(function(resolve) {
+            showBootstrapConfirm(msg, function(result) {
+                resolve(result);
+            });
+        });
+    };
 </script>
 @endsection

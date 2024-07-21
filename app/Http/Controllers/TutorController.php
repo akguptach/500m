@@ -45,7 +45,7 @@ class TutorController extends Controller
     public function store(CreateTutorRequest $request)
     {
         $tutor = $this->tutorService->saveTutor($request);
-        return redirect('/tutor_view/' . $tutor->profile_status)->with('status', 'Tutor Created Successfully');
+        return redirect('/tutor' . $tutor->profile_status)->with('status', 'Tutor Created Successfully');
     }
 
     /**

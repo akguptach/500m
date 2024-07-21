@@ -77,8 +77,13 @@ class AffiliateUserController extends Controller
             $student = Student::findOrFail($id);
             $student->status = $request->status;
             $student->save();
-            return redirect()->route('affiliateuser.affiliate.view')
-                ->with('status', 'Affiliate user was successfully activated.');
+            if($request->status == "active"){
+                return redirect()->route('affiliateuser.affiliate.view')
+                    ->with('status', 'Affiliate user was successfully activated.');
+            }else{
+                return redirect()->route('affiliateuser.affiliate.view')
+                ->with('status', 'Affiliate user was successfully Deactivated.');
+            }
         } catch (\Exception $exception) {
 
             return back()->withInput()

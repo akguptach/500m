@@ -3,7 +3,7 @@
         <form id="basic" method="POST" action="{{route('pages.store.ratings')}}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="page_id" value="{{Request::route('pages') }}">
-            <table class="table table-bordered" id="ratingsAddRemove">
+            <table class="table table-bordered table-responsive table-bordered " id="ratingsAddRemove">
                 <tr>
                     <th>Stars</th>
                     <th>Image</th>

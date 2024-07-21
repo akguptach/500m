@@ -40,7 +40,9 @@ class Deal extends Model
                   'offer_price',
                   'price_type',
                   'website_type',
-                  'status'
+                  'status',
+                  'show_on_home',
+                  'deal_logo'
               ];
 
     /**

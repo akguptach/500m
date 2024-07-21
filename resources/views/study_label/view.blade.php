@@ -3,14 +3,14 @@
 <section class="content-header">
 <div class="container-fluid">
     <section class="content">
-        <div class="container-fluid">
+        <!-- <div class="container-fluid"> -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Study Label</h3>
                             <div class="float-right">
-                                <a href="{{ route('studylabel.create') }}">
+                                <a href="{{ route('studylabel.create') }}" class="btn btn-primary">
                                     <i class="fa fa-plus" aria-hidden="true"></i> Add
                                 </a>
                             </div>
@@ -21,7 +21,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-responsive table-bordered  row-border">
                                 <thead>
                                     <tr>
                                         <th>Label Name</th>										<th>Price</th>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
     </section>
 </div>

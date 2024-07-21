@@ -36,9 +36,9 @@ class ExpertsController extends Controller
         }
 
         if($websiteType)
-        $experts = Expert::where('website_type', $websiteType)->paginate($limit);
+        $experts = Expert::where('website_type', $websiteType)->orderBy('id','desc')->paginate($limit);
         else
-        $experts = Expert::paginate($limit);
+        $experts = Expert::orderBy('id','desc')->paginate($limit);
         
         return view('experts.index', compact('experts','limit','websiteType'));
     }

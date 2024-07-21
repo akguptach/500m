@@ -32,7 +32,7 @@
                             {{ session('status') }}
                         </div>
                         @endif
-                        <table id="example1" class="table table-bordered table-striped" style="font-size: 12px;">
+                        <table id="example1" class="table table-responsive table-bordered table-bordered " style="font-size: 12px;">
                             <thead>
                                 <tr>
                                     <th>Student Name</th>

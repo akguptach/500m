@@ -29,6 +29,9 @@ use App\Http\Controllers\ExpertsController;
 use App\Http\Controllers\ExpertReviewsController;
 use App\Http\Controllers\StudentMarketController;
 use App\Http\Controllers\AffiliateUserController;
+
+use App\Http\Controllers\ImageUploadController as ImageUploadController;
+
 use App\Http\Controllers\DealCategoriesController;
 use App\Http\Controllers\DealsController;
 
@@ -53,8 +56,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('/upload-image',  [ImageUploadController::class,'upload'])->name('upload.image')->withoutMiddleware(['auth'])->withoutMiddleware(['web']);
+
+
 //Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
 Route::middleware('auth')->group(function () {
+
+//     Route::post('/upload-image', [ImageUploadController::class,'upload'])->name('upload.image');
+
     Route::resource('/role', RoleController::class);
     Route::resource('/subject', SubjectController::class);
     Route::resource('/tasktype', TaskTypeController::class);
@@ -114,10 +123,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/tutor-assign-request', [AjaxController::class, 'tutorAssignRequest'])->name('tutor_assign_request');
     Route::post('/qc-assign-request', [AjaxController::class, 'qcAssignRequest'])->name('qc_assign_request');
-
-
-    Route::get('/get-task-types', [AjaxController::class, 'getTaskTypes'])->name('get_task_types');
-
+	
+	Route::get('/get-task-types', [AjaxController::class, 'getTaskTypes'])->name('get_task_types');
 
     Route::post('/order/message', [OrdersController::class, 'sendMessage'])->name('send_message');
     Route::post('/request/message', [OrdersController::class, 'sendRequestMessage'])->name('send_request_message');

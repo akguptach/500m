@@ -3,7 +3,7 @@
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
             <h3 class="profile-username text-center">Order Details</h3>
-            <p class="text-muted text-center">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}
+            <p class="text-muted text-center">{{ isset($data['student']['first_name']) ? $data['student']['first_name'] : '' }} {{ isset($data['student']['last_name']) ? ' ' . $data['student']['last_name'] : '' }}
             </p>
             <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">

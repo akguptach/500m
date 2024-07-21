@@ -27,26 +27,26 @@
 <script>
 $(function() {
 
-    $('.editor').summernote({
-        toolbar: [
+    // $('.editor').summernote({
+    //     toolbar: [
 
-            ['style', ['style']],
+    //         ['style', ['style']],
 
-            ['font', ['bold', 'underline', 'clear']],
+    //         ['font', ['bold', 'underline', 'clear']],
 
-            ['fontname', ['fontname']],
+    //         ['fontname', ['fontname']],
 
-            ['color', ['color']],
+    //         ['color', ['color']],
 
-            ['para', ['ul', 'ol', 'paragraph']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
 
-            ['table', ['table']],
+    //         ['table', ['table']],
 
-            ['insert', ['link', 'picture', 'video']],
+    //         ['insert', ['link', 'picture', 'video']],
 
-            ['view', ['fullscreen', 'codeview', 'help']],
-        ],
-    });
+    //         ['view', ['fullscreen', 'codeview', 'help']],
+    //     ],
+    // });
 
     $('#services').DataTable({
         initComplete: function() {
@@ -103,13 +103,13 @@ $(function() {
 
 
 
-    document.querySelector('div.toolbar').innerHTML =
-        '<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
+    // document.querySelector('div.toolbar').innerHTML =
+    //     '<?php // HtmlHelper::WebsiteDropdown('website_type', '', false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>';
 });
 
-function delete_service(msg, id) {
+async function delete_service(msg, id) {
 
-    if (confirm(msg)) {
+    if (await confirm(msg)) {
         var form = $('#service_form_' + id);
         var token = $('#csrf_' + id).val();
         // Create a hidden input field to send the CSRF token 
@@ -128,4 +128,52 @@ function delete_service(msg, id) {
         form.submit();
     }
 }
+</script>
+<script>
+    // Function to show Bootstrap modal as confirmation
+    function showBootstrapConfirm(msg, callback) {
+        // Create modal markup
+        var modalMarkup = `
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation</h5>
+                    <button type="button" class="close btn border" style="padding: 1% 2%;" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <p>${msg}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Yes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        `;
+        var modalElement = $(modalMarkup).appendTo('body');
+        $(modalElement).modal('show');
+        $(modalElement).find('.btn-primary').click(function() {
+            callback(true); // Call callback with true indicating confirmation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).find('.btn-secondary').click(function() {
+            callback(false); // Call callback with false indicating cancellation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).on('hidden.bs.modal', function() {
+            $(this).remove(); // Remove modal from DOM when closed
+        });
+    }
+
+    window.confirm = function(msg) {
+        return new Promise(function(resolve) {
+            showBootstrapConfirm(msg, function(result) {
+                resolve(result);
+            });
+        });
+    };
 </script>

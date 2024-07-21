@@ -14,6 +14,14 @@ div:has(> ul.pagination) {
 </style>
 <section class="content-header">
     <div class="container-fluid">
+    @if(Session::has('success_message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {!! session('success_message') !!}
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -41,7 +49,7 @@ div:has(> ul.pagination) {
                                     'expertReview' => null,
                                     ])
                                     <div class="col-lg-10 col-xl-9 offset-lg-2 offset-xl-3">
-                                        <input class="btn btn-primary" type="submit" value="Add">
+                                        <input class="btn btn-primary" type="submit" value="submit">
                                     </div>
                                 </form>
 
@@ -52,8 +60,8 @@ div:has(> ul.pagination) {
                                     <h4 class="m-0">Review list</h4>
                                 </div>
                                 <div class="card-body1 p-0">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped ">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table  table-responsive table-bordered row-border ">
                                             <thead>
                                                 <tr>
                                                     <th>Review Title </th>
@@ -126,7 +134,7 @@ div:has(> ul.pagination) {
                                                             {{ csrf_field() }}
                                                             <button type="submit" class="btn btn-link "
                                                                 title="Delete Student"
-                                                                onclick="return confirm(&quot;Click Ok to delete Expert Review.&quot;)"
+                                                                onclick="return new_modal(event,'Click Yes to delete Expert Review.')"
                                                                 style="padding: 0px;padding-bottom:3px;">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
@@ -156,4 +164,61 @@ div:has(> ul.pagination) {
         </section>
     </div>
 </section>
+
+<script>
+    async function new_modal(event, msg) {
+        event.preventDefault(); // Prevent form submission
+
+        if (await confirm(msg)) {
+            event.target.closest('form').submit(); // Submit the form if confirmed
+        }
+    }
+
+    // Function to show Bootstrap modal as confirmation
+    function showBootstrapConfirm(msg, callback) {
+        // Create modal markup
+        var modalMarkup = `
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation</h5>
+                    <button type="button" class="close btn border" style="padding: 1% 2%;" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <p>${msg}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Yes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        `;
+        var modalElement = $(modalMarkup).appendTo('body');
+        $(modalElement).modal('show');
+        $(modalElement).find('.btn-primary').click(function() {
+            callback(true); // Call callback with true indicating confirmation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).find('.btn-secondary').click(function() {
+            callback(false); // Call callback with false indicating cancellation
+            $(modalElement).modal('hide'); // Hide modal
+        });
+        $(modalElement).on('hidden.bs.modal', function() {
+            $(this).remove(); // Remove modal from DOM when closed
+        });
+    }
+
+    window.confirm = function(msg) {
+        return new Promise(function(resolve) {
+            showBootstrapConfirm(msg, function(result) {
+                resolve(result);
+            });
+        });
+    };
+</script>
 @endsection

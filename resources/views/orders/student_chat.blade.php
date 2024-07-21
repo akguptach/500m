@@ -1,9 +1,9 @@
-<div class="col-md-3">
+<div class="col-md-4">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
         <div class="card-header">
             <h3 class="card-title">Student Chat</h3></br>
-            <p class="text-muted text-left">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}
+            <p class="text-muted text-left">{{ isset($data['student']['first_name']) ? $data['student']['first_name'] : '' }} {{ isset($data['student']['last_name']) ? ' ' . $data['student']['last_name'] : '' }}
             </p>
         </div>
         <!-- /.card-header -->
@@ -18,7 +18,7 @@
                 <!-- Message to the right -->
                 <div class="direct-chat-msg right">
                     <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-right">{{$item['sendertable']['first_name']}}</span>
+                        <span class="direct-chat-name float-right">{{isset($item['sendertable']['first_name']) ? $item['sendertable']['first_name'] : '' }}</span>
                         <span
                             class="direct-chat-timestamp float-left">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                     </div>
@@ -69,8 +69,8 @@
                 <div class="input-group">
                     <input type="file" name="attachment" id="attachment" style="display: none;" />
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                    <input type="hidden" name="receiver_id" value="{{$data->student->id}}">
-                    <input type="hidden" name="order_id" value="{{$data->id}}">
+                    <input type="hidden" name="receiver_id" value="{{isset($data->student->id)?$data->student->id:''}}">
+                    <input type="hidden" name="order_id" value="{{isset($data->id)?$data->id:''}}">
                     <input type="hidden" name="type" value="STUDENT">
                     <span class="input-group-append">
                         <a class="btn btn-info btn-sm" href="javascript::void(0);"

@@ -44,7 +44,9 @@ class Expert extends Model
                   'type_of_paper',
                   'status',
                   'website_type',
-                  'satisfied_students'
+                  'satisfied_students',
+                  'month_on_domain',
+                  'show_on_home'
               ];
 
     /**

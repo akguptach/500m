@@ -4,7 +4,7 @@
             @csrf
 
             <input type="hidden" name="page_id" value="{{Request::route('pages') }}">
-            <table class="table table-bordered" id="dynamicAddRemove">
+            <table class="table table-bordered table-responsive table-bordered " id="dynamicAddRemove">
                 <tr>
                     <th>Question</th>
                     <th>Answer</th>

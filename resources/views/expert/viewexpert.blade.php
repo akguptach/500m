@@ -28,7 +28,7 @@ div:has(> ul.pagination) {
                                 {{ session('status') }}
                             </div>
                         @endif
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table  table-responsive table-bordered row-border ">
                                 <thead>
                                     <tr>
                                       <th>S.no</th>
@@ -78,7 +78,7 @@ div:has(> ul.pagination) {
                                         <i class="fas fa-trash-alt"></i> 
                                         </a>
                                         </td>
-                                        <td> <a href="#" class="btn-sm btn-primary">Add Review </a></td>
+                                        <td> <a href="#" class="btn-sm btn btn-primary">Add Review </a></td>
                            </tr>
                             </tbody>
                         </table>

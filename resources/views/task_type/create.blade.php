@@ -2,69 +2,90 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
+
+        <!-- row -->
         <div class="row">
-            <div class="col-md-12">
-                <div class="card card-primary">
+            <div class="col-lg-12">
+                <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Create <small>Task Type</small></h3>
+                        <h4 class="card-title">Create Task Type</h4>
+
                     </div>
+                    <div class="card-body">
+                        <div class="form-validation">
+                            <form id="quickForm" method="POST" action="{{route('tasktype.store')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="">Task Type Name
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" name="type_name" placeholder="Enter task type name" value="{{old('type_name')}}" required>
+                                                @error('type_name')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="">Price Type
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                {{ HtmlHelper::PriceTypeDropdown('website_type',old('website_type'),false,'','') }}
+                                                @error('website_type')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="">Price(%) <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="number" name="price" class="form-control" placeholder="Enter price Name" value="{{old('price')}}" required>
+                                                @error('price')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="">Status
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <select class="default-select wide form-control"  name="status">
+                                                    <option selected="selected" value="">Please select status</option>
+                                                    <option value="active" <?php if (old('status') == 'active') {
+                                                                                echo 'selected';
+                                                                            } ?>>Active</option>
+                                                    <option value="inactive" <?php if (old('status') == 'inactive') {
+                                                                                    echo 'selected';
+                                                                                } ?>>Inactive</option>
+                                                </select>
+                                                @error('status')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
 
 
-                    <form id="quickForm" method="POST" action="{{route('tasktype.store')}}">
-                        @csrf
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Task type name</label>
-                                <input type="text" name="type_name" class="form-control" id="exampleInputEmail1" placeholder="Enter task type name" value="{{old('type_name')}}">
-
-                            </div>
-                            @error('type_name')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                                    </div>
+                                    <div class="col-xl-6">
 
 
-                            <div class="form-group">
 
-                                {{ HtmlHelper::PriceTypeDropdown('website_type',old('website_type'),true,'','') }}
-                                @error('website_type')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
-
-                            </div>
-                            @error('website_type')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-
-                            <div class="form-group">
-                                <label>Price(%)</label>
-                                <input type="number" name="price" class="form-control" placeholder="Enter price Name" value="{{old('price')}}">
-                            </div>
-                            @error('price')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-control select2" style="width: 100%;" name="status">
-                                    <option selected="selected" value="">Please select status</option>
-                                    <option value="active" <?php if (old('status') == 'active') {
-                                                                echo 'selected';
-                                                            } ?>>Active</option>
-                                    <option value="inactive" <?php if (old('status') == 'inactive') {
-                                                                    echo 'selected';
-                                                                } ?>>Inactive</option>
-                                </select>
-                            </div>
-
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn me-2 btn-primary">Submit</button>
                                 <a href="{{route('tasktype.index')}}" class="btn btn-primary">Back</a>
-                            </div>
-                    </form>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

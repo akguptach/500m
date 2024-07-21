@@ -10,7 +10,7 @@
 
                                 <div class="form-group">
                                     <label>Last name</label>
-                                    <input type="text" name="last_name" class="form-control" placeholder="Enter last name" value="{{ old('last_name', optional($student)->last_name) }}"">
+                                    <input type="text" name="last_name" class="form-control" placeholder="Enter last name" value="{{ old('last_name', optional($student)->last_name) }}">
                                 </div>
                                 @error('last_name')
                                   <div class="alert alert-danger">{{ $message }}</div>
@@ -18,14 +18,14 @@
 
                                 <div class="form-group">
                                     <label >Email</label>
-                                    <input type="email" name="email" class="form-control"  placeholder="Enter email" value="{{ old('email', optional($student)->email) }}"">
+                                    <input type="email" name="email" class="form-control"  placeholder="Enter email" value="{{ old('email', optional($student)->email) }}"
                                 </div>
                                 @error('email')
                                   <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                                 <div class="form-group">
                                     <label >Contact no</label>
-                                    <input type="text" name="phone_number" class="form-control"  placeholder="Enter contact no" value="{{ old('phone_number', optional($student)->phone_number) }}"">
+                                    <input type="text" name="phone_number" class="form-control"  placeholder="Enter contact no" value="{{ old('phone_number', optional($student)->phone_number) }}">
                                 </div>
                                 @error('phone_number')
                                   <div class="alert alert-danger">{{ $message }}</div>
