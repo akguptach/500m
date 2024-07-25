@@ -46,7 +46,8 @@ class Expert extends Model
                   'website_type',
                   'satisfied_students',
                   'month_on_domain',
-                  'show_on_home'
+                  'show_on_home',
+                  'website_manager'
               ];
 
     /**

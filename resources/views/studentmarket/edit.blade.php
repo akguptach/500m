@@ -29,9 +29,7 @@ div:has(> ul.pagination) {
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="mb-3 row">
-                                                <label class="col-lg-4 col-form-label" for="validationCustom01">Title
-                                                    <span class="text-danger">*</span>
-                                                </label>
+                                                <label class="col-lg-4 col-form-label" for="validationCustom01">Title<span class="text-danger">*</span></label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control" name="title" type="text"
                                                         id="title" value="{{ old('title', optional($deal)->title) }}"
@@ -90,7 +88,7 @@ div:has(> ul.pagination) {
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-lg-4 col-form-label" for="validationCustom02">Image
+                                                <label class="col-lg-4 col-form-label" for="validationCustom02">Deal Image
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
@@ -103,18 +101,20 @@ div:has(> ul.pagination) {
                                                         placeholder="Enter image here...">
                                                     {!! $errors->first('image', '<div class="invalid-feedback">:message
                                                     </div>') !!}
+													<p class="text-muted">Image size:800px*800px width(less then 2MB)</p>
                                                 </div>
                                             </div>
 
 
                                             <div class="mb-3 row">
-											<label class="col-lg-4 col-form-label" for="validationCustom02">Deal Logo <span class="text-danger">*</span>
+											<label class="col-lg-4 col-form-label" for="validationCustom02">Website Logo <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
                                             <img src="{{ old('deal_logo', optional($deal)->deal_logo) }}"
                                             width="50px;" />
 												<input  class="form-control {{ $errors->has('deal_logo') ? ' is-invalid' : '' }}" name="deal_logo" type="file" id="deal_logo"  >
 												{!! $errors->first('deal_logo', '<div class="invalid-feedback">:message</div>') !!}
+												<p class="text-muted">Image size:400px width(less then 2MB)</p>
 											</div>
 										</div>
 
@@ -192,7 +192,7 @@ div:has(> ul.pagination) {
                                                 <label for="voucher_code" class="col-form-label col-lg-4">Voucher
                                                     Code</label>
                                                 <div class="col-lg-6 ">
-                                                    <input class="form-control" name="voucher_code" type="number"
+                                                    <input class="form-control" name="voucher_code" type="text"
                                                         id="voucher_code"
                                                         value="{{ old('voucher_code', optional($deal)->voucher_code) }}"
                                                         minlength="1" placeholder="Enter voucher code">

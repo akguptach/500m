@@ -67,7 +67,7 @@ div:has(> ul.pagination) {
                                                     <th>Review Title </th>
                                                     <th>Review Description</th>
                                                     <th>Date</th>
-                                                    <th>Review Code</th>
+                                                    <th>University Name</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                     <th></th>
@@ -78,7 +78,6 @@ div:has(> ul.pagination) {
                                                 <tr>
                                                     <td class="align-middle">{{ $expertReview->title }}</td>
                                                     <td class="align-middle">{{ $expertReview->description }}</td>
-                                                    <td class="align-middle">{{ $expertReview->title }}</td>
                                                     <td class="align-middle">{{ $expertReview->review_date }}</td>
                                                     <td class="align-middle">{{ $expertReview->review_code }}</td>
                                                     <td class="align-middle">{{ $expertReview->status }}</td>

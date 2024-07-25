@@ -28,16 +28,19 @@
         <label class="col-lg-4 col-form-label" for="image">Enter image <span class="text-danger">*</span>
         </label>
         <div class="col-lg-6">
-            <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="" value="" placeholder="">
+        
+            <input type="hidden" name="image" id="expert_image" value="{{ old('image', optional($expert)->image) }}">
+            <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="uploadimage" id="uploadimage" value="" placeholder="">
             {!! $errors->first('image', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        
     </div>
 
     <div class="form-group row">
-    <label class="col-lg-4 col-form-label" for="image"><span class="text-danger">*</span>
+    <label class="col-lg-4 col-form-label" for="image"><span class="text-danger"></span>
     </label>
     <div class="col-lg-6">
-        <img src="{{@$expert->image}}" style="width:200px;">
+    <img src="{{ old('image', optional($expert)->image) }}" style="width:200px;" id="image-preview">
     </div>
     </div>
 
@@ -45,8 +48,8 @@
         <label class="col-lg-4 col-form-label" for="website_manager">Website Manager <span class="text-danger">*</span>
         </label>
         <div class="col-lg-6">
-            {{ HtmlHelper::WebsiteDropdown('website_type', old('website_type', optional($expert)->website_type), false, '', 'website_type') }}
-            {!! $errors->first('website_type', '<div class="invalid-feedback">:message</div>') !!}
+            {{ HtmlHelper::WebsiteDropdown('website_manager', old('website_manager', optional($expert)->website_manager), false, '', 'website_manager') }}
+            {!! $errors->first('website_manager', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
 
@@ -152,8 +155,8 @@
         <label class="col-lg-4 col-form-label" for="website_type">Website Type<span class="text-danger">*</span>
         </label>
         <div class="col-lg-6">
-            <select id="website_type" aria-placeholder="Select Website Type" name="website_type" class="form-control {{ $errors->has('website_type') ? ' is-invalid' : '' }}" required>
-                <option>Select Website Type</option>
+            <select onchange="onchangeWebsite(this.value)" id="website_type" aria-placeholder="Select Website Type" name="website_type" class="form-control {{ $errors->has('website_type') ? ' is-invalid' : '' }}" required>
+                <option value="">Select Website Type</option>
                 <option  @if(old('website_type', optional($expert)->website_type) == 'SOP')
                 selected="selected" @endif value="SOP">SOP</option>
                 <option  @if(old('website_type', optional($expert)->website_type) == 'Essay')
@@ -220,23 +223,23 @@
 
 <div id="subject-container">
     @if(count($oldArray)>0)
-
+    
     @php($i = count($oldArray)-1)
     @foreach($oldArray as $index=>$filed)
     <div class="form-group row  subject-row">
         <label class="col-lg-1 col-form-label" for="">@if($index == 0) Skilled In @endif</label>
         <div class="col-lg-1 col-xl-1">
-            <input type="checkbox" name="addMoreSubject[{{$index}}][show_on_home]" @if(@$filed['show_on_home']==1) checked="checked" @endif>
+            <input type="checkbox" name="addMoreSubject[{{$index}}][show_on_home]" @if(@$filed['show_on_home']==1 || @$filed['show_on_home']=='on') checked="checked" @endif>
         </div>
         <div class="col-lg-6 col-xl-2 expert_subject1">
             <select class="form-control" name="addMoreSubject[{{$index}}][expert_subject]">
                 @if(!empty($subjects))
                 @foreach ($subjects as $subject)
 
-                @if(@$filed['subject_id'] == $subject->id)
+                @if(@$filed['subject_id'] == $subject->id || @$filed['expert_subject'] == $subject->id)
                 <option value="{{$subject->id}}" selected="selected">{{$subject->subject_name}}</option>
                 @else
-                <option value="{{$subject->id}}">{{$subject->subject_name}}11</option>
+                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                 @endif
 
                 @endforeach
@@ -282,7 +285,7 @@
             </select>
         </div>
         <div class="col-lg-4 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMoreSubject[0][subject_number]" placeholder="Enter skill number">
+            <input type="text" class="form-control" name="addMoreSubject[0][subject_number]" placeholder="Enter skill number" value="1">
         </div>
         <div class="col-lg-4 col-xl-3 expert_subject1">
             <button type="button" class="btn btn-outline-primary" id="add-more-subject">Add More</button>
@@ -329,9 +332,19 @@
 <script src="{{asset('js/jquery.multi-select.min.js')}}"></script>
 @php($webType = old('website_type', optional($expert)->website_type))
 <script>
+
+    function onchangeWebsite(val){
+        $.ajax({
+                url: "{{route('get_task_types')}}?website_type=" + val + '&competences={{$competences}}',
+                success: function(html) {
+                    $('.competences-ajax').html(html);
+                    $('#competences').selectpicker('refresh');
+                }
+            });
+    }
     $(document).ready(function() {
 
-
+        
         $.ajax({
             url: "{{route('get_task_types')}}?website_type={{$webType}}&competences={{$competences}}",
             success: function(html) {
@@ -340,15 +353,25 @@
             }
         });
 
-        $('#website_type').change(function() {
+        $('#uploadimage').change(function(){
+            data = new FormData();
+            data.append('image', $('#uploadimage')[0].files[0]);
+            data.append("_token","{{ csrf_token() }}");
             $.ajax({
-                url: "{{route('get_task_types')}}?website_type=" + $(this).val() + '&competences={{$competences}}',
-                success: function(html) {
-                    $('.competences-ajax').html(html);
-                    $('#competences').selectpicker('refresh');
+                url: "{{route('imageupload')}}",
+                type: "POST",
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,
+                success: function(result) {
+                    $('#expert_image').val(result.url);
+                    $("#image-preview").attr("src",result.url);
+
                 }
             });
         })
+        
 
         $('.language .multi-select-button').html("{{$lang}}")
         $('.competences .multi-select-button').html("{{$competences}}")
@@ -380,7 +403,7 @@
         </select>
         </div>
         <div class="col-lg-4 col-xl-3 expert_subject1">
-            <input type="text" class="form-control" name="addMoreSubject[${i}][subject_number]" placeholder="Enter skill number">
+            <input type="text" class="form-control" name="addMoreSubject[${i}][subject_number]" placeholder="Enter skill number" value="1">
         </div>
         <div class="col-lg-4 col-xl-3 expert_subject1">
             <button type="button" class="btn btn-outline-danger remove-subject">Remove</button>

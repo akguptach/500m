@@ -23,7 +23,7 @@ class ExpertsController extends Controller
     public function index(Request $request)
     {
 
-        $limit = 10;
+        $limit = 1000;
         $websiteType = '';
         if ($request->has('limit')) {
             $limit = $request->input('limit');
@@ -36,9 +36,11 @@ class ExpertsController extends Controller
         }
 
         if($websiteType)
-        $experts = Expert::where('website_type', $websiteType)->orderBy('id','desc')->paginate($limit);
+        $experts = Expert::where('website_type', $websiteType)->orderBy('id','desc')->get();
         else
-        $experts = Expert::orderBy('id','desc')->paginate($limit);
+        $experts = Expert::orderBy('id','desc')->get();
+        
+
         
         return view('experts.index', compact('experts','limit','websiteType'));
     }
@@ -73,24 +75,31 @@ class ExpertsController extends Controller
     {
         $data = $request->all();
 
-        
         //echo "<pre>"; print_r($data); die;
-        $image = '';
+        //echo "<pre>"; print_r($data); die;
+        /*$image = '';
         if ($request->has("image")) {
             $image = request()->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/uploads/attachment/'), $imageName);
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
-        $data['image'] = $image;
+        $data['image'] = $image;*/
         $data['language'] = implode(',', $data['language']);
         $data['competences'] = implode(',', $data['competences']);
         $expert = Expert::create($data);
         foreach ($request->addMoreSubject as $item) {
-            ExpertSubject::Create([
+            /*ExpertSubject::Create([
                 'expert_id' => $expert->id,
                 'subject_id' => $item['expert_subject'],
                 'subject_number' => $item['subject_number']
+            ]);*/
+
+            ExpertSubject::Create([
+                'expert_id' => $expert->id,
+                'subject_id' => $item['expert_subject'],
+                'subject_number' => $item['subject_number'],
+                'show_on_home' => isset($item['show_on_home'])?1:0,
             ]);
         }
 
@@ -130,7 +139,9 @@ class ExpertsController extends Controller
      */
     public function edit($id)
     {
-        $expert = Expert::findOrFail($id);
+        $expert = Expert::with(['subjects'=>function($q){
+            $q->orderBy('subject_number','asc');
+        }])->findOrFail($id);
         $subjects  =   Subject::all();
         return view('experts.edit', compact('expert','subjects'));
     }
@@ -150,14 +161,14 @@ class ExpertsController extends Controller
         
         $expert = Expert::findOrFail($id);
 
-        $image = $expert->image;
+        /*$image = $expert->image;
         if ($request->has("image")) {
             $image = request()->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/uploads/attachment/'), $imageName);
             $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
         }
-        $data['image'] = $image;
+        $data['image'] = $image;*/
         $data['language'] = implode(',', $data['language']);
         $data['competences'] = implode(',', $data['competences']);
 
@@ -225,6 +236,10 @@ class ExpertsController extends Controller
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }
     }
+
+
+
+    
 
     
     

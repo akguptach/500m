@@ -22,7 +22,7 @@
                         </div>
                         @endif
                         <div class="form-validation">
-                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.store') }}" accept-charset="UTF-8" id="create_expert_form" name="create_expert_form" enctype="multipart/form-data">
+                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.store') }}" accept-charset="UTF-8" id="create_expert_form" name="create_expert_form">
                                 {{ csrf_field() }}
                                 @include ('experts.form', [
                                 'expert' => null,

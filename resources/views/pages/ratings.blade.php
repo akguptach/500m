@@ -100,6 +100,7 @@
 </div>
 <script type="text/javascript">
     var i = '{{$i}}';
+	
     $("#add_more_rating").click(function() {
         ++i;
         $("#ratingsAddRemove").append(`<tr>

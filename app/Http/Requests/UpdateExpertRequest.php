@@ -32,6 +32,7 @@ class UpdateExpertRequest extends FormRequest
             'success_rate'=> 'required',
             'total_orders'=> 'required',
             'website_type'=>'required',
+            'website_manager'=>'required',
             'addMoreSubject.*.expert_subject' => 'required',
             'addMoreSubject.*.subject_number' => 'required',
             'addMorePaper.*.paper_number' => 'required',

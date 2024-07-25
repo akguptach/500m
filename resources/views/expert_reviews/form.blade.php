@@ -45,9 +45,9 @@
 </div>
 
 <div class="mb-3 row">
-    <label for="review_code" class="col-form-label text-lg-end col-lg-2 col-xl-3">Review Code</label>
+    <label for="review_code" class="col-form-label text-lg-end col-lg-2 col-xl-3">University Name</label>
     <div class="col-lg-10 col-xl-9">
-        <input class="form-control {{ $errors->has('review_code') ? ' is-invalid' : '' }}" name="review_code" type="text" id="review_code" value="{{ old('review_code', optional($expertReview)->review_code) }}" minlength="1" placeholder="Enter review code here...">
+        <input class="form-control {{ $errors->has('review_code') ? ' is-invalid' : '' }}" name="review_code" type="text" id="review_code" value="{{ old('review_code', optional($expertReview)->review_code) }}" minlength="1" placeholder="Enter university name here...">
         {!! $errors->first('review_code', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>

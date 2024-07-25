@@ -23,7 +23,7 @@
                         @endif
                         <div class="form-validation">
 
-                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" enctype="multipart/form-data">
+                            <form method="POST" class="needs-validation" novalidate action="{{ route('experts.expert.update', $expert->id) }}" id="edit_expert_form" name="edit_expert_form" accept-charset="UTF-8" >
                                 {{ csrf_field() }}
                                 @method('PUT')
                                 @include ('experts.form', [

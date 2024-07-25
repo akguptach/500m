@@ -1,5 +1,3 @@
-
-
 <style>
 .invalid-feedback {
     display: block;
@@ -29,6 +27,7 @@
     <label for="rating" class="col-form-label text-lg-end col-lg-2 col-xl-3">Status</label>
     <div class="col-lg-10 col-xl-9">
     <select name="status" class="form-control" id="status">
+	<option value="">Select</option>
     <option value="active">Active</option>
     <option value="inactive">Inactive</option>
   </select>    

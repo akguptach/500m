@@ -22,7 +22,7 @@ class HtmlHelper
 
         $html .= '<select id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '>';
         if($blankValueText)
-        $html .= '<option value="">'.$blankValueText.'</option>';
+        $html .= '<option value="0">'.$blankValueText.'</option>';
         else
         $html .= '<option value="">Select website</option>';
         if (!empty($websites))
@@ -124,5 +124,46 @@ class HtmlHelper
         $html .= '</select></div>';
         echo $html;
     }
+
+
+    static function ServiceKeywordDropdown($name, $options=[])
+    {
+        $serviceKeywords = \App\Models\ServiceKeyword::where('status', 1)->get();
+        $html = '<div>';
+
+        if (isset($options['label']))
+            $html .= '<label>'.$options['label'].'</label>';
+
+        $style = '';
+        if (isset($options['style'])) {
+            $style = 'style="' . $options['style'] . '"';
+        }
+
+        $id = $name;
+        if (isset($options['id'])) {
+            $id = $options['id'];
+        }
+
+        $required = '';
+        if (isset($options['required']) && $options['required']) {
+            $required = 'required="required"';
+        }
+
+        $html .= '<select '.$required.' id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select Service Keyword</option>';
+        if (!empty($serviceKeywords))
+            foreach ($serviceKeywords as $serviceKeyword) {
+
+                
+                    $selected = '';
+                    if (isset($options['default']) && $options['default'] == $serviceKeyword->id) {
+                        $selected = 'selected="selected"';
+                    }
+                    $html .= '<option ' . $selected . ' value="' . $serviceKeyword->id . '">' . $serviceKeyword->name . '</option>';
+                
+            }
+        $html .= '</select></div>';
+        echo $html;
+    }
+
 
 }

@@ -112,7 +112,8 @@
 		searching: false,
 		paging:true,
 		select: false,         
-		lengthChange:false 
+		lengthChange:false ,
+        
 	});
 	// dataTable4
 	var table = $('#dataTable4').DataTable({
@@ -123,7 +124,11 @@
 	});
 
 	// table row
-	var table = $('#dataTable1, #dataTable2, #dataTable3, #dataTable4, #example3, #example4, #example5').DataTable();
+	var table = $('#dataTable1, #dataTable2, #dataTable3, #dataTable4, #example3, #example4, #example5').DataTable(
+        {
+            "order": []
+        }
+    );
 	$('#example tbody').on('click', 'tr', function () {
 		var data = table.row( this ).data();
 	});

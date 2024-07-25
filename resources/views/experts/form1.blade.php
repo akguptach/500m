@@ -32,7 +32,7 @@
 
 
 <div class="mb-3 row">
-    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">Review Code</label>
+    <label for="ratingno" class="col-form-label text-lg-end col-lg-2 col-xl-3">University Name</label>
     <div class="col-lg-10 col-xl-9">
     <input type="text" class="form-control" name="reviewcode"  id="" value=""  placeholder="Enter Description" id="">      
     </div>

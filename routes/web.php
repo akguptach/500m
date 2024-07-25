@@ -34,6 +34,7 @@ use App\Http\Controllers\ImageUploadController as ImageUploadController;
 
 use App\Http\Controllers\DealCategoriesController;
 use App\Http\Controllers\DealsController;
+use App\Http\Controllers\ServiceKeywordsController;
 
 
 
@@ -351,4 +352,27 @@ Route::group([
                     
 
          
+});
+
+Route::post('/image-upload', [AjaxController::class, 'imageUpload'])->name('imageupload');
+Route::group([
+    'prefix' => 'service_keywords',
+], function () {
+    Route::get('/', [ServiceKeywordsController::class, 'index'])
+         ->name('service_keywords.service_keyword.index');
+    Route::get('/create', [ServiceKeywordsController::class, 'create'])
+         ->name('service_keywords.service_keyword.create');
+    Route::get('/show/{serviceKeyword}',[ServiceKeywordsController::class, 'show'])
+         ->name('service_keywords.service_keyword.show')->where('id', '[0-9]+');
+    Route::get('/{serviceKeyword}/edit',[ServiceKeywordsController::class, 'edit'])
+         ->name('service_keywords.service_keyword.edit')->where('id', '[0-9]+');
+    Route::post('/', [ServiceKeywordsController::class, 'store'])
+         ->name('service_keywords.service_keyword.store');
+    Route::put('service_keyword/{serviceKeyword}', [ServiceKeywordsController::class, 'update'])
+         ->name('service_keywords.service_keyword.update')->where('id', '[0-9]+');
+    Route::delete('/service_keyword/{serviceKeyword}',[ServiceKeywordsController::class, 'destroy'])
+         ->name('service_keywords.service_keyword.destroy')->where('id', '[0-9]+');
+
+         Route::patch('/service_keyword/{serviceKeyword}',[ServiceKeywordsController::class, 'change'])
+         ->name('service_keywords.service_keyword.change')->where('id', '[0-9]+');
 });

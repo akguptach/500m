@@ -66,12 +66,13 @@ class ServiceController extends Controller
             'status' => isset($request->status) ? $request->status : 'INACTIVE',
             'short_description' => $request->short_description,
             'type' => $request->content_type,
+            'service_keyword_id' => $request->service_keyword_id,
         ]);
 
         if ($request->content_type == 'PAGE')
-            return redirect('/pages/edit/' . $service->id . '#seo')->with('status', 'Saved Successfully');
+            return redirect('/pages/edit/' . $service->id)->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $service->id . '#seo')->with('status', 'Saved Successfully');
+            return redirect('/services/edit/' . $service->id)->with('status', 'Saved Successfully');
     }
 
     public function storeSeo(SeoServiceRequest $seoServiceRequest)
@@ -99,9 +100,9 @@ class ServiceController extends Controller
         ]);
         $service = Service::find($seoServiceRequest->service_id);
         if ($service->type == 'PAGE')
-            return redirect('/pages/edit/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
+            return redirect('/pages/edit/' . $seoServiceRequest->service_id . '#seo')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $seoServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
+            return redirect('/services/edit/' . $seoServiceRequest->service_id . '#seo')->with('status', 'Saved Successfully');
     }
 
     public function storeFaq(FaqServiceRequest $faqServiceRequest)
@@ -120,9 +121,9 @@ class ServiceController extends Controller
         }
         $service = Service::find($faqServiceRequest->service_id);
         if ($service->type == 'PAGE')
-            return redirect('/pages/edit/' . $faqServiceRequest->service_id . '#specifications');
+            return redirect('/pages/edit/' . $faqServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $faqServiceRequest->service_id . '#specifications');
+            return redirect('/services/edit/' . $faqServiceRequest->service_id . '#faq')->with('status', 'Saved Successfully');
     }
 
 
@@ -132,9 +133,9 @@ class ServiceController extends Controller
         $service = Service::find($serviceSpecificationRequest->service_id);
 
         if ($service->type == 'PAGE')
-            return redirect('/pages/edit/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
+            return redirect('/pages/edit/' . $serviceSpecificationRequest->service_id . '#specifications')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $serviceSpecificationRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
+            return redirect('/services/edit/' . $serviceSpecificationRequest->service_id . '#specifications')->with('status', 'Saved Successfully');
     }
 
 
@@ -171,9 +172,9 @@ class ServiceController extends Controller
         $this->servicesService->storeRatings($serviceRatingRequest);
         $service = Service::find($serviceRatingRequest->service_id);
         if ($service->type == 'PAGE')
-            return redirect('/pages/edit/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
+            return redirect('/pages/edit/' . $serviceRatingRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
         else
-            return redirect('/services/edit/' . $serviceRatingRequest->service_id . '#how_works')->with('status', 'Saved Successfully');
+            return redirect('/services/edit/' . $serviceRatingRequest->service_id . '#ratings')->with('status', 'Saved Successfully');
     }
 
     public function storeHowWorks(ServiceHowWorksRequest $serviceHowWorksRequest)

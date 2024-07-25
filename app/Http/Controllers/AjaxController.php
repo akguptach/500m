@@ -67,4 +67,21 @@ class AjaxController extends Controller
             return response($e->getMessage());
         }
     }
+
+
+    public function imageUpload(Request $request)
+    {
+        try {
+            $image = '';
+            if ($request->has("image")) {
+                $image = request()->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/uploads/attachment/'), $imageName);
+                $image = env('APP_URL') . '/images/uploads/attachment/' . $imageName;
+            }
+            return response(['url'=>$image]);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+    }
 }

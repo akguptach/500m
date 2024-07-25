@@ -68,7 +68,7 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            <?php /*<div class="form-group">
                 <label>Button Url</label>
                 <input type="text" name="button_url" class="form-control" placeholder=""
                     value="{{ old('button_url', @$service->seo->button_url ) }}">
@@ -76,7 +76,7 @@
                 @error('button_url')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
-            </div>
+            </div>*/ ?>
 
             @if(Request::route('id'))
             <div class="card-footer">

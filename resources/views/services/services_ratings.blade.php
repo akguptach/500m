@@ -92,11 +92,12 @@
     </div>
 </div>
 <script type="text/javascript">
+
 var i = '{{$i}}';
 $("#add_more_rating").click(function() {
     ++i;
-    $("#ratingsAddRemove").append(`<tr>
-                    <td>
+    $("#ratingsAddRemove").append('<tr>
+						<td>
                         <input type="text" name="addMoreRatingFields[${i}][star_rating]" placeholder="Enter rating" class="form-control" require />
                     </td>
                     
@@ -108,7 +109,7 @@ $("#add_more_rating").click(function() {
                     </td>
 
                     <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
-                </tr>`);
+                </tr>');
 });
 $(document).on('click', '.remove-input-field', function() {
     $(this).parents('tr').remove();

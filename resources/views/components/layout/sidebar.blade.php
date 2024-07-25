@@ -26,6 +26,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{route('media.save')}}">Media</a></li>
                             <li><a href="{{ route('pages') }}">Pages</a></li>
+							<li><a href="{{ route('service_keywords.service_keyword.index') }}">Services Keyword</a></li>
                             <li><a href="{{ route('services_index') }}">Services</a></li>
                             <li><a href="{{ route('faq.index') }}">FAQ</a></li>
                         </ul>
@@ -92,8 +93,15 @@
 						<span class="nav-text"></i>Coupon Code</span>
 					  </a>
 				    </li>
+
+					<li><a class="ai-icon" href="{{route('experts.expert.index')}}" aria-expanded="false">
+						<i class=" nav-icon fa-solid  fa-gift">
+						<span class="nav-text"></i>Experts</span>
+					  </a>
+				    </li>
 					
-					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					
+					<?php /*<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 							<i class="fas fa-user-check	"></i>
 							<span class="nav-text">Expert Profile</span>
 						</a>
@@ -102,19 +110,27 @@
                             <li><a href="{{route('experts.expert.index')}}">View Expert</a></li>
                             
                         </ul>
-                    </li>
+                    </li>*/ ?>
+
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 						<i class=" nav-icon fa-solid fas fa-map-marked"></i>
 						<span class="nav-text"> </i>Student Market Place</span>
 					  </a>
 					 <ul aria-expanded="false">
 						<li><a href="{{route('studentmarket.student.deals_category')}}">Deals Category</a></li>
-						<li><a href="{{route('studentmarket.student.add_deals')}}">Add Deals</a></li>
-						<li><a href="{{route('studentmarket.student.view_deals')}}">View Deals</a></li>
+						<li><a href="{{route('studentmarket.student.view_deals')}}">Deals</a></li>
 						
 					 </ul>
 				    </li>
-					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+
+
+					<li><a class="ai-icon" href="{{route('affiliateuser.affiliate.view')}}" aria-expanded="false">
+						<i class=" nav-icon fa-solid  fa-gift">
+						<span class="nav-text"></i>View Affiliate User</span>
+					  </a>
+				    </li>
+
+					<?php /*<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 							<i class="la la-users"></i>
 							<span class="nav-text">Affiliate User</span>
 						</a>
@@ -123,7 +139,7 @@
                             <li><a href="{{route('affiliateuser.affiliate.view')}}">View Affiliate User</a></li>
                             
                         </ul>
-                    </li>
+                    </li>*/ ?>
 					
 					
                     

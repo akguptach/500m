@@ -88,23 +88,25 @@
 
 
 										<div class="mb-3 row">
-											<label class="col-lg-4 col-form-label" for="validationCustom02">Image <span class="text-danger">*</span>
+											<label class="col-lg-4 col-form-label" for="validationCustom02">Deal Image <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
 												<img src="{{ old('image')}}" width="50px;" />
 												<input required class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" type="file" id="image" value="{{ old('image') }}" placeholder="Enter image here...">
 												{!! $errors->first('image', '<div class="invalid-feedback">:message</div>') !!}
+												<p class="text-muted">Image size:800px*800px(less then 2MB)</p>
 											</div>
 										</div>
 
 
 										<div class="mb-3 row">
-											<label class="col-lg-4 col-form-label" for="validationCustom02">Deal Logo <span class="text-danger">*</span>
+											<label class="col-lg-4 col-form-label" for="validationCustom02">Website Logo <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
 												
 												<input required class="form-control {{ $errors->has('deal_logo') ? ' is-invalid' : '' }}" name="deal_logo" type="file" id="deal_logo"  >
 												{!! $errors->first('deal_logo', '<div class="invalid-feedback">:message</div>') !!}
+												<p class="text-muted">Image size:400px width(less then 2MB)</p>
 											</div>
 										</div>
 
@@ -124,7 +126,7 @@
 												<span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-10">
-												<textarea placeholder="Enter long description here..." id="ckeditor" class="editor form-control {{ $errors->has('long_description') ? ' is-invalid' : '' }}" name="long_description">{{ old('long_description') }}</textarea>
+												<textarea id="ckeditor" class="editor form-control {{ $errors->has('long_description') ? ' is-invalid' : '' }}" name="long_description">{{ old('long_description') }}</textarea>
 												{!! $errors->first('long_description', '<div class="invalid-feedback">:message</div>') !!}
 											</div>
 										</div>
@@ -154,7 +156,7 @@
 										<div class="mb-3 row Voucher_Code" style="display: none;">
 											<label for="voucher_code" class="col-form-label col-lg-4">Voucher Code</label>
 											<div class="col-lg-6 ">
-												<input class="form-control" name="voucher_code" type="number" id="voucher_code" value="{{ old('voucher_code') }}" minlength="1" placeholder="Enter voucher code">
+												<input class="form-control" name="voucher_code" type="text" id="voucher_code" value="{{ old('voucher_code') }}" minlength="1" placeholder="Enter voucher code">
 												{!! $errors->first('voucher_code', '<div class="invalid-feedback">:message</div>') !!}
 											</div>
 										</div>
@@ -236,8 +238,8 @@
 		}
 	}
 </script>
-<!-- <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script> -->
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+
 
 
 @endsection

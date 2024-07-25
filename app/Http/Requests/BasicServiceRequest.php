@@ -24,7 +24,8 @@ class BasicServiceRequest extends FormRequest
         return [
             'service_name' => 'required',
             //'service_description' => 'required',
-            'website_type' => 'required'
+            'website_type' => 'required',
+            'service_keyword_id'=>'required'
         ];
     }
 }

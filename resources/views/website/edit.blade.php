@@ -71,6 +71,10 @@
                         @enderror
                       </div>
                     </div>
+
+
+
+
                     <div class="mb-3 row">
                       <label class="col-lg-4 col-form-label" for="">Contact Person Name<span class="text-danger">*</span>
                       </label>
@@ -192,6 +196,43 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="mb-3 row">
+                      <div class="col-lg-10">
+                        <h5>Website Day Wise Price</h5>
+                      </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                      <label class="col-lg-4 col-form-label" for="">Subject Price(%)<span class="text-danger">*</span>
+                      </label>
+                      <div class="col-lg-6">
+                      <input type="text" name="subject_price" class="form-control" placeholder="Enter Suject Price" value="{{$data->subject_price}}">
+                      <small class="text-muted">Example: 10,-10</small>
+                        <div class="invalid-feedback">
+                          ....
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                      <label class="col-lg-4 col-form-label" for="">Day Wise Price(%)<span class="text-danger">*</span>
+                      </label>
+                      <div class="col-lg-6">
+                      <input type="text" name="website_price" class="form-control" placeholder="Enter Website Price day wise" value="{{$data->website_price}}">
+                <small class="text-muted">Example: 12Hours:200,1day:180,2day:170</small>
+                        <div class="invalid-feedback">
+                          ....
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                    
                     <div class="mb-3 row">
                       <div class="col-lg-10">
                         <h5>WEBSITE ADMIN LOGIN CREDENTIALS</h5>

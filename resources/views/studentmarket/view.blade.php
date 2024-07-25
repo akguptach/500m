@@ -14,13 +14,14 @@ div:has(> ul.pagination) {
 </style>
 <section class="content-header">
     <div class="container-fluid">
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
+        
+                
                         <div class="card">
+                            
+                        
                             <div class="card-header">
                                 <h3 class="card-title">Deals</h3>
+                                <a href="{{route('studentmarket.student.add_deals')}}" class="btn btn-primary">+ Add new</a>
                             </div>
                             <div class="card-body">
                                 @if (session('status'))
@@ -31,24 +32,16 @@ div:has(> ul.pagination) {
 
 
                                 <form id="page-limit-form">
-                                <div style="display: flex;" class="card-header d-flex justify-content-between align-items-center p-3">
-                                    <div>
-                                        <labe>Item Per Page</labe>
-                                        <select id="limit" name="limit">
-                                            <option value="5" @if(@$limit==5) selected @endif>5</option>
-                                            <option value="10" @if(@$limit==10) selected @endif>10</option>
-                                            <option value="25" @if(@$limit==25) selected @endif>25</option>
-                                            <option value="50" @if(@$limit==50) selected @endif>50</option>
-                                            <option value="100" @if(@$limit==100) selected @endif>100</option>
-                                        </select>
-                                    </div>
-                                    <div style="margin-left: auto;">
-                                        {{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type_filter',[],'All') }}
-                                    </div>
-                                </div>
-                            </form>
-                            <br>
-                                <table class="table  ">
+								    
+									<div style="display: flex;" class="card-header d-flex justify-content-between align-items-center p-3">
+										
+										<div style="margin-left: auto;">
+											{{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type_filter',[],'All') }}
+										</div>
+									</div>
+                                </form>
+                           
+                                <table class="table table-bordered table-responsive-sm">
                                     <thead>
                                         <tr>
                                             <th>Image</th>
@@ -80,21 +73,19 @@ div:has(> ul.pagination) {
 
                                             <td class="text-end">
 
-                                                <form method="POST"
-                                                    action="{!! route('deals.deal.destroy', $deal->id) !!}"
-                                                    accept-charset="UTF-8">
+                                                <form method="POST" action="{!! route('deals.deal.destroy', $deal->id) !!}" accept-charset="UTF-8">
                                                     {{ csrf_field() }}
 
-                                                    <div class="btn-group btn-group-sm" role="group">
+                                                    
                                                         
-                                                        <a style="padding: 0px;padding-bottom:3px;margin-right:5px;" href="{{ route('deals.deal.edit', $deal->id ) }}"
-                                                            class="edit-link" title="Edit Deal">
+                                                        <a  href="{{ route('deals.deal.edit', $deal->id ) }}"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1" title="Edit Deal">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
 
                                                         @if($deal->status=='active')
                                                         <button style="padding: 0px;padding-bottom:3px;margin-right: 7px;" name="action"
-                                                            value="inactive" type="submit" class="btn btn-link "
+                                                            value="inactive" type="submit" class="btn btn-success shadow btn-xs sharp"
                                                             title="Inactivate Deal Category"
                                                             onclick="return new_modal(event,'Click Ok to Inactivate Deal.')">
                                                             <i class="fas fa-check-circle"></i>
@@ -103,7 +94,7 @@ div:has(> ul.pagination) {
 
                                                         @if($deal->status=='inactive')
                                                         <button style="padding: 0px;padding-bottom:3px;margin-right: 7px;" name="action"
-                                                            value="active" type="submit" class="btn btn-link "
+                                                            value="active" type="submit" class="btn btn-danger shadow btn-xs sharp"
                                                             title="activate Deal"
                                                             onclick="return new_modal(event,'Click Ok to activate Deal.')">
                                                             
@@ -111,11 +102,11 @@ div:has(> ul.pagination) {
                                                         </button>
                                                         @endif
 
-                                                        <button name="action" value="delete" style="padding: 0px;padding-bottom:3px;" type="submit" class="btn btn-link" title="Delete Deal"
+                                                        <button name="action" value="delete"  type="submit" class="btn btn-danger shadow btn-xs sharp" title="Delete Deal"
                                                             onclick="return new_modal(event,&quot;Click Ok to delete Deal.&quot;)">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
-                                                    </div>
+                                                    
 
                                                 </form>
 
@@ -126,15 +117,9 @@ div:has(> ul.pagination) {
                                 </table>
 
                             </div>
+						</div>
 
-                        </div>
-
-
-
-                    </div>
-                </div>
-            </div>
-        </section>
+            
     </div>
 </section>
 <script>

@@ -29,6 +29,7 @@ div:has(> ul.pagination) {
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Experts</h3>
+								<a href="{{route('experts.expert.create')}}" class="btn btn-primary">+ Add new</a>
                             </div>
                             <div class="card-body">
                                 @if (session('status'))
@@ -38,123 +39,112 @@ div:has(> ul.pagination) {
                                 @endif
                                 <form id="page-limit-form">
                                     <div style="display: flex;">
-                                        <div>
-
-                                            <labe>Item Per Page</labe>
-                                            <select id="limit" name="limit">
-                                                <option value="5" @if(@$limit==5) selected @endif>5</option>
-                                                <option value="10" @if(@$limit==10) selected @endif>10</option>
-                                                <option value="25" @if(@$limit==25) selected @endif>25</option>
-                                                <option value="50" @if(@$limit==50) selected @endif>50</option>
-                                                <option value="100" @if(@$limit==100) selected @endif>100</option>
-                                            </select>
-
-                                        </div>
+                                       
                                         <div style="margin-left: auto;">
                                             {{ HtmlHelper::WebsiteDropdown('website_type', $websiteType, false, 'height: 31px;padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type',[],'All') }}
                                         </div>
                                     </div>
                                 </form>
                                 <br>
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Image</th>
-                                            <th>Show on Home</th>
-                                            <th>Language</th>
-                                            <th>Skills</th>
-                                            <th>Rating</th>
-                                            <th>Qualification</th>
-                                            <th>Subject Number</th>
-                                            <th>Paper Number</th>
-                                            <th>Add Review</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($experts as $expert)
-                                        <tr>
-                                            <td class="align-middle">{{$expert->first_name}}</td>
-                                            <td class="align-middle"><img src="{{$expert->image}}" width="50px"></td>
-                                            <td class="align-middle">
-                                                @if($expert->show_on_home)
-                                                Yes
-                                                @else
-                                                No
-                                                @endif
-                                            </td>
-                                            <td class="align-middle">{{$expert->language}}</td>
-                                            <td class="align-middle">{{count($expert->subjects)}}</td>
-                                            <td class="align-middle">{{$expert->rating_numbers}}</td>
-                                            <td class="align-middle">{{$expert->qualification}}</td>
-                                            <td class="align-middle">{{$expert->subject_number}}</td>
-                                            <td class="align-middle">{{$expert->paper_number}}</td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('expert_reviews.expert_review.index',$expert->id) }}"
-                                                type="button" class="btn-xs btn-primary" style="color: white;">Add Review </a>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{route('experts.expert.edit',$expert->id)}}"
-                                                    class="edit-link">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form method="POST"
-                                                    action="{!! route('experts.expert.change', $expert->id) !!}"
-                                                    accept-charset="UTF-8" style="display:inline">
-                                                    <input name="_method" value="PATCH" type="hidden">
-                                                    <input name="status" value="active" type="hidden">
-                                                    {{ csrf_field() }}
-                                                    <button @if($expert->status=='active') disabled="disabled" @endif
-                                                        type="submit" class="btn btn-link " title="Inactivate Expert"
-                                                        onclick="return new_modal(event, &quot;Click Ok to activate
-                                                        Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
-                                                        <i class="fas fa-check-circle"></i>
-                                                    </button>
+								<div class="table-responsive">
+									<table id="example3" class="table table-bordered table-responsive-sm">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Image</th>
+												<th>Show on Home</th>
+												<th>Language</th>
+												<th>Skills</th>
+												<th>Help</th>
+												<th>Rating</th>
+												
+												<th>Add Review</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($experts as $expert)
+											<tr>
+												<td class="align-middle">{{$expert->first_name}}</td>
+												<td class="align-middle"><img src="{{$expert->image}}" width="50px"></td>
+												<td class="align-middle">
+													@if($expert->show_on_home)
+													Yes
+													@else
+													No
+													@endif
+												</td>
+												<td class="align-middle">{{$expert->language}}</td>
+												<td class="align-middle">{{count($expert->subjects)}}</td>
+												<td class="align-middle"></td>
+												<td class="align-middle">{{$expert->rating_numbers}}</td>
+												
+												<td class="align-middle">
+													<a href="{{ route('expert_reviews.expert_review.index',$expert->id) }}"
+													type="button" class="btn-xs btn-primary" style="color: white;">Add Review </a>
+												</td>
+												<td class="align-middle">
+													<a href="{{route('experts.expert.edit',$expert->id)}}"
+														class="edit-link">
+														<i class="fas fa-edit"></i>
+													</a>
+													<form method="POST"
+														action="{!! route('experts.expert.change', $expert->id) !!}"
+														accept-charset="UTF-8" style="display:inline">
+														<input name="_method" value="PATCH" type="hidden">
+														<input name="status" value="active" type="hidden">
+														{{ csrf_field() }}
+														<button @if($expert->status=='active') disabled="disabled" @endif
+															type="submit" class="btn btn-link " title="Inactivate Expert"
+															onclick="return new_modal(event, &quot;Click Ok to activate
+															Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
+															<i class="fas fa-check-circle"></i>
+														</button>
 
-                                                </form>
-
-
-                                                <form method="POST"
-                                                    action="{!! route('experts.expert.change', $expert->id) !!}"
-                                                    accept-charset="UTF-8" style="display:inline">
-                                                    <input name="_method" value="PATCH" type="hidden">
-                                                    <input name="status" value="inactive" type="hidden">
-                                                    {{ csrf_field() }}
-                                                    <button @if($expert->status=='inactive') disabled="disabled" @endif
-                                                        type="submit" class="btn btn-link " title="Activate Expert"
-                                                        onclick="return new_modal(event, &quot;Click Ok to Inactivate
-                                                            Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
-                                                        <i class="fas fa-times-circle"></i>
-                                                    </button>
-
-                                                </form>
+													</form>
 
 
+													<form method="POST"
+														action="{!! route('experts.expert.change', $expert->id) !!}"
+														accept-charset="UTF-8" style="display:inline">
+														<input name="_method" value="PATCH" type="hidden">
+														<input name="status" value="inactive" type="hidden">
+														{{ csrf_field() }}
+														<button @if($expert->status=='inactive') disabled="disabled" @endif
+															type="submit" class="btn btn-link " title="Activate Expert"
+															onclick="return new_modal(event, &quot;Click Ok to Inactivate
+																Expert.&quot;)" style="padding: 0px;padding-bottom:3px;">
+															<i class="fas fa-times-circle"></i>
+														</button>
 
-                                                <form method="POST"
-                                                    action="{!! route('experts.expert.destroy', $expert->id) !!}"
-                                                    accept-charset="UTF-8" style="display:inline">
-                                                    <input name="_method" value="DELETE" type="hidden">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-link " title="Delete Student"
-                                                    onclick="return new_modal(event, &quot;Click Ok to delete Expert.&quot;)" 
-                                                        style="padding: 0px;padding-bottom:3px;">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
+													</form>
 
-                                                </form>
 
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+
+													<form method="POST"
+														action="{!! route('experts.expert.destroy', $expert->id) !!}"
+														accept-charset="UTF-8" style="display:inline">
+														<input name="_method" value="DELETE" type="hidden">
+														{{ csrf_field() }}
+														<button type="submit" class="btn btn-link " title="Delete Student"
+														onclick="return new_modal(event, &quot;Click Ok to delete Expert.&quot;)" 
+															style="padding: 0px;padding-bottom:3px;">
+															<i class="fas fa-trash-alt"></i>
+														</button>
+
+													</form>
+
+												</td>
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
+                                </div>
+							</div>
                             <div class="clearfix mt-2 pagination-div">
                                 <div style="width: 100%;">
 
-                                    {!! $experts->appends(request()->input())->links('pagination::bootstrap-5') !!}
+                                    
                                 </div>
                             </div>
                         </div>
