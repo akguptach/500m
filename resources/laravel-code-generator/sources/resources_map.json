@@ -14,9 +14,5 @@
     {
         "model-name": "Deal",
         "resource-file": "deals.json"
-    },
-    {
-        "model-name": "ServiceKeyword",
-        "resource-file": "service_keywords.json"
     }
 ]

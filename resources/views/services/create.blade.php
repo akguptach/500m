@@ -107,9 +107,9 @@ input:checked+.slider .off {
                 <h4 class="card-title">{{ $type=='PAGE'?'Pages':'Services' }}</h4>
                 <div class="float-right">
                     @if($type=='PAGE')
-                        <a href="{{ route('pages') }}" class="btn btn-primary">View Pages</a>
+                    <a href="{{ route('pages') }}" class="btn btn-primary">View Pages</a>
                     @else
-                        <a href="{{ route('services_index') }}" class="btn btn-primary">View Services</a>
+                    <a href="{{ route('services_index') }}" class="btn btn-primary">View Services</a>
                     @endif
                 </div>
             </div>
@@ -119,7 +119,12 @@ input:checked+.slider .off {
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#home1" href="#home1">
-                                Service</a>
+                            @if($type == 'PAGE')
+                            Page
+                            @else
+                            Service
+                            @endif
+                        </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#seo" href="#seo"> Seo</a>
@@ -183,7 +188,7 @@ input:checked+.slider .off {
 
 
 
-
+                                            @if($type != 'PAGE')
                                             <div class="mb-3 row">
                                                 <label class="col-lg-4 col-form-label" for="">Select Keyword
                                                     <span class="text-danger">*</span>
@@ -198,14 +203,14 @@ input:checked+.slider .off {
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
 
 
 
 
 
                                             <div class="mb-3 row">
-                                                <label class="col-lg-4 col-form-label" for="validationCustom01">Services
-                                                    Name
+                                                <label class="col-lg-4 col-form-label" for="validationCustom01">Title
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
@@ -1434,7 +1439,7 @@ $(document).ready(function() {
 
 <!-- ratings JS -->
 <script type="text/javascript">
-    //alert("{{@$r}}")
+//alert("{{@$r}}")
 var r = "{{@$r}}";
 $("#add_more_rating").click(function() {
     r++;
