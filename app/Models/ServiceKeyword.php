@@ -29,7 +29,8 @@ class ServiceKeyword extends Model
      */
     protected $fillable = [
                   'name',
-                  'status'
+                  'status',
+                  'website_type'
               ];
 
     /**

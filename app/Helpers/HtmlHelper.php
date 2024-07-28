@@ -166,4 +166,50 @@ class HtmlHelper
     }
 
 
+
+    static function WebsiteTypes($name, $options=[])
+    {
+        $types = [
+            ['value'=>'SOP', 'label'=>'SOP'],
+            [
+                'value'=>'Essay', 'label'=>'Essay'
+            ]
+            ];
+        $html = '<div>';
+
+        if (isset($options['label']))
+            $html .= '<label>'.$options['label'].'</label>';
+
+        $style = '';
+        if (isset($options['style'])) {
+            $style = 'style="' . $options['style'] . '"';
+        }
+
+        $id = $name;
+        if (isset($options['id'])) {
+            $id = $options['id'];
+        }
+
+        $required = '';
+        if (isset($options['required']) && $options['required']) {
+            $required = 'required="required"';
+        }
+
+        $html .= '<select '.$required.' id="' . $id . '" name="' . $name . '" class="form-control" ' . $style . '><option value="">Select Website Type</option>';
+        if (!empty($types))
+            foreach ($types as $type) {
+
+                
+                    $selected = '';
+                    if (isset($options['default']) && $options['default'] == $type['value']) {
+                        $selected = 'selected="selected"';
+                    }
+                    $html .= '<option ' . $selected . ' value="' . $type['value'] . '">' . $type['label'] . '</option>';
+                
+            }
+        $html .= '</select></div>';
+        echo $html;
+    }
+
+
 }

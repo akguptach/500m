@@ -22,7 +22,8 @@ class ServiceKeywordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> 'required'
+            'name'=> 'required',
+            'website_type'=> 'required'
         ];
     }
 

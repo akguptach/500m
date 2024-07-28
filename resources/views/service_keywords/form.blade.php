@@ -11,6 +11,14 @@
     </div>
 
     <div class="mb-3 row">
+        <label for="name" class="col-form-label text-lg-end col-lg-2 col-xl-3">Website Type</label>
+        <div class="col-lg-10 col-xl-9">
+            {{HtmlHelper::WebsiteTypes('website_type',['default'=>old('website_type', optional($serviceKeyword)->website_type)])}}
+            {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+
+    <div class="mb-3 row">
         <label for="status" class="col-form-label text-lg-end col-lg-2 col-xl-3">Active</label>
         <div class="col-lg-10 col-xl-9">
             <input style="margin-top: 8px;" class="l{{ $errors->has('status') ? ' is-invalid' : '' }}" 

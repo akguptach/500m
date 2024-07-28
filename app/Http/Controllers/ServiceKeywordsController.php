@@ -18,7 +18,7 @@ class ServiceKeywordsController extends Controller
      */
     public function index()
     {
-        $serviceKeywords = ServiceKeyword::paginate(25);
+        $serviceKeywords = ServiceKeyword::orderBy('id', 'desc')->paginate(10);
 
         return view('service_keywords.index', compact('serviceKeywords'));
     }

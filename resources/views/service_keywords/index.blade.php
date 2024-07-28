@@ -33,7 +33,9 @@ div:has(> ul.pagination) {
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Website Type</th>
                                     <th>Status</th>
+                                    
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -41,6 +43,7 @@ div:has(> ul.pagination) {
                                 @foreach($serviceKeywords as $serviceKeyword)
                                 <tr>
                                     <td class="align-middle">{{ $serviceKeyword->name }}</td>
+                                    <td class="align-middle">{{ $serviceKeyword->website_type }}</td>
                                     <td class="align-middle">
                                         
                                     @if($serviceKeyword->status == '1')
