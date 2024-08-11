@@ -1,10 +1,34 @@
+<style>
+.checked {
+  color: orange;
+}
+</style>
+<?php  
+
+
+$orderRating = \App\Models\OrderRating::where('order_id', $data['id'])->first();
+$ratingCount = 0;
+if($orderRating){
+    $ratingCount = $orderRating?->ratings; 
+}
+?>
 <div class="col-md-3">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
-        <div class="card-header">
-            <h3 class="card-title">Student Chat</h3></br>
+        <div class="card-header" style="display: block;">
+            <h3 class="card-title" >Student Chat</h3></br>
             <p class="text-muted text-left">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}
             </p>
+            <div>
+                @for($i=1; $i<=5; $i++)
+                    @if($i<=$ratingCount)
+                        <span class="fa fa-star checked"></span>
+                    @else
+                        <span class="fa fa-star"></span>
+                    @endif
+                @endfor
+                
+            </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -86,7 +110,7 @@
 <div class="col-md-3">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
-        <div class="card-header">
+        <div class="card-header" style="display: block;">
             <h3 class="card-title">Teachers Chat</h3>
             </br>
             <p class="text-muted text-left">

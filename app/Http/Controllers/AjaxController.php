@@ -26,7 +26,7 @@ class AjaxController extends Controller
 
     public function getTeacherList($order_id, $student_id, $type = 'tutor')
     {
-        $teachers = Tutor::get();
+        $teachers = Tutor::where('profile_status','approved')->where('status','active')->get();
         $title = ($type == 'tutor') ? 'Send Request to Tutor' : 'Send Request to QC';
         $actionUrl = ($type == 'tutor') ? route('tutor_assign_request') : route('qc_assign_request');
         return view('ajax.teacher_list', compact('teachers', 'order_id', 'student_id', 'title', 'actionUrl'));

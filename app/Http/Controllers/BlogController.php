@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\Blog;
-use App\Models\Categories;
+use App\Models\BlogCategory as Categories;
 use App\Models\Website;
 use Illuminate\Support\Facades\File;
 
@@ -40,7 +40,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $data['categories'] = Categories::all();
+        $data['categories'] = Categories::where('status', 'active')->get();
         $data['websites']   = Website::all();
         return view('blog/create', $data);
     }
@@ -61,7 +61,8 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
-        $categories = Categories::all();
+        
+        $categories = Categories::where('status', 'active')->get();
         $datas = Blog::find($id);
         $websites   = Website::all();
         return view('blog/edit', array('formAction' => route('blog.update', ['blog' => $id]), 'data' => $datas, 'categories' => $categories, 'websites' => $websites));

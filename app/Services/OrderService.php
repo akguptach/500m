@@ -467,7 +467,7 @@ class OrderService
             Mail::send('emails.mywriters.message', $data, function ($message) use ($data, $tutor) {
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                 $message->subject("Order assigned");
-                $message->to(env('APP_TEST_EMAIL', $tutor['tutor_email ']));
+                $message->to(env('APP_TEST_EMAIL', $tutor['tutor_email']));
             });
         } catch (\Exception $e) {
             echo $e;

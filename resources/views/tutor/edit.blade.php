@@ -48,7 +48,7 @@
                       <label class="col-lg-4 col-form-label" for="">Contact Number<span class="text-danger">*</span>
                       </label>
                       <div class="col-lg-6">
-                        <input ype="tel" pattern="[7-9]{1}[0-9]{9}" title="Please enter valid phone number"  name="tutor_contact_no" class="form-control" placeholder="Enter contact no" value="{{$data->tutor_contact_no}}" required>
+                        <input ype="tel"  title="Please enter valid phone number"  name="tutor_contact_no" class="form-control" placeholder="Enter contact no" value="{{$data->tutor_contact_no}}" required>
                         @error('tutor_contact_no')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

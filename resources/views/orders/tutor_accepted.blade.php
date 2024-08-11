@@ -1,7 +1,7 @@
 <div class="col-md-9">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
-        <div class="card-header">
+        <div class="card-header" style="display: block;">
             <h3 class="card-title">Teachers Chat</h3>
             </br>
             <p class="text-muted text-left">

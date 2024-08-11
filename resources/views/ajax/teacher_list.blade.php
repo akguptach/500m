@@ -14,9 +14,10 @@
     <div class="modal-body">
 
         <div class="table-responsive table-bordered mailbox-messages" style="overflow: scroll;height: 400px;">
-            <table class="table table-hover ">
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Search for names..">
+            <table class="table table-hover" id="myTable">
                 <tbody>
-                    @foreach($teachers as $qc)
+                    @foreach($teachers as $qc) 
                     <tr>
                         <td>
                             <div class="icheck-primary">
@@ -49,6 +50,9 @@
         <button type="submit" class="btn btn-primary">Assign</button>
     </div>
 </form>
-
+<script>
+   //$('#teacherList').DataTable()
+   
+</script>
 
 

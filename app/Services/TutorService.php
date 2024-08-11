@@ -17,9 +17,11 @@ class TutorService
         }
         if (!empty($searchValue)) {
             $query->where(function ($subquery) use ($searchValue) {
-                $subquery->orwhere('tutor_name', 'LIKE', '%' . $searchValue . '%')
+                $subquery
+                ->orwhere('tutor_first_name', 'LIKE', '%' . $searchValue . '%')
+                ->orwhere('tutor_last_name', 'LIKE', '%' . $searchValue . '%')
                     ->orWhere('tutor_email', 'LIKE', '%' . $searchValue . '%')
-                    ->orWhere('tutor_mobile', 'LIKE', '%' . $searchValue . '%')
+                    ->orWhere('tutor_contact_no', 'LIKE', '%' . $searchValue . '%')
                     ->orWhere('tutor_subject', 'LIKE', '%' . $searchValue . '%');
             });
         }

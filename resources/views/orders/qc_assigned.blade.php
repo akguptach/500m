@@ -1,7 +1,7 @@
 <div class="col-md-3">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
-        <div class="card-header">
+        <div class="card-header" style="display: block;">
             <h3 class="card-title">QC Chat</h3>
             </br>
             <p class="text-muted text-left">{{@$data->qcAssigned->qc->tutor_first_name.' '.@$data->qcAssigned->qc->tutor_last_name}}</p>
@@ -21,9 +21,17 @@
                     <!-- /.direct-chat-infos -->
                     <img class="direct-chat-img" src="{{ asset('images/avatar.png') }}" alt="Message User Image">
                     <!-- /.direct-chat-img -->
+
+                    @if($item['message'])
                     <div class="direct-chat-text">
                         {{$item['message']}}
                     </div>
+                    @endif
+                    @if($item['attachment'])
+                    <div class="direct-chat-text">
+                    <a style="color:#fff;" href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                    </div>
+                    @endif
                     <!-- /.direct-chat-text -->
                 </div>
                 <!-- /.direct-chat-msg -->

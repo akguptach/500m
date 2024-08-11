@@ -33,6 +33,7 @@ use App\Http\Controllers\AffiliateUserController;
 use App\Http\Controllers\ImageUploadController as ImageUploadController;
 
 use App\Http\Controllers\DealCategoriesController;
+use App\Http\Controllers\BlogCategoriesController;
 use App\Http\Controllers\DealsController;
 use App\Http\Controllers\ServiceKeywordsController;
 
@@ -376,3 +377,33 @@ Route::group([
          Route::patch('/service_keyword/{serviceKeyword}',[ServiceKeywordsController::class, 'change'])
          ->name('service_keywords.service_keyword.change')->where('id', '[0-9]+');
 });
+
+
+Route::group([
+     'prefix' => 'blog_categories',
+ ], function () {
+     Route::get('/', [BlogCategoriesController::class, 'index'])
+          ->name('blog_categories.blog_category.index');
+
+     Route::get('/create', [BlogCategoriesController::class, 'create'])
+          ->name('blog_categories.blog_category.create');
+
+     Route::get('/show/{blogCategory}',[BlogCategoriesController::class, 'show'])
+          ->name('blog_categories.blog_category.show')->where('id', '[0-9]+');
+
+     Route::get('/{blogCategory}/edit',[BlogCategoriesController::class, 'edit'])
+          ->name('blog_categories.blog_category.edit')->where('id', '[0-9]+');
+
+     Route::post('/', [BlogCategoriesController::class, 'store'])
+          ->name('blog_categories.blog_category.store');
+
+     Route::put('blog_category/{blogCategory}', [BlogCategoriesController::class, 'update'])
+          ->name('blog_categories.blog_category.update')->where('id', '[0-9]+');
+
+     Route::delete('/blog_category/{blogCategory}',[BlogCategoriesController::class, 'destroy'])
+          ->name('blog_categories.blog_category.destroy')->where('id', '[0-9]+');
+ 
+          Route::patch('/blog_category/{blogCategory}',[BlogCategoriesController::class, 'change'])
+          ->name('blog_categories.blog_category.change')->where('id', '[0-9]+');
+ });
+

@@ -30,23 +30,24 @@
                     <b>Delivery Date</b> <a class="float-right">{{date('m-d-Y', strtotime($data['delivery_date']))}}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Student's Attachment</b> <a target="_blank" class="float-right" href="{{$data['fileupload']}}"
-                        style="overflow-wrap: anywhere;">{{$data['fileupload']}}</a>
+                    <b>Student's Attachment</b> 
+                    <p><a target="_blank" class="float-right1" href="{{$data['fileupload']}}"
+                        style="overflow-wrap: anywhere;">View attachment</a></p>
                 </li>
 
                 @if(isset($data['teacherAssigned']) && $data['teacherAssigned']['status'] == 'COMPLETED')
                 <li class="list-group-item">
-                    <b>Teacher's Attachment--</b> <a target="_blank" class="float-right"
+                    <b>Teacher's Attachment</b> <p><a target="_blank" class="float-right1"
                         href="{{$data['teacherAssigned']['attachment']}}" class="float-right"
-                        style="overflow-wrap: anywhere;">{{$data['teacherAssigned']['attachment']}}</a>
+                        style="overflow-wrap: anywhere;">View attachment</a></p>
                 </li>
                 @endif
 
                 @if(isset($data['qcAssigned']) && $data['qcAssigned']['status'] == 'COMPLETED')
                 <li class="list-group-item">
-                    <b>Qc's Attachment--</b> <a target="_blank" class="float-right"
+                    <b>Qc's Attachment</b> <p><a target="_blank" class="float-right1"
                         href="{{$data['teacherAssigned']['attachment']}}" class="float-right"
-                        style="overflow-wrap: anywhere;">{{$data['qcAssigned']['attachment']}}</a>
+                        style="overflow-wrap: anywhere;">View attachment</a></p>
                 </li>
                 @endif
 

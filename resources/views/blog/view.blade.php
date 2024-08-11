@@ -26,6 +26,8 @@
                                     <tr>
                                         <th>Sr.No.</th>
                                         <th>Blog Title</th>
+                                        <th>Website</th>
+                                        <th>Category</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -66,9 +68,15 @@
                     data: "blog_title"
                 },
                 {
+                    data: "website_type"
+                },
+                {
+                    data: "category_name"
+                },
+                {
                     data: "action"
                 }
-            ],
+            ], 
             "processing": true,
             "serverSide": true,
             "ajax": "<?php echo URL::to('blog');; ?>"

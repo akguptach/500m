@@ -68,11 +68,24 @@
 						<span class="nav-text">Order</span>
 					  </a>
 				    </li>
-					<li><a class="ai-icon" href="{{ route('blog.index') }}" aria-expanded="false">
+
+					<?php /*<li><a class="ai-icon" href="{{ route('blog.index') }}" aria-expanded="false">
 						<i class="nav-icon fas fa-blog">
 						<span class="nav-text">  </i>Blog</span>
 					  </a>
+				    </li>*/ ?>
+
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i class=" nav-icon fa-solid fas fa-map-marked"></i>
+						<span class="nav-text"> </i>Blog</span>
+					  </a>
+					 <ul aria-expanded="false">
+						<li><a href="{{route('blog_categories.blog_category.index')}}">Blog Category</a></li>
+						<li><a href="{{route('blog.index')}}">Blogs</a></li>
+					 </ul>
 				    </li>
+
+
 					<li><a class="ai-icon" href="{{ route('students.student.index') }}" aria-expanded="false">
 						<i class=" nav-icon fa-solid fa-user-check">
 						<span class="nav-text"></i>Student</span>

@@ -35,7 +35,9 @@
                           @endif
                         </select>
                         <div class="invalid-feedback">
-                          ....
+                        @error('website_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                       </div>
                     </div>
@@ -51,12 +53,13 @@
 
                       </div>
                     </div>
+
                     <div class="mb-3 row">
                       <label class="col-lg-4 col-form-label" for="">Category
                         <span class="text-danger">*</span>
                       </label>
                       <div class="col-lg-6">
-                        <select name="category_id" class="default-select wide form-control">
+                        <select name="category_id" class="default-select wide form-control" required>
                           <option value="">Select Category</option>
                           @if(!empty($categories))
                           @foreach($categories as $category)
@@ -65,10 +68,16 @@
                           @endif
                         </select>
                         <div class="invalid-feedback">
-                          ....
+                        @error('category_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                       </div>
                     </div>
+
+
+
+
                     <div class="mb-3 row">
                       <label class="col-lg-4 col-form-label" for="validationCustom01">Blog Date
                         <span class="text-danger">*</span>

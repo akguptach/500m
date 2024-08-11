@@ -1,7 +1,45 @@
 @extends('layouts.app')
 @section('content')
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style> 
+.paginate_button  {
+    padding : 8px!important;
+}
+#loadingoverlay {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px #ddd solid;
+    border-top: 4px #2e93e6 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.8s infinite linear;
+}
+
+@keyframes sp-anime {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
+</style>
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -34,6 +72,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.No.</th>
+                                        <th>Task Code</th>
                                         <th>Student Name</th>
                                         <th>Website</th>
                                         <th>Subject</th>
@@ -41,9 +80,9 @@
 										<th>Lebel of study</th>
 										<th>Grade</th>
 										<th>Referencing Style</th>-->
-                                        <th>Number of words</th>
+                                        <th>Words</th>
                                         <th>Amount</th>
-                                        <th>Currency Code</th>
+                                     
                                         <th>Delivery Date</th>
 
                                         <th width="15%">Actions</th>
@@ -69,29 +108,13 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-
-<script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{ asset('js/plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ asset('js/plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-
-
 <style>
     .toolbar {
         float: right;
         margin-left: 10px;
     }
 </style>
+
 <script>
     $(document).on("click", '.assign-teacher', function(event) {
         var dataModelBody = $('#' + $(this).attr('data-model-body'));
@@ -163,7 +186,16 @@
                     render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
-                }, {
+                }, 
+                
+                {
+                    data: 'order_number',
+                    render: function(data, type, row, meta) {
+                        return '<a style="color:blue" href="/orders/'+row.id+'/view">'+row.order_number+'</a>';
+                    }
+                },
+
+                {
                     data: "first_name"
                 },
                 {
@@ -177,11 +209,12 @@
                     data: "no_of_words"
                 },
                 {
-                    data: "price"
+                    data: "price",
+                    render: function(data, type, row, meta) {
+                        return row.currency_code+row.price;
+                    }
                 },
-                {
-                    data: "currency_code"
-                },
+                
                 {
                     data: "delivery_date"
                 },
@@ -204,22 +237,55 @@
 
 <script src="{{ asset('vendor\bootstrap-datepicker-master\js\bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
 <script>
     function datepicker_assign() {
-
-
         $(".datepicker").datepicker({
             autoclose: true,
             dateFormat: 'yy-mm-dd', // Set the date format to yyyy-mm-dd
         }).on('change', function() {
 
         });
-
-
     }
 </script>
+<style>
+    #myInput {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
 
+
+</style>
+<script>
+function filterTable() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 
 @endsection

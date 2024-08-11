@@ -18,4 +18,15 @@ class Blog extends Model
         // Automatically generate and set the SKU attribute based on the title
         $this->attributes['blog_sku'] = generateSkuFromTitle($value);
     }
+
+    public function website()
+	{
+		return $this->belongsTo('App\Models\Website', 'website_id');
+	}
+
+    public function category()
+	{
+		return $this->belongsTo('App\Models\BlogCategory', 'category_id');
+	}
+
 }
