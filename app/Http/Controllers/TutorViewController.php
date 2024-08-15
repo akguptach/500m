@@ -22,6 +22,7 @@ class TutorViewController extends Controller
     {
         $data['tutor']   = Tutor::find($tutor_id);
         $data['bank'] = Bank::where('tutor_id', $tutor_id)->first();
+        $data['address'] = Address::where('tutor_id', $tutor_id)->first();
         return view('tutor/bank', $data);
     }
     public function education($tutor_id)

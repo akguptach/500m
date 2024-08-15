@@ -1,5 +1,4 @@
-<section class="content">
-    <div class="container-fluid">
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-primary">
@@ -14,12 +13,12 @@
                                         <a href="<?= env('TUTOT_URL').$kyc->id_proof;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;float: left;">View</a>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                <?php /*<div class="form-group">
                                     <label style="width:50%;float:left;">Address Proof</label>
                                     @if(!empty($kyc->address_proof))
                                         <a href="<?= env('TUTOT_URL').$kyc->address_proof;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;float: left;">View</a>
                                     @endif
-                                </div>
+                                </div>*/ ?>
                             </div>
                         @else
                             <div class="card-body">
@@ -31,5 +30,4 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    

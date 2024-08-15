@@ -13,7 +13,11 @@ class TutorService
         $query = Tutor::query();
         $searchValue = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
         if (!empty($_GET['status'])) {
-            $query = $query->where('profile_status', $_GET['status']);
+            if($_GET['status'] == 'pending'){
+                $query = $query->whereIn('profile_status', ['pending','incompelte']);
+            }else{
+                $query = $query->where('profile_status', $_GET['status']);
+            }
         }
         if (!empty($searchValue)) {
             $query->where(function ($subquery) use ($searchValue) {
@@ -26,8 +30,11 @@ class TutorService
             });
         }
         $query->orderBy('id', 'desc');
-        $req_record['data'] = $query->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
         $tutors = $query->get()->toArray();
+        $req_record['data'] = $query->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
+        
+
+
         if (!empty($tutors))
             $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($tutors);
         else
@@ -61,7 +68,8 @@ class TutorService
                 $kyc_url = '"' . 'kyc' . '"';
                 //$education_url = 'education/'.$tutor['id'];
                 $education_url = '"' . 'education' . '"';
-                $req_record['data'][$i]['views'] = "<a href='javascript:void(0)' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $address_url . "," . $tutor['id'] . ")' ><i class='fas fa-address-card' title='Address' ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' title='Bank' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $bank_url . "," . $tutor['id'] . ")' ><i class='fas fa-piggy-bank'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' title='Education' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $education_url . "," . $tutor['id'] . ")'><i class='fas fa-book'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' data-bs-toggle='modal' data-bs-target='#myModal'  title='KYC' onclick='addressData(" . $kyc_url . "," . $tutor['id'] . ")'><i class='fas fa-file' ></i></a>&nbsp;&nbsp;&nbsp;";
+                //$req_record['data'][$i]['views'] = "<a href='javascript:void(0)' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $address_url . "," . $tutor['id'] . ")' ><i class='fas fa-address-card' title='Address' ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' title='Bank' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $bank_url . "," . $tutor['id'] . ")' ><i class='fas fa-piggy-bank'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' title='Education' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $education_url . "," . $tutor['id'] . ")'><i class='fas fa-book'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' data-bs-toggle='modal' data-bs-target='#myModal'  title='KYC' onclick='addressData(" . $kyc_url . "," . $tutor['id'] . ")'><i class='fas fa-file' ></i></a>&nbsp;&nbsp;&nbsp;";
+                $req_record['data'][$i]['views'] = "<a href='javascript:void(0)' title='Bank' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $bank_url . "," . $tutor['id'] . ")' ><i class='fas fa-piggy-bank'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' title='Education' data-bs-toggle='modal' data-bs-target='#myModal' onclick='addressData(" . $education_url . "," . $tutor['id'] . ")'><i class='fas fa-book'  ></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' data-bs-toggle='modal' data-bs-target='#myModal'  title='KYC' onclick='addressData(" . $kyc_url . "," . $tutor['id'] . ")'><i class='fas fa-file' ></i></a>&nbsp;&nbsp;&nbsp;";
 
                 $req_record['data'][$i]['status'] = ucfirst($tutor['status']);
                 $req_record['data'][$i]['action'] = "<a class='btn btn-xs sharp btn-primary' href='" . url($edit_page) . "' ><i class='fas fa-edit' title='Edit'></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' class='btn btn-xs sharp btn-danger' onclick='delete_tutor(" . $del_msg . "," . $req_tutor_id . ")' ><i class='fas fa-trash'  title='Delete'></i></a><form method='POST' action=' " . $del_page . " ' class='form-delete' style='display: none;' id='tutor_form_" . $tutor['id'] . "'>

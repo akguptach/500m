@@ -59,7 +59,7 @@
 						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'approved']) }}"> Approved</a></li>
 						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'pending']) }}">Pending</a></li>
 						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'baned']) }}"> Banned</a></li>
-						<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'incompelte']) }}">Incomplete</a></li>
+						<?php /*<li><a href="{{ route('tutor_view.profile_status',['profile_status'=>'incompelte']) }}">Incomplete</a></li>*/ ?>
 						
 					</ul>
 				    </li>

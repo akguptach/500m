@@ -21,8 +21,32 @@
 <script src="<?php echo asset('/'); ?>js/custom.min.js"></script>
 <script src="<?php echo asset('/'); ?>js/dlabnav-init.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<style> 
+.direct-chat-text::selection {
+  background: #e74c3c;
+}
 
-
+.direct-chat-text a::selection {
+  background: #e74c3c;
+}
+</style>
+<script> 
+function ltrim(str) {
+  if(!str) return str;
+    str = str.replace(/(\r\n|\n|\r)/gm, "");
+   str = str.replace(/^\s+/g, '');
+   alert('--'+str+'___');
+   return str;
+}
+$(document).ready(function(){
+    $( ".direct-chat-text" ).find('a').removeAttr('href')
+});
+$( ".direct-chat-text" ).on( "dblclick", function(e) {
+    var span = e.target;
+    window.getSelection().selectAllChildren(e.target);
+    document.execCommand("copy");
+});
+</script>
 <!-- JS confirm Override -->
 </body>
 </html>

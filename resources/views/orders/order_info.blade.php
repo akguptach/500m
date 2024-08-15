@@ -29,26 +29,28 @@
                 <li class="list-group-item">
                     <b>Delivery Date</b> <a class="float-right">{{date('m-d-Y', strtotime($data['delivery_date']))}}</a>
                 </li>
-                <li class="list-group-item">
-                    <b>Student's Attachment</b> 
-                    <p><a target="_blank" class="float-right1" href="{{$data['fileupload']}}"
-                        style="overflow-wrap: anywhere;">View attachment</a></p>
-                </li>
+
+                @include('orders.download_link', 
+                [
+                    'attachment'=>$data['fileupload'],
+                    'attachmentTitle'=>"Student's Attachment"
+                ])
 
                 @if(isset($data['teacherAssigned']) && $data['teacherAssigned']['status'] == 'COMPLETED')
-                <li class="list-group-item">
-                    <b>Teacher's Attachment</b> <p><a target="_blank" class="float-right1"
-                        href="{{$data['teacherAssigned']['attachment']}}" class="float-right"
-                        style="overflow-wrap: anywhere;">View attachment</a></p>
-                </li>
+
+                @include('orders.download_link', 
+                [
+                    'attachment'=>$data['teacherAssigned']['attachment'],
+                    'attachmentTitle'=>"Teacher's Attachment"
+                ])
                 @endif
 
                 @if(isset($data['qcAssigned']) && $data['qcAssigned']['status'] == 'COMPLETED')
-                <li class="list-group-item">
-                    <b>Qc's Attachment</b> <p><a target="_blank" class="float-right1"
-                        href="{{$data['teacherAssigned']['attachment']}}" class="float-right"
-                        style="overflow-wrap: anywhere;">View attachment</a></p>
-                </li>
+                @include('orders.download_link', 
+                [
+                    'attachment'=>$data['teacherAssigned']['attachment'],
+                    'attachmentTitle'=>"Qc's Attachment"
+                ])
                 @endif
 
 
