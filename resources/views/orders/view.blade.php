@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <style> 
+
 .paginate_button  {
     padding : 8px!important;
 }

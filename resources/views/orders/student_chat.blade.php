@@ -1,8 +1,8 @@
 <div class="col-md-4">
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
-        <div class="card-header">
-            <h3 class="card-title">Student Chat</h3></br>
+        <div class="card-header" style="display: block;">
+            <h3 class="card-title" >Student Chat</h3></br>
             <p class="text-muted text-left">{{ isset($data['student']['first_name']) ? $data['student']['first_name'] : '' }} {{ isset($data['student']['last_name']) ? ' ' . $data['student']['last_name'] : '' }}
             </p>
         </div>
@@ -84,3 +84,10 @@
         </div>
     </div>
 </div>
+<style>.direct-chat-messages{
+    height: 300px!important;
+}
+</style>
+<script>
+    $('.direct-chat-messages').scrollTop($('.direct-chat-messages')[0].scrollHeight);
+    </script>
