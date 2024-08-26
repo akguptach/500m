@@ -31,6 +31,26 @@ class OrdersController extends Controller
         }
     }
 
+    public function enquery($studentId = '')
+    {
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->orderService->getOrders($studentId,'Failed'));
+        } else {
+            return view('orders/view',compact('studentId'));
+        }
+    }
+
+    public function paymentDone($studentId = '')
+    {
+        
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->orderService->getOrders($studentId,'Success'));
+        } else {
+            return view('orders/view',compact('studentId'));
+        }
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */

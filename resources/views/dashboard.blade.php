@@ -17,12 +17,13 @@
     </div><!-- /.container-fluid -->
 </div>
 <?php
-
+/*
 use App\Models\Orders;
 use App\Models\ContactUs;
 
 $orders = Orders::get()->count();
 $enqury = ContactUs::get()->count();
+*/
 ?>
 <section class="content">
     <div class="container-fluid">
@@ -36,11 +37,12 @@ $enqury = ContactUs::get()->count();
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Order</p>
-                                <h3 class="text-white">{{$orders}}</h3>
+                                <h3 class="text-white">{{$total_orders}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
                                 </div> -->
-                                <!-- <small>80% Increase in 20 Days</small> -->
+                                <small><a href="{{route('orders.payment_done')}}" style="color:#fff;">View All</a></small>
+
                             </div>
                         </div>
                     </div>
@@ -55,11 +57,12 @@ $enqury = ContactUs::get()->count();
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Expanse</p>
-                                <h3 class="text-white">100000</h3>
+                                <h3 class="text-white">${{$total_expence}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 50%"></div>
                                 </div>
-                                <small>50% Increase in 25 Days</small> -->
+                                <small>50% Increase in 25 Days</small> --> 
+                                
                             </div>
                         </div>
                     </div>
@@ -74,11 +77,12 @@ $enqury = ContactUs::get()->count();
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Enquery </p>
-                                <h3 class="text-white">{{$enqury}}</h3>
+                                <h3 class="text-white">{{$total_enqury}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 76%"></div>
                                 </div>
                                 <small>76% Increase in 20 Days</small> -->
+                                <small><a href="{{route('orders.enquery')}}" style="color:#fff;">View All</a></small>
                             </div>
                         </div>
                     </div>
@@ -93,7 +97,7 @@ $enqury = ContactUs::get()->count();
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Profit</p>
-                                <h3 class="text-white">₹ 150000</h3>
+                                <h3 class="text-white">${{$total_profit}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 30%"></div>
                                 </div>
@@ -109,7 +113,7 @@ $enqury = ContactUs::get()->count();
                 
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{$orders}}</h3>
+                        <h3></h3>
 
                         <p>Total Order</p>
                     </div>

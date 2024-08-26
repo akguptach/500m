@@ -6,6 +6,13 @@
 						<span class="nav-text"> Dashboard </span>
 					  </a>
 				    </li>
+
+					<li><a class="ai-icon" href="{{ route('withdraw_request_view') }}" aria-expanded="false">
+					<i class="nav-icon fas fa-indian-rupee-sign"></i>
+						<span class="nav-text">Withdraw Requests</span>
+					  </a>
+				    </li>
+
 					
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 						<i class="nav-icon fas fa-indian-rupee-sign"></i>

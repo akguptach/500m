@@ -36,6 +36,8 @@ use App\Http\Controllers\DealCategoriesController;
 use App\Http\Controllers\BlogCategoriesController;
 use App\Http\Controllers\DealsController;
 use App\Http\Controllers\ServiceKeywordsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WithdrawRequestController;
 
 
 
@@ -54,18 +56,24 @@ use App\Http\Controllers\ServiceKeywordsController;
 Route::match(['get', 'head'], '/', function () {
     return view('auth.login');
 });
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
 
 Route::post('/upload-image',  [ImageUploadController::class,'upload'])->name('upload.image')->withoutMiddleware(['auth'])->withoutMiddleware(['web']);
-
 
 //Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
 Route::middleware('auth')->group(function () {
 
 //     Route::post('/upload-image', [ImageUploadController::class,'upload'])->name('upload.image');
 
+
+     Route::get('/withdraw-requests', [WithdrawRequestController::class,'index'])->name('withdraw_request_view');
+     Route::get('/withdraw-requests/details/{requestId}', [WithdrawRequestController::class,'withdrawDetails'])->name('withdraw_request_details');
+     Route::post('/withdraw-requests/accept/{requestId}', [WithdrawRequestController::class,'acceptRequest'])->name('accept_withdraw_requests');
+     Route::post('/withdraw-requests/decline/{requestId}', [WithdrawRequestController::class,'declineRequest'])->name('decline_withdraw_requests');
+
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('/role', RoleController::class);
     Route::resource('/subject', SubjectController::class);
     Route::resource('/tasktype', TaskTypeController::class);
@@ -109,7 +117,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{categories}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{categories}', [CategoriesController::class, 'update'])->name('categories.update');
 
+    Route::get('/orders/payment/{student_id?}', [OrdersController::class, 'paymentDone'])->name('orders.payment_done');
+    Route::get('/orders/enquery/{student_id?}', [OrdersController::class, 'enquery'])->name('orders.enquery');
     Route::get('/orders/{student_id?}', [OrdersController::class, 'index'])->name('orders');
+   
+    
     Route::get('/orders/{orders}/view', [OrdersController::class, 'view'])->name('orders.view');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

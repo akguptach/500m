@@ -18,4 +18,16 @@ class Student extends Model
 	{
 		return $this->belongsTo('App\Models\Website', 'website_id');
 	}
+
+
+    public function payment_method()
+	{
+		return $this->hasOne('App\Models\StudentPaymentMethods', 'student_id');
+	}
+
+    public function wallet_transactions()
+	{
+		return $this->hasMany('App\Models\WalletTransaction', 'user_id');
+	}
+
 }

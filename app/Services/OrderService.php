@@ -23,25 +23,35 @@ use Illuminate\Support\Facades\Mail;
  */
 class OrderService
 {
-    public function getOrders($studentId = '')
+
+
+    private function addStausCondition($query, $type){
+
+
+        if($type == 'Failed'){
+            $query->where(function($q) {
+                $q->where('orders.payment_status', 'Failed');
+                $q->orWhereNull('orders.payment_status');
+            });
+        }
+        else if ($type) {
+            $query->where('orders.payment_status', $type);
+        }
+
+       /* if ($type) {
+            $query->where('orders.payment_status', $type);
+        }*/
+        return $query;
+    }
+
+    public function getOrders($studentId = '', $type='')
     {
 
         $req_record['data'] = array();
         $query = Orders::query();
         if (!empty($_GET['search']['value']) || isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
 
-            /*if (!empty($_GET['search']['value'])) {
-                $query->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
-                $query->where('page_title', 'LIKE', '%' . $_GET['search']['value'] . '%');
-            }
-
-            if (isset($_GET['columns'][2]['search']['value']) && !empty($_GET['columns'][2]['search']['value'])) {
-                $website  = Website::where('website_type', $_GET['columns'][2]['search']['value'])->first();
-                $query->where('website_id', $website->id);
-            }
-
-            $req_record['data'] = $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc')->get()->toArray();
-            $pages = $query->orderBy('id', 'desc')->get()->toArray();*/
+            
 
 
             $query = Orders::join('student', 'student.id', '=', 'orders.student_id')
@@ -60,6 +70,12 @@ class OrderService
             if ($studentId) {
                 $query->where('orders.student_id', $studentId);
             }
+            
+            /*if ($type) {
+                $query->where('orders.payment_status', $type);
+            }*/
+            $query = $this->addStausCondition($query, $type);
+            
 
             if (!empty($_GET['search']['value'])) {
                 $query->where(function ($q) {
@@ -99,6 +115,10 @@ class OrderService
             if ($studentId) {
                 $pages->where('orders.student_id', $studentId);
             }
+            /*if ($type) {
+                $query->where('orders.payment_status', $type);
+            }*/
+            $query = $this->addStausCondition($query, $type);
 
             if (!empty($_GET['search']['value'])) {
                 $pages->where(function ($q) {
@@ -110,9 +130,14 @@ class OrderService
             if ($studentId) {
                 $pages->where('orders.student_id', $studentId);
             }
+            /*if ($type) {
+                $query->where('orders.payment_status', $type);
+            }*/
+            $pages = $this->addStausCondition($pages, $type);
             $pages = $pages->get();
         } else {
 
+            
             $query = DB::table('orders')
                 ->join('student', 'student.id', '=', 'orders.student_id')
                 ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
@@ -127,6 +152,12 @@ class OrderService
             if ($studentId) {
                 $query->where('orders.student_id', $studentId);
             }
+            /*if ($type) {
+                $query->where('orders.payment_status', $type);
+            }*/
+
+            $query = $this->addStausCondition($query, $type);
+
             if (isset($_GET['start']) && isset($_GET['length'])) {
                 $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc');
             }
@@ -150,6 +181,11 @@ class OrderService
             if ($studentId) {
                 $pages->where('orders.student_id', $studentId);
             }
+            /*if ($type) {
+                $pages->where('orders.payment_status', $type);
+            }*/
+            $pages = $this->addStausCondition($pages, $type);
+
             $pages = $pages->get();
             //    echo "<pre>".var_export($pages,true);die();
             //$req_record['data'] = Orders::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
