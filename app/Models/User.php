@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'status'
     ];
 
     /**
@@ -52,4 +54,20 @@ class User extends Authenticatable
     {
         return $this->morphMany('App\Models\StudentOrderMessage', 'receivertable');
     }*/
+
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role', 'role_id');
+    }
+
+    public function userPermissions()
+    {
+        return $this->hasMany('App\Models\UserPermission', 'user_id');
+    }
+
+
+
+
+
 }

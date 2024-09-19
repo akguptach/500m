@@ -2,8 +2,10 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
         <div class="card-header" style="display: block;">
-            <h3 class="card-title" >Student Chat</h3></br>
-            <p class="text-muted text-left">{{ isset($data['student']['first_name']) ? $data['student']['first_name'] : '' }} {{ isset($data['student']['last_name']) ? ' ' . $data['student']['last_name'] : '' }}
+            <h3 class="card-title">Student Chat</h3></br>
+            <p class="text-muted text-left">
+                {{ isset($data['student']['first_name']) ? $data['student']['first_name'] : '' }}
+                {{ isset($data['student']['last_name']) ? ' ' . $data['student']['last_name'] : '' }}
             </p>
         </div>
         <!-- /.card-header -->
@@ -18,7 +20,8 @@
                 <!-- Message to the right -->
                 <div class="direct-chat-msg right">
                     <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-right">{{isset($item['sendertable']['first_name']) ? $item['sendertable']['first_name'] : '' }}</span>
+                        <span
+                            class="direct-chat-name float-right">{{isset($item['sendertable']['first_name']) ? $item['sendertable']['first_name'] : '' }}</span>
                         <span
                             class="direct-chat-timestamp float-left">{{date('m-d-Y h:i A', strtotime($item['created_at']))}}</span>
                     </div>
@@ -27,8 +30,12 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a style="color:#fff;" href="{{$item['attachment']}}"
-                            target="_blank">{{$item['attachment']}}</a>
+
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -47,8 +54,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a style="color:#fff;" href="{{$item['attachment']}}"
-                            target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -60,6 +70,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
+
             <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
                 @csrf
 
@@ -84,10 +95,11 @@
         </div>
     </div>
 </div>
-<style>.direct-chat-messages{
-    height: 300px!important;
+<style>
+.direct-chat-messages {
+    height: 300px !important;
 }
 </style>
 <script>
-    $('.direct-chat-messages').scrollTop($('.direct-chat-messages')[0].scrollHeight);
-    </script>
+$('.direct-chat-messages').scrollTop($('.direct-chat-messages')[0].scrollHeight);
+</script>

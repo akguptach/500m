@@ -22,7 +22,7 @@ class OrdersController extends Controller
     public function index($studentId = '')
     {
 
-        
+        echo "hii"; die;
         if (isset($_GET) && !empty($_GET['columns'])) {
             //echo "===="; echo $studentId; die;
             return response($this->orderService->getOrders($studentId));
@@ -49,6 +49,39 @@ class OrdersController extends Controller
             return view('orders/view',compact('studentId'));
         }
     }
+
+
+    public function newOrders($studentId = '')
+    {
+        
+        
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->orderService->getOrders($studentId,'New'));
+        } else {
+            return view('orders/view',compact('studentId'));
+        }
+    }
+
+    public function onGoingOrders($studentId = '')
+    {
+        
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->orderService->getOrders($studentId,'OnGoing'));
+        } else {
+            return view('orders/view',compact('studentId'));
+        }
+    }
+
+    public function completedOrders($studentId = '')
+    {
+        
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return response($this->orderService->getOrders($studentId,'Completed'));
+        } else {
+            return view('orders/view',compact('studentId'));
+        }
+    }
+
 
 
     /**

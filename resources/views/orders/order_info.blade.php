@@ -1,3 +1,8 @@
+<style>
+.direct-chat-messages{
+    height: 300px;
+}
+</style>
 <div class="col-md-3">
     <!-- Profile Image -->
     <div class="card card-primary card-outline">

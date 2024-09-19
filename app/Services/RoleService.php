@@ -32,9 +32,14 @@ class RoleService
                 if ($role1['id'] == 1) {
                     $req_record['data'][$i]['action'] = "";
                 } else {
-                    $req_record['data'][$i]['action'] = "<a class='btn btn-xs sharp btn-primary' href='" . url($edit_page) . "' ><i class='fas fa-edit' title='Edit'></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' class='btn btn-xs sharp btn-danger' onclick='delete_role(" . $del_msg . "," . $req_role_id . ")' ><i class='fas fa-trash'  title='Delete'></i></a><form method='POST' action=' " . $del_page . " ' class='form-delete' style='display: none;' id='role_form_" . $role1['id'] . "'>
+                    $actionHtml = $req_record['data'][$i]['action'] = "<a class='btn btn-xs sharp btn-primary' href='" . url($edit_page) . "' ><i class='fas fa-edit' title='Edit'></i></a>&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' class='btn btn-xs sharp btn-danger' onclick='delete_role(" . $del_msg . "," . $req_role_id . ")' ><i class='fas fa-trash'  title='Delete'></i></a><form method='POST' action=' " . $del_page . " ' class='form-delete' style='display: none;' id='role_form_" . $role1['id'] . "'>
                         <input type='hidden' value='" . csrf_token() . "'  id='csrf_" . $role1['id'] . "'>
                     </form>";
+                    $actionHtml .='&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-xs sharp btn-primary btn-permission" data-id="'.$role1['id'].'">
+                                        <div><i class="fa fa-key"></i></div>
+                                    </a>';
+
+                    $req_record['data'][$i]['action'] = $actionHtml;
                 }
                 $i++;
             }

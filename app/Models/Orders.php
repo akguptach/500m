@@ -37,4 +37,14 @@ class Orders extends Model
 	{
 		return $this->hasOne('App\Models\QcAssign', 'order_id');
 	}
+
+	public function order_request()
+    {
+        return $this->hasOne('App\Models\OrderRequest', 'order_id')->where('type','TUTOR')->where('status','!=','REJECTED');
+    }
+
+    public function qc_order_request()
+    {
+        return $this->hasOne('App\Models\OrderRequest', 'order_id')->where('type','QC')->where('status','!=','REJECTED');;
+    }
 }

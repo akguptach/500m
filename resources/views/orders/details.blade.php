@@ -53,8 +53,8 @@
 
             @if($qcAssign)
             @include('orders.qc_assigned',['data'=>$data, 'qcOrderMessage'=>$qcOrderMessage])
-            @elseif($qcRequestAccepted)
-            @include('orders.qc_accepted')
+            <?php /*@elseif($qcRequestAccepted)
+            @include('orders.qc_accepted',['orderRequestSent'=>$qcRequestAccepted])*/ ?>
             @endif
 
 

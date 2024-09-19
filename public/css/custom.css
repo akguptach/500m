@@ -61,3 +61,7 @@
         transform: rotate(359deg);
     }
 }
+.error{
+    color:rgba(var(--bs-danger-rgb), var(--bs-text-opacity));
+    font-size: 0.875em;
+}

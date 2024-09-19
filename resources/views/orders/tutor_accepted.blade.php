@@ -27,8 +27,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a style="color:#fff" href="{{$item['attachment']}}" target="_blank"
-                            style="color:#fff;">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -46,7 +49,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>

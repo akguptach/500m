@@ -4,6 +4,7 @@
         <div class="card-header">
             <h3 class="card-title">QC Chat</h3>
             </br>
+            
             <p class="text-muted text-left">{{$orderRequestSent->tutor->tutor_first_name.' '.$orderRequestSent->tutor->tutor_last_name}}</p>
         </div>
         <!-- /.card-header -->
@@ -24,7 +25,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text" >
                         {{$item['message']}}
-                        <a href="{{$item['attachment']}}" target="_blank" style="color:#fff;">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -40,7 +45,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>

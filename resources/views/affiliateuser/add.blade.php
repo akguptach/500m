@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <section class="content-header">
 	<!-- <div class="container-fluid">
         <section class="content">
@@ -122,7 +123,43 @@
 
 											</div>
 										</div>
+
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label" for="website_id">Website Type<span class="text-danger">*</span>
+											</label>
+											<div class="col-lg-6">
+											<?php HtmlHelper::WebsiteTypeDropdown('website_id', old('website_id'), false, 'website_id') ?>
+												
+											@error('website_id')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+												
+											</div>
+										</div>
+
+
+
+
 										<div class="mb-3 row">
+                                                        <label class="col-lg-4 col-form-label"
+                                                            for="validationCustom06">Commission in Percent
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-lg-6">
+                                                            <input type="number"  class="form-control"
+                                                                name="commission" id="validationCustom06" 
+                                                                placeholder="commission" required
+                                                                value="{{ old('commission') }}">
+                                                            {!! $errors->first('commission', '<div
+                                                                class=" invalid-feedback">:message</div>') !!}
+                                                            <div class="invalid-feedback">
+                                                                Please enter commission.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+										<?php /*<div class="mb-3 row">
 											<label class="col-lg-4 col-form-label" for="validationCustom06">Refral Link
 												<span class="text-danger">*</span>
 											</label>
@@ -133,7 +170,7 @@
 													Please enter a Currency.
 												</div>
 											</div>
-										</div>
+										</div>*/ ?>
 
 									</div>
 									<div class="col-xl-6">

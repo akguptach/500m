@@ -50,6 +50,11 @@
         position: relative;
     }
 
+    .error {
+        color: red;
+        font-size: 0.875em;
+    }
+
     .direct-chat.chat-pane-open .direct-chat-contacts {
         -webkit-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -197,6 +202,15 @@
     .direct-chat-contacts-light .contacts-list-msg {
         color: #545b62;
     }
+
+	table.dataTable tbody tr.red-bg
+	{
+		background: #c4101042!important;
+	}
+	table.dataTable tbody tr.green-bg
+	{
+		background: greenyellow!important;
+	}
     </style>
 
 
@@ -840,14 +854,33 @@
 
                                         @if(count($combined) > 0)
                                         @foreach($combined as $message)
+                                        @php($sender ='')
+                                        @if(isset($message['sendertable']['tutor_first_name']))
+                                        @php($sender =$message['sendertable']['tutor_first_name'])
+                                        @elseif(isset($message['sendertable']['first_name']))
+                                        @php($sender =$message['sendertable']['first_name'])
+                                        @endif
+                                        <?php //echo "<pre>"; print_r($message['sendertable']['tutor_first_name']);  ?>
                                         <li class="media dropdown-item align-items-center gap-3">
                                             <span class="success"><i class="ti-user"></i></span>
                                             <div class="media-body">
                                                 <a href="{{$message['url']}}">
                                                     <p>{{$message['message']}}</p>
-                                                    <p>{{$message['attachment']}}
-                                                    </p>
                                                 </a>
+                                                @if($message['attachment'])
+                                                <p>
+                                                    <a href="{{$message['url']}}">
+                                                        <div>
+                                                            <b>
+                                                                {{$sender}} sent an attachment</b>
+                                                        </div>
+                                                        <div>
+                                                            <i class='fas fa-file-download'></i>
+                                                            View attachment
+                                                        </div>
+                                                    </a>
+                                                </p>
+                                                @endif
                                             </div>
                                             <span
                                                 class="notify-time">{{\Carbon\Carbon::parse($message['created_at'])->format('h:i A')}}</span>

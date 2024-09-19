@@ -44,6 +44,7 @@ div:has(> ul.pagination) {
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="col-lg-6">
+                                                    @php($dealcat =  old('deal_category', optional(@$deal)->deal_category))
                                                     <select
                                                         class="form-control {{ $errors->has('deal_category') ? ' is-invalid' : '' }}"
                                                         style="width: 100%;" name="deal_category">
@@ -51,9 +52,8 @@ div:has(> ul.pagination) {
                                                         </option>
                                                         @if(!empty($dealCategories))
                                                         @foreach ($dealCategories as $dealCategory)
-                                                        <option value="{{$dealCategory->id}}" @if(@$deal->deal_category
-                                                            == $dealCategory->id) selected="selected"
-                                                            @endif>{{$dealCategory->category_name}}</option>
+                                                        <option value="{{$dealCategory->id}}" 
+                                                        @if($dealcat == $dealCategory->id) selected="selected" @endif >{{$dealCategory->category_name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>

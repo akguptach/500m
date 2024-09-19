@@ -43,7 +43,8 @@
                       <label class="col-lg-4 col-form-label" for="">Additional Per Word Rate <span class="text-danger">*</span>
                       </label>
                       <div class="col-lg-6">
-                        <input type="number" class="form-control" name="additional_word_rate" placeholder="Enter Per Word Rate" required value="{{$data->additional_word_rate}}">
+                        <input type="number" min="0" 
+                        max="1000" step="0.01" class="form-control" name="additional_word_rate" placeholder="Enter Per Word Rate" required value="{{$data->additional_word_rate}}">
                         @error('additional_word_rate')
                         <small class="text-danger">{{ $message }}</small>
                         @enderror

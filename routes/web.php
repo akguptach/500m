@@ -38,6 +38,9 @@ use App\Http\Controllers\DealsController;
 use App\Http\Controllers\ServiceKeywordsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WithdrawRequestController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\StaffUserController;
+
 
 
 
@@ -54,7 +57,12 @@ use App\Http\Controllers\WithdrawRequestController;
 */
 
 Route::match(['get', 'head'], '/', function () {
-    return view('auth.login');
+     if(Auth::user()){
+          return redirect()->route('dashboard');
+     }else{
+          return view('auth.login');
+     }
+    
 });
 /*Route::get('/dashboard', function () {
     return view('dashboard');
@@ -63,7 +71,17 @@ Route::match(['get', 'head'], '/', function () {
 Route::post('/upload-image',  [ImageUploadController::class,'upload'])->name('upload.image')->withoutMiddleware(['auth'])->withoutMiddleware(['web']);
 
 //Route::get('/pages/{seo_url_slug}', [PageController::class, 'showPage'])->name('show-page');
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','is_authorized'])->group(function () {
+
+
+     Route::get('permission/{id?}', [PermissionController::class,'index'])->name('permission.index');
+     Route::post('permission/update', [PermissionController::class,'update'])->name('permission.update');
+
+     Route::get('permission/users/{id?}', [PermissionController::class,'userPermission'])->name('permission.userPermission');
+     Route::post('permission/users/update', [PermissionController::class,'updateUserPermission'])->name('permission.updateUserPermission');
+
+
+
 
 //     Route::post('/upload-image', [ImageUploadController::class,'upload'])->name('upload.image');
 
@@ -72,6 +90,13 @@ Route::middleware('auth')->group(function () {
      Route::get('/withdraw-requests/details/{requestId}', [WithdrawRequestController::class,'withdrawDetails'])->name('withdraw_request_details');
      Route::post('/withdraw-requests/accept/{requestId}', [WithdrawRequestController::class,'acceptRequest'])->name('accept_withdraw_requests');
      Route::post('/withdraw-requests/decline/{requestId}', [WithdrawRequestController::class,'declineRequest'])->name('decline_withdraw_requests');
+
+
+     Route::get('/tutor-withdraw-requests', [WithdrawRequestController::class,'tutorWithdrawRequests'])->name('tutor_withdraw_request_view');
+     Route::get('/tutor-withdraw-requests/details/{requestId}', [WithdrawRequestController::class,'tutorWithdrawDetails'])->name('tutor_withdraw_request_details');
+     Route::post('/tutor-withdraw-requests/accept/{requestId}', [WithdrawRequestController::class,'tutorAcceptRequest'])->name('tutor_accept_withdraw_requests');
+     Route::post('/tutor-withdraw-requests/decline/{requestId}', [WithdrawRequestController::class,'tutorDeclineRequest'])->name('tutor_decline_withdraw_requests');
+
 
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('/role', RoleController::class);
@@ -117,9 +142,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{categories}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{categories}', [CategoriesController::class, 'update'])->name('categories.update');
 
+
+
+    //Route::get('/orders/{student_id?}', [OrdersController::class, 'index'])->name('orders');
+
     Route::get('/orders/payment/{student_id?}', [OrdersController::class, 'paymentDone'])->name('orders.payment_done');
-    Route::get('/orders/enquery/{student_id?}', [OrdersController::class, 'enquery'])->name('orders.enquery');
-    Route::get('/orders/{student_id?}', [OrdersController::class, 'index'])->name('orders');
+    Route::get('/orders/payment-failed/{student_id?}', [OrdersController::class, 'enquery'])->name('orders.enquery');
+    Route::get('/orders/new/{student_id?}', [OrdersController::class, 'newOrders'])->name('orders.new');
+    Route::get('/orders/ongoing/{student_id?}', [OrdersController::class, 'onGoingOrders'])->name('orders.ongoing');
+    Route::get('/orders/completed/{student_id?}', [OrdersController::class, 'completedOrders'])->name('orders.completed');
+
+
+
+
+
    
     
     Route::get('/orders/{orders}/view', [OrdersController::class, 'view'])->name('orders.view');
@@ -175,7 +211,11 @@ Route::middleware('auth')->group(function () {
     //Route::get('/services/{pages}/edit', [ServiceController::class, 'edit'])->name('pages.edit');
     //Route::put('/services/{pages}', [ServiceController::class, 'update'])->name('pages.update');
     //Route::delete('services/{pages}/delete', [ServiceController::class, 'destroy'])->name('pages.destroy');
-    Route::get('/contact/form-store', [PageController::class, 'dataStore'])->name('contact.form.store');
+    Route::post('/enquery/export/{type}', [PageController::class, 'EnqueryExport'])->name('enquery.export');
+
+    Route::get('/contact/form-store/{type}', [PageController::class, 'dataStore'])->name('contact.form.store');
+    Route::post('/contact/customer-attendant/{id}', [PageController::class, 'customerAttendant'])->name('contact.customer.attendant');
+
     Route::post('/contact/form', [PageController::class, 'dataStore1'])->name('form.store');
     Route::get('/media', [MediaController::class, 'index'])->name('media.save');
     Route::post('/save', [MediaController::class, 'save'])->name('media.store');
@@ -183,7 +223,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/media/delete', [MediaController::class, 'deleteMedia'])->name('deleteMedia');
     Route::get('/subscription/list', [MediaController::class, 'subscription'])->name('subscription');
     Route::post('/subscription/delete', [MediaController::class, 'subscriptionDelete'])->name('subscriptionDelete');
-
+    Route::post('/subscription/export', [MediaController::class, 'subscriptionExport'])->name('subscription.export');
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
 
@@ -210,6 +250,9 @@ Route::middleware('auth')->group(function () {
             Route::group([
                'prefix' => 'students',
            ], function () {
+
+               Route::post('/students/export', [StudentsController::class, 'StudentsExport'])->name('students.export');
+
                Route::get('/', [StudentsController::class, 'index'])
                     ->name('students.student.index');
                Route::get('/create', [StudentsController::class, 'create'])
@@ -259,6 +302,22 @@ Route::middleware('auth')->group(function () {
                               Route::patch('experts/status/{expert}', [ExpertsController::class, 'change'])
                     ->name('experts.expert.change')->where('id', '[0-9]+');
                      });
+
+
+
+                     Route::group([
+                         'prefix' => 'staffuser',
+                     ], function () {
+                         Route::get('/add', [StaffUserController::class, 'index'])->name('staffuser.add');
+                         Route::post('/store', [StaffUserController::class, 'store'])->name('staffuser.store');
+                         Route::get('/{id}/edit', [StaffUserController::class, 'edit'])->name('staffuser.edit');
+                         Route::put('/{id}/update', [StaffUserController::class, 'update'])->name('staffuser.update');
+                         Route::delete('/delete/{id}',[StaffUserController::class, 'destroy'])->name('staffuser.destroy')->where('id', '[0-9]+');
+                         Route::patch('change/status/{id}', [StaffUserController::class, 'change'])->name('staffuser.change')->where('id', '[0-9]+');
+                         Route::get('/', [StaffUserController::class, 'view'])->name('staffuser.list');     
+                     });
+
+                     
 
                      Route::group([
                          'prefix' => 'affiliateuser',
@@ -334,7 +393,7 @@ Route::middleware('auth')->group(function () {
          
 
 
-                     Route::get('/notificationslist', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');
+     Route::get('/notificationslist/{type}', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications');
                          
 });
 
@@ -418,4 +477,3 @@ Route::group([
           Route::patch('/blog_category/{blogCategory}',[BlogCategoriesController::class, 'change'])
           ->name('blog_categories.blog_category.change')->where('id', '[0-9]+');
  });
-

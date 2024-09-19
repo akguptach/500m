@@ -1,6 +1,6 @@
 <style>
 .checked {
-  color: orange;
+    color: orange;
 }
 </style>
 <?php  
@@ -16,18 +16,17 @@ if($orderRating){
     <!-- Profile Image -->
     <div class="card card-primary card-outline direct-chat direct-chat-primary">
         <div class="card-header" style="display: block;">
-            <h3 class="card-title" >Student Chat</h3></br>
+            <h3 class="card-title">Student Chat</h3></br>
+            
             <p class="text-muted text-left">{{ $data['student']['first_name'] . ' ' . $data['student']['last_name'] }}
             </p>
             <div>
-                @for($i=1; $i<=5; $i++)
-                    @if($i<=$ratingCount)
-                        <span class="fa fa-star checked"></span>
+                @for($i=1; $i<=5; $i++) @if($i<=$ratingCount) <span class="fa fa-star checked"></span>
                     @else
-                        <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
                     @endif
-                @endfor
-                
+                    @endfor
+
             </div>
         </div>
         <!-- /.card-header -->
@@ -69,8 +68,12 @@ if($orderRating){
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a style="color:#fff;" href="{{$item['attachment']}}"
-                            target="_blank">{{$item['attachment']}}</a>
+
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -136,8 +139,11 @@ if($orderRating){
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a style="color:#fff;" href="{{$item['attachment']}}"
-                            target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
@@ -155,7 +161,11 @@ if($orderRating){
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>

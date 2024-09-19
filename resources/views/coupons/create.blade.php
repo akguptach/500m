@@ -139,7 +139,7 @@
 											</div>
 										</div>
 										<div class="mb-3 row">
-											<label class="col-lg-4 col-form-label" for="">Max Uses<span class="text-danger">*</span>
+											<label class="col-lg-4 col-form-label" for="">Number of users<span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
 												<input type="number" name="max_uses" value="{{old('max_uses')}}" class="form-control" id="" placeholder="Enter Maximum limit" required>
@@ -176,7 +176,7 @@
 											</div>
 										</div>
 										<div class="mb-3 row">
-											<label class="col-lg-4 col-form-label" for="">Limit Users<span class="text-danger">*</span>
+											<label class="col-lg-4 col-form-label" for="">Code uses per customer <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
 												<input type="number" class="form-control" value="{{old('limit_per_users')}}" name="limit_per_users" id="" placeholder="Enter Limit Users" required>

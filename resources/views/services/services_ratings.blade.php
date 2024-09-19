@@ -6,7 +6,7 @@
             <table class="table table-bordered" id="ratingsAddRemove">
                 <tr>
                     <th>Stars</th>
-                    <th>Name</th>
+                    <th>Name11</th>
                     <th>Description</th>
                     <th>Action</th>
                 </tr>

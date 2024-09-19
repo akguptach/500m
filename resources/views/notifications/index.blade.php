@@ -12,6 +12,14 @@ div:has(> ul.pagination) {
     float: right;
     margin-right: 20px;
 }
+
+.nav-link.active{
+    background-color: #6a73fa!important;
+    color: #fff!important;
+}
+.nav-link{
+border: 1px solid!important;
+}
 </style>
 <section class="content-header">
     <div class="container-fluid">
@@ -19,6 +27,23 @@ div:has(> ul.pagination) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        <div class="home-tab" style="margin-top:10px;margin-bottom:10px;">
+                            <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                                <ul class="nav nav-tabs" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ ( request()->is('notificationslist/customer')) ? 'active' : '' }}"
+                                            href="{{route('notifications','customer')}}">Customer Query</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ ( request()->is('notificationslist/writer')) ? 'active' : '' }}"
+                                            href="{{route('notifications','writer')}}">Writer Query</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Notifications</h3>
@@ -39,44 +64,54 @@ div:has(> ul.pagination) {
                                             <th>Message</th>
                                             <th>Receiver</th>
                                             <th>Action</th>
-                                            
+
                                         </tr>
                                     </thead>
-                                   
+
                                     <tbody>
                                         @foreach($data as $item)
+
+
                                         <tr>
-                                            <td>MAS{{$item->order_id}}</td>
                                             <td>
-                                            @if ($item['sendertable_type']== 'App\Models\Tutor')
-                                            {{$item['sendertable']['tutor_first_name']}} ({{$item->message_type}})
-                                            @elseif ($item['sendertable_type']== 'App\Models\Student')
-                                            {{@$item['sendertable']['first_name']}} ({{@$item->message_type}})
-                                            @elseif ($item['sendertable_type']== 'App\Models\User')
-                                            {{$item['sendertable']['name']}}
-                                            @endif
-                                            
+                                                @if($item->order_id)
+                                                MAS{{$item->order->order_number}}
+                                                @elseif($item->request_id)
+                                                {{$item->order_request?->order?->order_number}}
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if ($item['sendertable_type']== 'App\Models\Tutor')
+                                                {{$item['sendertable']['tutor_first_name']}} ({{$item->message_type}})
+                                                @elseif ($item['sendertable_type']== 'App\Models\Student')
+                                                {{@$item['sendertable']['first_name']}} ({{@$item->message_type}})
+                                                @elseif ($item['sendertable_type']== 'App\Models\User')
+                                                {{$item['sendertable']['name']}}
+                                                @endif
+
                                             </td>
                                             <td width="250px"><span
                                                     style="overflow-wrap: anywhere;">{{$item->message}}</span>
-                                                    <span style="overflow-wrap: anywhere;"><a href="{{$item['attachment']}}" target="_blank" >{{$item['attachment']}}</a></span>
+                                                <span style="overflow-wrap: anywhere;"><a href="{{$item['attachment']}}"
+                                                        target="_blank">{{$item['attachment']}}</a></span>
                                             </td>
                                             <td>
-                                            @if ($item['receivertable_type']== 'App\Models\Tutor')
-                                            {{$item['receivertable']['tutor_first_name']}} ({{$item->message_type}})
-                                            @elseif ($item['receivertable_type']== 'App\Models\Student')
-                                            {{$item['receivertable']['first_name']}} ({{$item->message_type}})
-                                            @elseif ($item['receivertable_type']== 'App\Models\User')
-                                            {{$item['receivertable']['name']}}
-                                            @endif
+                                                @if ($item['receivertable_type']== 'App\Models\Tutor')
+                                                {{$item['receivertable']['tutor_first_name']}} ({{$item->message_type}})
+                                                @elseif ($item['receivertable_type']== 'App\Models\Student')
+                                                {{$item['receivertable']['first_name']}} ({{$item->message_type}})
+                                                @elseif ($item['receivertable_type']== 'App\Models\User')
+                                                {{$item['receivertable']['name']}}
+                                                @endif
                                             </td>
                                             <td>
-                                                <a href="{{route('orders.view',$item->order_id)}}">View</a>
+                                                <a href="{{$item['url']}}">View</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    
+
                                 </table>
                             </div>
                             <div class="clearfix mt-2 pagination-div">

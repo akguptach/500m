@@ -28,12 +28,12 @@
 
                                         <tr>
                                             <td>Total Wallet amount</td>
-                                            <td>${{$studentWithdrawal->wallet_balance}}</td>
+                                            <td>£{{$studentWithdrawal->wallet_balance}}</td>
                                         </tr>
 
                                         <tr>
                                             <td>Withdraw Amount</td>
-                                            <td>${{$studentWithdrawal->amount}}</td>
+                                            <td>£{{$studentWithdrawal->amount}}</td>
                                         </tr>
                                         <tr>
                                             <td>Request Date</td>

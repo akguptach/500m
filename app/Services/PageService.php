@@ -6,6 +6,7 @@ use App\Models\Pages;
 use App\Models\ContactUs;
 use App\Models\PageRating;
 use Illuminate\Support\Str;
+use DataTables;
 
 /**
  * Class PageService.
@@ -112,14 +113,30 @@ class PageService
         }
         return true;
     }
-    public function getReferencingStyle1(): array
+    public function contactUsEnquiry($type)
     {
+        $query = ContactUs::orderBy('id', 'desc');
+        if($type == 'completed'){
+            $query->where('customer_attendant',1);
+        }else{
+            $query->where('customer_attendant',0); 
+        }
+        return DataTables::eloquent($query)
+        ->addColumn('action', function($row) use($type){
+            if($type != 'completed')
+                return '<form class="customer-attendant-form" method="POST" action="'.route('contact.customer.attendant',$row->id).'">'.csrf_field().'<button type="button" class="btn btn-success me-2 customer-attendant-btn" name="customer_attendant_btn" data-id="'.$row->id.'" class="btn btn-link " title="Inactivate Expert" onclick="return new_modal(event, &quot;Click Ok to attendant customer.&quot;)">Customer attendant</button></form>';
+            else
+                return '';
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+        /*
         $req_record['data'] = array();
         if (!empty($_GET['search']['value'])) {
-            $req_record['data'] = ContactUs::get()->toArray();
-            $styles = ContactUs::get()->toArray();
+            $req_record['data'] = ContactUs::orderBy('id', 'desc')->get()->toArray();
+            $styles = ContactUs::orderBy('id', 'desc')->get()->toArray();
         } else {
-            $req_record['data'] = ContactUs::get()->toArray();
+            $req_record['data'] = ContactUs::orderBy('id', 'desc')->get()->toArray();
             $styles = ContactUs::orderBy('id', 'desc')->get()->toArray();
         }
         
@@ -127,6 +144,6 @@ class PageService
             $req_record['recordsFiltered'] = $req_record['recordsTotal'] = count($styles);
         else
             $req_record['recordsFiltered'] = $req_record['recordsTotal'] = 0;       
-        return $req_record;
+        return $req_record;*/
     }
 }

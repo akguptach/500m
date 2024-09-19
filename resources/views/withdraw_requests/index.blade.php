@@ -9,6 +9,7 @@
     margin-left: 400px;
 }
 </style>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -37,6 +38,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                @include('withdraw_requests.withdraw_tab')
                 <div class="card">
                     <div class="card-body">
                         @if (session('status'))

@@ -4,6 +4,7 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
+        
             <div class="col-sm-6">
                 <h1 class="m-0">Dashboard</h1>
             </div><!-- /.col -->
@@ -26,9 +27,209 @@ $enqury = ContactUs::get()->count();
 */
 ?>
 <section class="content">
+
     <div class="container-fluid">
         <div class="row">
+
+            
+
             <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-truck"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">New orders</p>
+                                <h3 class="text-white">{{$new_orders}}</h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('orders.new')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-truck"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Due Soon</p>
+                                <h3 class="text-white">{{$total_due}}</h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('orders.ongoing')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Payment Failed</p>
+                                <h3 class="text-white">{{$total_enqury}}</h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('orders.enquery')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Student Query </p>
+                                <h3 class="text-white"></h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('notifications','customer')}}" style="color:#fff;">View All</a></small>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Writer Query</p>
+                                <h3 class="text-white"></h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('notifications','writer')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Student Withdraw Request</p>
+                                <h3 class="text-white"></h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('withdraw_request_view')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Writer Withdraw Request</p>
+                                <h3 class="text-white"></h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('tutor_withdraw_request_view')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Payment History</p>
+                                <h3 class="text-white"></h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('payments')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-question-circle"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Enquiry</p>
+                                <h3 class="text-white">{{$total_pending_enquiry}}</h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
+                                </div> -->
+                                <small><a href="{{route('contact.form.store','pending')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <?php /*<div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card bg-primary">
                     <div class="card-body">
                         <div class="media">
@@ -42,33 +243,13 @@ $enqury = ContactUs::get()->count();
                                     <div class="progress-bar progress-animated bg-white" style="width: 80%"></div>
                                 </div> -->
                                 <small><a href="{{route('orders.payment_done')}}" style="color:#fff;">View All</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*/ ?>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="widget-stat card bg-warning">
-                    <div class="card-body">
-                        <div class="media">
-                            <span class="me-3">
-                                <i class="la la-money"></i>
-                            </span>
-                            <div class="media-body text-white">
-                                <p class="mb-1">Total Expanse</p>
-                                <h3 class="text-white">${{$total_expence}}</h3>
-                                <!-- <div class="progress mb-2 bg-white">
-                                    <div class="progress-bar progress-animated bg-white" style="width: 50%"></div>
-                                </div>
-                                <small>50% Increase in 25 Days</small> --> 
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-xxl-3 col-sm-6">
+<div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card bg-secondary">
                     <div class="card-body">
                         <div class="media">
@@ -76,8 +257,8 @@ $enqury = ContactUs::get()->count();
                                 <i class="la la-question-circle"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">Total Enquery </p>
-                                <h3 class="text-white">{{$total_enqury}}</h3>
+                                <p class="mb-1">Total Payment </p>
+                                <h3 class="text-white">£{{$total_payment}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 76%"></div>
                                 </div>
@@ -88,6 +269,29 @@ $enqury = ContactUs::get()->count();
                     </div>
                 </div>
             </div>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-warning">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="me-3">
+                                <i class="la la-money"></i>
+                            </span>
+                            <div class="media-body text-white">
+                                <p class="mb-1">Total Expense</p>
+                                <h3 class="text-white">£{{$total_expence}}</h3>
+                                <!-- <div class="progress mb-2 bg-white">
+                                    <div class="progress-bar progress-animated bg-white" style="width: 50%"></div>
+                                </div>
+                                <small>50% Increase in 25 Days</small> --> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card bg-danger">
                     <div class="card-body">
@@ -97,7 +301,7 @@ $enqury = ContactUs::get()->count();
                             </span>
                             <div class="media-body text-white">
                                 <p class="mb-1">Total Profit</p>
-                                <h3 class="text-white">${{$total_profit}}</h3>
+                                <h3 class="text-white">£{{$total_profit}}</h3>
                                 <!-- <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-white" style="width: 30%"></div>
                                 </div>

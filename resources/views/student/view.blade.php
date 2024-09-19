@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <style>
+    .paginate_button  {
+    padding : 8px!important;
+}
     p.small {
         font-size: 16px;
         margin-left: 24px;
@@ -11,6 +14,12 @@
         float: right;
         margin-right: 20px;
     }
+    
+
+    #student_table td{
+        overflow-wrap: anywhere;
+    }
+    
 </style>
 
 <div class="container-fluid">
@@ -20,9 +29,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Student</h3>
-                    <div class="float-right">
+                    <?php /*<div class="float-right">
                         <?php HtmlHelper::WebsiteTypeDropdown('website_type', $website, false, 'width:150px;', 'website_type') ?>
-                    </div>
+                    </div>*/?>
                 </div>
                 <div class="card-body">
                     @if (session('status'))
@@ -30,90 +39,24 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <div class="table-responsive">
-                        <table id="example1" class="table table-responsive table-bordered row-border">
+                    <div class="table-responsive"> 
+                        <table id="student_table" class="table table-responsive table-bordered row-border">
                             <thead>
                                 <tr>
-                                    <th>Sr.No.</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile Number</th>
-                                    <th>Website</th>
-                                    <th>view</th>
-
-
-                                    <th>Actions</th>
+                                    <th style="width:80px;">Sr.No.</th>
+                                    <th style="width:120px;">First Name</th>
+                                    <th style="width:120px;">Last Name</th>
+                                    <th style="width:120px;">Email</th>
+                                    <th style="width:120px;">Mobile Number</th>
+                                    <th style="width:120px;">Website</th>
+                                    <th style="width:200px;">view</th>
+                                    <th style="width:50px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($students as $student)
-                                <tr>
-                                    <td>{{$student->id}}</td>
-                                    <td>{{$student->first_name}}</td>
-                                    <td>{{$student->last_name}}</td>
-                                    <td>{{$student->email}}</td>
-                                    <td>{{$student->phone_number}}</td>
-                                    <td>{{@$student->website->website_type}}</td>
-                                    <td> <a href="{{route('orders', $student->id)}}" class="btn-sm btn btn-primary">View Orders
-                                            <i class="fas fa-arrow-right"></i></a></td>
-
-
-                                    <td>
-
-                                        <a href="{{route('students.student.edit',['student'=>$student->id])}}" class="edit-link">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-
-
-
-                                        <form method="POST" action="{!! route('students.student.change', $student->id) !!}" accept-charset="UTF-8" style="display:inline">
-                                            <input name="_method" value="PATCH" type="hidden">
-                                            <input name="status" value="active" type="hidden">
-                                            {{ csrf_field() }}
-                                            <button @if($student->status=='active') disabled="disabled" @endif type="submit"
-                                                class="btn btn-link " title="Inactivate Student"
-                                                onclick="return new_modal(event,&quot;Click Ok to activate Student.&quot;)"
-                                                style="padding: 0px;padding-bottom:3px;">
-                                                <i class="fas fa-check-circle"></i>
-                                            </button>
-
-                                        </form>
-
-
-                                        <form method="POST" action="{!! route('students.student.change', $student->id) !!}" accept-charset="UTF-8" style="display:inline">
-                                            <input name="_method" value="PATCH" type="hidden">
-                                            <input name="status" value="inactive" type="hidden">
-                                            {{ csrf_field() }}
-                                            <button @if($student->status=='inactive') disabled="disabled" @endif
-                                                type="submit" class="btn btn-link " title="Activate Student"
-                                                onclick="return new_modal(event,&quot;Click Ok to Inactive Student.&quot;)"
-                                                style="padding: 0px;padding-bottom:3px;">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
-
-                                        </form>
-
-                                        <form method="POST" action="{!! route('students.student.destroy', $student->id) !!}" accept-charset="UTF-8" style="display:inline">
-                                            <input name="_method" value="DELETE" type="hidden">
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-link " title="Delete Student" onclick="return new_modal(event,&quot;Click Ok to delete Student.&quot;)" style="padding: 0px;padding-bottom:3px;">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-
-                                        </form>
-
-                                    </td>
-                                </tr>
-                                @endforeach
+                                
                             </tbody>
                         </table>
-                    </div>
-
-                </div>
-                <div class="clearfix mt-2 pagination-div">
-                    <div style="width: 100%;">
-                        {!! $students->appends(request()->input())->links('pagination::bootstrap-5') !!}
                     </div>
                 </div>
             </div>
@@ -137,6 +80,63 @@
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
 <script>
+
+
+$(document).ready(function() {
+    var table = $('#student_table').DataTable({
+        "autoWidth": false,
+        dom: '<"top-toolbar"lf>rtip',
+            initComplete: function() {
+                this.api().columns([5]).every(function() {
+                    var column = this;
+                    var website_type = $('#website_type')
+                        .on('change', function() {
+                            var val = $(this).val();
+                            column.search(val).draw();
+                        });
+
+                });
+            },
+        processing: true,
+        serverSide: true,
+        ajax: "{{url()->full()}}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            {
+                data: 'first_name'
+            },
+            {
+                data: 'last_name'
+            },
+            {
+                data:'email'
+            },
+            {
+                data: 'phone_number'
+            },
+            {
+                data: 'website'
+            },
+            {
+                data: 'view'
+            },
+            {
+                data: 'action'
+            }
+        ]
+
+    });
+    $("div.top-toolbar").css({
+        "display": "flex",
+        "justify-content": "space-between"
+    });
+    
+    $("div.top-toolbar").append('<?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>');
+    $("div.top-toolbar").append(`@include('student.csvExportForm')`);
+    
+});
+
+
     function generateParamsurl(params) {
         let paramString = '';
         Object.keys(params).forEach(function(key, index) {
@@ -147,7 +147,7 @@
         return paramString;
     }
 
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         const searchParams = new URLSearchParams(window.location.search);
         var paramsList = {};
         for (const param of searchParams) {
@@ -159,7 +159,7 @@
             paramsList['website'] = $(this).val();
             window.location.href = "{{route('students.student.index')}}/" + generateParamsurl(paramsList);
         })
-    })
+    })*/
 </script>
 
 

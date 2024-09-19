@@ -57,11 +57,11 @@ div:has(> ul.pagination) {
                                             <th>Code</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th>Max Uses</th>
+                                            <th>Number of users</th>
                                             <th>Num Uses</th>
                                             <th>Reduction Type</th>
                                             <th>Reduction Amount</th>
-                                            <th>Limit Per Users</th>
+                                            <th>Code uses per customer </th>
 
                                             <th></th>
                                         </tr>

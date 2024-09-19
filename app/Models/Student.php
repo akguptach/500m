@@ -12,7 +12,7 @@ class Student extends Model
     use SoftDeletes;
     protected $table = 'student';
     protected $fillable = ['first_name', 'last_name', 'email', 'status', 'phone_number',
-'user_type','type','referal_link','about','location','password'];
+'user_type','type','referral_code','about','location','password','website_id','commission'];
 
     public function website()
 	{

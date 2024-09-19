@@ -14,11 +14,11 @@ class NotificationController extends Controller
     {
     }
     
-    public function index()
+    public function index($type='customer')
     {
-        $data = $this->notificationService->getNotifications();
+        $data = $this->notificationService->getNotifications($type);
         return view('notifications/index',$data);
-    }
+    } 
 
     
 

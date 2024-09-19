@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Tutor;
+use App\Models\TutorSubject;
 
 class TutorService
 {
@@ -89,8 +90,9 @@ class TutorService
         $tutor->tutor_last_name     = $request->tutor_last_name;
         $tutor->tutor_email         = $request->tutor_email;
         $tutor->tutor_contact_no    = $request->tutor_contact_no;
-        $tutor->tutor_subject       = $request->tutor_subject;
+        //$tutor->tutor_subject       = $request->tutor_subject;
         $tutor->status              = $request->status;
+
         if (!empty($request->password)) {
             $tutor->password        = bcrypt($request->password);
         }
@@ -104,6 +106,15 @@ class TutorService
             }
         }
         $tutor->save();
+
+        TutorSubject::where('tutor_id',$id)->delete();
+        foreach ($request->tutor_subject as $subject) {
+            TutorSubject::Create([
+                'tutor_id' => $id,
+                'subject_id' => $subject
+            ]);
+        }
+
         return $tutor;
     }
 }

@@ -95,7 +95,8 @@
                                 @if(!empty($education->proof))
                                     <a href="<?= env('TUTOT_URL').$education->proof;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;color:blue;">
                                         <i class="nav-icon fas fa-file-download"><span class="nav-text"> </span></i> View</a>
-                                
+                                @else
+                                    <span>No attachment</span>
                                 @endif
                                 </div>
                             </div>
@@ -104,9 +105,10 @@
                             <div class="form-group">
                                 <label>CV</label>
                                 <div style="min-height: 20px;">
-                                @if(!empty($education->proof))
+                                @if(!empty($education->cv_file))
                                     <a href="<?= env('TUTOT_URL').$education->cv_file;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;color:blue;"><i class="nav-icon fas fa-file-download"><span class="nav-text"> </span></i> View</a>
-                                
+                                @else
+                                    No attachment
                                 @endif
                                 </div>
                             </div>
@@ -115,9 +117,10 @@
                             <div class="form-group">
                                 <label>Graduation degree and mark sheet</label> file
                                 <div style="min-height: 20px;">
-                                @if(!empty($education->proof))
+                                @if(!empty($education->graduation_degree))
                                     <a href="<?= env('TUTOT_URL').$education->graduation_degree;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;color:blue;"><i class="nav-icon fas fa-file-download"><span class="nav-text"> </span></i> View</a>
-                                
+                                @else
+                                    No attachment
                                 @endif
                                 </div>
                             </div>
@@ -126,9 +129,10 @@
                             <div class="form-group">
                                 <label>samples of previous work</label>
                                 <div style="min-height: 20px;">
-                                @if(!empty($education->proof))
+                                @if(!empty($education->samples_of_previous_work))
                                     <a href="<?= env('TUTOT_URL').$education->samples_of_previous_work;?>" target="_blank" class="form-control" style="    border: 0px !important;width: 50% !important;color:blue;"><i class="nav-icon fas fa-file-download"><span class="nav-text"> </span></i> View</a>
-                                
+                                @else
+                                No attachment
                                 @endif
                                 </div>
                             </div>

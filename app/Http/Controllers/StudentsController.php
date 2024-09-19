@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Http\Requests\StudentRequest;
 use Illuminate\Http\Request;
+use DataTables;
+use Illuminate\Support\Facades\Response;
 
 class StudentsController extends Controller
 {
@@ -18,7 +20,42 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
-        $website = '';
+        if (isset($_GET) && (!empty($_GET['columns']) || !empty($_GET['search']['value']))) {
+
+            $query = Student::orderBy('first_name','asc');
+            if($_GET['search']['value']){
+                $query->where(function($q){
+                    $q->orWhere('first_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('last_name', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('email', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                    $q->orWhere('phone_number', 'LIKE', '%' . $_GET['search']['value'] . '%');
+                });
+            }
+
+            $datatable =  DataTables::eloquent($query)
+            ->addIndexColumn()
+            ->addColumn('website', function($row) {
+                return $row->website?->website_type;
+            })
+            ->addColumn('action', function($row) {
+                return '<a href="'.route('students.student.edit',['student'=>$row->id]).'" class="edit-link"><i class="fas fa-edit"></i></a>';
+            })
+            ->addColumn('view', function($row) {
+                return '<a href="'.route('orders.new', $row->id).'" class="btn-sm btn btn-primary">View Orders<i class="fas fa-arrow-right"></i></a>';
+            });
+
+            $datatable->filterColumn('website', function($query, $keyword) {
+                $query->whereHas('website', function($q){
+                    $q->where('website_type',$_GET['columns'][5]['search']['value']);
+                });
+            });
+            $datatable->rawColumns(['action','view']);
+            return $datatable->make(true);
+            ;
+        }else{
+            return view('student/view');
+        }
+        /*$website = '';
         if ($request->has('website')) {
             $website = $request->input('website');
         }
@@ -28,7 +65,7 @@ class StudentsController extends Controller
             $query->where('website_id', $website);
         }
         $students = $query->paginate(15);
-        return view('student/view', compact('students','website'));
+        return view('student/view', compact('students','website'));*/
         
     }
 
@@ -87,6 +124,47 @@ class StudentsController extends Controller
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }
     }
+
+
+    public function StudentsExport(Request $request)
+{
+
+    $from = $request->from;
+    $to = $request->to;
+
+    $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=students.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    );
+    
+
+    if($from && $to)
+        $enquery = Student::whereBetween('created_at', [$from, $to])->get();
+    elseif($from)
+        $enquery = Student::whereDate('created_at', '>=', $from)->get();
+    elseif($to)
+        $enquery = Student::whereDate('created_at', '<=', $to)->get();
+    else
+        $enquery = Student::get();
+
+
+    $columns = array('First Name', 'Last Name', 'Email', 'Mobile Number', 'Website', 'Member Since');
+    $callback = function() use ($enquery, $columns)
+    {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columns);
+        foreach($enquery as $row) {
+            $mobileNumber = (string) $row->phone_number;
+            fputcsv($file, array($row->first_name,$row->last_name,  $row->email, $mobileNumber, $row?->website?->website_type, $row->created_at));
+        }
+        fclose($file);
+    };
+    return Response::stream($callback, 200, $headers);
+}
+
 
     
 }

@@ -28,7 +28,8 @@ class AffiliateUserUpdateRequest extends FormRequest
             'email' => 'required|unique:student,email,' . request()->id,
             'about' => 'required',
             'location' => 'required',
-            'referal_link' => 'required',
+            'website_id' => 'required',
+            'commission' => 'required',
     ];
     }
 }

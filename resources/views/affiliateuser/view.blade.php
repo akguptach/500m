@@ -40,7 +40,7 @@
                                                 <th>About</th>
                                                 <th> Location </th>
                                                 <th>Type</th>
-                                                <th>Refferal Link</th>
+                                                <th>Affiliate Link</th>
 
 
                                                 <th>Action</th>
@@ -55,7 +55,7 @@
                                                 <td class="align-middle">{{$user->about}}</td>
                                                 <td class="align-middle">{{$user->location}}</td>
                                                 <td class="align-middle">{{$user->type}}</td>
-                                                <td class="align-middle">{{$user->referal_link}}</td>
+                                                <td class="align-middle">{{$user->referral_code}}</td>
                                                 <td class="align-middle">
                                                 <a href="{{route('affiliateuser.affiliate.edit',['id'=>$user->id])}}" class="edit-link">
                                                     <i class="fas fa-edit"></i>

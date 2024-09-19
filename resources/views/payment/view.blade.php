@@ -1,6 +1,21 @@
 @extends('layouts.app')
 @section('content')
 <style>
+.paginate_button {
+    padding: 8px !important;
+}
+
+#payment_table_filter {
+    margin-left: 34%;
+}
+
+#payment_table td {
+    overflow-wrap: anywhere;
+}
+.dataTables_length{
+    width: 200px;
+}
+
 p.small {
     font-size: 16px;
     margin-left: 24px;
@@ -21,21 +36,6 @@ div:has(> ul.pagination) {
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Payment History</h3>
-                                <div class="float-right" style="display: flex;">
-
-                                    <?php HtmlHelper::WebsiteTypeDropdown('website_type', $website, false, 'width:150px;', 'website_type') ?>
-
-                                    &nbsp;&nbsp;
-
-                                    <select name="payment_filter" id="payment_filter" class="form-control"
-                                        style="width:150px;">
-                                        <option value="">All</option>
-                                        <option value="Success" @if($paymentStatus=='Success' ) selected="selected" @endif>
-                                            Success</option>
-                                        <option value="Failed" @if($paymentStatus=='Failed' ) selected="selected" @endif>Fail
-                                        </option>
-                                    </select>
-                                </div>
                             </div>
                             <div class="card-body">
                                 @if (session('status'))
@@ -43,7 +43,8 @@ div:has(> ul.pagination) {
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="example1" class="table table-bordered  table-responsive table-bordered row-border">
+                                <table id="payment_table"
+                                    class="table table-bordered  table-responsive table-bordered row-border">
                                     <thead>
                                         <tr>
                                             <th>Order id</th>
@@ -56,28 +57,8 @@ div:has(> ul.pagination) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($payments as $payment)
-                                        <tr>
-                                            <td>MAS{{$payment->order->id}}</td>
-                                            <td>{{@$payment->order->student->first_name}}</td>
-                                            <td>{{@$payment->order->student->email}}</td>
-                                            <td>{{@$payment->order->student->phone_number}}</td>
-                                            <td>{{@$payment->order->website->website_type}}</td>
-                                            <td width="250px"><span
-                                                    style="overflow-wrap: anywhere;">{{$payment->transaction_id}}</span>
-                                            </td>
-                                            <td>
-                                                {{$payment->payment_status}}
-                                            </td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="clearfix mt-2 pagination-div">
-                                <div style="width: 100%;">
-                                    {!! $payments->appends(request()->input())->links('pagination::bootstrap-5') !!}
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,6 +81,86 @@ div:has(> ul.pagination) {
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <script>
+$(document).ready(function() {
+    var table = $('#payment_table').DataTable({
+        "autoWidth": false,
+        dom: '<"top-toolbar"lf>rtip',
+        initComplete: function() {
+            this.api().columns([4]).every(function() {
+                var column = this;
+                $('#website_type')
+                    .on('change', function() {
+                        var val = $(this).val();
+                        column.search(val).draw();
+                    });
+
+            });
+
+            this.api().columns([6]).every(function() {
+                var column = this;
+                $('#payment_filter')
+                    .on('change', function() {
+                        var val = $(this).val();
+                        column.search(val).draw();
+                    });
+
+            });
+
+        },
+        processing: true,
+        serverSide: true,
+        ajax: "{{url()->full()}}",
+        columns: [{
+                data: 'task_id',
+                'searchable': false
+            },
+            {
+                data: 'first_name',
+                'searchable': false
+            },
+            {
+                data: 'email',
+                'searchable': false
+            },
+            {
+                data: 'phone_number',
+                'searchable': false
+            },
+            {
+                data: 'website_type',
+                'searchable': false
+            },
+            {
+                data: 'transaction_id',
+                'searchable': false
+            },
+            {
+                data: 'payment_status',
+                'searchable': false
+            }
+        ]
+
+    });
+    $("div.top-toolbar").css({
+        "display": "flex",
+        "justify-content": "space-between"
+    });
+
+    $("div.top-toolbar").append(`<div class="float-right" style="display: flex;">
+    <?php HtmlHelper::WebsiteDropdown('website_type', '', false, 'padding: -16.625rem .75rem;padding: .200rem .75rem;', 'website_type') ?>
+    &nbsp;&nbsp;
+
+                                    <select name="payment_filter" id="payment_filter" class="form-control"
+                                        style="width:150px;">
+                                        <option value="">All</option>
+                                        <option value="Success">
+                                            Success</option>
+                                        <option value="Failed">Fail
+                                        </option>
+                                    </select>
+    `);
+});
+
 function generateParamsurl(params) {
     let paramString = '';
     Object.keys(params).forEach(function(key, index) {
@@ -117,7 +178,7 @@ $(document).ready(function() {
     for (const param of searchParams) {
         paramsList[param[0]] = param[1];
     }
-    $('#payment_filter').change(function() {
+    /*$('#payment_filter').change(function() {
         if (paramsList['page'])
         paramsList['page'] = 1;
         paramsList['payment_status'] = $(this).val();
@@ -128,7 +189,7 @@ $(document).ready(function() {
         paramsList['page'] = 1;
         paramsList['website'] = $(this).val();
         window.location.href = "{{route('payments')}}/"+generateParamsurl(paramsList);
-    })
+    })*/
 
 
 })

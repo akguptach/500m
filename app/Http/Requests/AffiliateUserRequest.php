@@ -28,7 +28,8 @@ class AffiliateUserRequest extends FormRequest
             'password' => 'required',
             'about' => 'required',
             'location' => 'required',
-            'referal_link' => 'required',
+            'website_id' => 'required',
+            'commission' => 'required',
     ];
     }
 }

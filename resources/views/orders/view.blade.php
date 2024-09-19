@@ -58,6 +58,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                @include('orders.order_tab')
                 <div class="card">
                     <!--<div class="card-header">
                                 <h3 class="card-title">Orders</h3>
@@ -170,6 +171,11 @@
 
     $(function() {
         $('#example1').DataTable({
+
+            "createdRow": function( row, data, dataIndex){
+                $(row).addClass(`${data['row_color']}`);
+            },
+
             dom: '<"toolbar">frtip',
             initComplete: function() {
                 this.api().columns([2]).every(function() {

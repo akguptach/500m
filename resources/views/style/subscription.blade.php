@@ -16,11 +16,12 @@
                                     {{ session('status') }}
                                 </div>
                                 @endif
-                                <table id="subscription"  class="table table-responsive table-bordered  row-border">
+                                <table id="subscription" class="table table-responsive table-bordered  row-border">
                                     <thead>
                                         <tr>
                                             <th>Sr.No.</th>
                                             <th>Email</th>
+                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,52 +51,67 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
 <script>
-    $(function() {
-        $('#subscription').DataTable({
-            "columns": [{
-                    render: function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    data: "email"
-                },
-                {
-                    render: function(data, type, row, meta) {
-                        return '<button class="btn btn-danger delete-btn d-block mx-auto" data-id="' + row.id + '">Delete</button>';
-                    }
+$(function() {
+    $('#subscription').DataTable({
+        dom: '<"top-toolbar"lf>rtip',
+        "columns": [{
+                render: function(data, type, row, meta) {
+                    return meta.row + 1;
                 }
-            ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": "<?php echo URL::to('subscription/list'); ?>"
-        });
-        $('#subscription').on('click', '.delete-btn', function() {
-            var SubscriptionDlt = $(this).data('id');
-            $.ajax({
-                url: "{{ route('subscriptionDelete') }}",
-                type: 'POST',
-                data: {
-                    id: SubscriptionDlt,
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function(response) {                   
-                    Swal.fire({
-                        title: 'Success!',
-                        text: response.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
+            },
+            {
+                data: "email"
+            },
+            {
+                data: "created_at"
+            },
+            {
+                render: function(data, type, row, meta) {
+                    return '<button class="btn btn-danger delete-btn d-block mx-auto" data-id="' +
+                        row.id + '">Delete</button>';
                 }
-            });
+            }
+        ],
+        "processing": true,
+        "serverSide": true,
+        "ajax": "<?php echo URL::to('subscription/list'); ?>"
+    });
+
+    $("div.top-toolbar").css({
+        "display": "flex",
+        "justify-content": "space-between"
+    });
+    $("div.top-toolbar").append(`@include('style.subcriptionExportForm')`);
+    
+
+
+
+    $('#subscription').on('click', '.delete-btn', function() {
+        var SubscriptionDlt = $(this).data('id');
+        $.ajax({
+            url: "{{ route('subscriptionDelete') }}",
+            type: 'POST',
+            data: {
+                id: SubscriptionDlt,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: response.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
     });
+});
 </script>
 @endsection

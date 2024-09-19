@@ -14,4 +14,15 @@ class Notification extends Model
     {
         return $this->morphTo();
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Orders', 'order_id');
+    }
+
+    public function order_request()
+    {
+        return $this->belongsTo('App\Models\OrderRequest', 'request_id');
+    }
+
 }

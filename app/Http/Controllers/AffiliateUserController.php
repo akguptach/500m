@@ -35,7 +35,11 @@ class AffiliateUserController extends Controller
         $data = $request->all();
         $data['user_type'] = 'AFFILIATE';
         $data['password'] = Hash::make($data['password']);
-        Student::Create($data);
+        $student = Student::Create($data);
+
+        $student->referral_code = $student->id.time();
+        $student->update();
+        
         return redirect()->route('affiliateuser.affiliate.view')
             ->with('status', 'Affiliate was successfully created.');
     }
@@ -49,7 +53,18 @@ class AffiliateUserController extends Controller
     public function update($id, AffiliateUserUpdateRequest $request)
     {
         $data = $request->all();
+
+        if($data['password']){
+            $data['password'] = Hash::make($data['password']);
+        }else{
+            unset($data['password']);
+        }
+
         $student = Student::findOrFail($id);
+
+        if(!$student->referral_code)
+        $student->referral_code = $student->id.time();
+
         $student->update($data);
         return redirect()->route('affiliateuser.affiliate.view')
             ->with('status', 'Affiliate was successfully updated.');

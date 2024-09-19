@@ -29,7 +29,11 @@
                     @endif
                     @if($item['attachment'])
                     <div class="direct-chat-text">
-                    <a style="color:#fff;" href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                    @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     @endif
                     <!-- /.direct-chat-text -->
@@ -46,7 +50,11 @@
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{$item['message']}}
-                        <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                        @include('orders.download_link',
+                        [
+                        'attachment'=>$item['attachment'],
+                        'attachmentTitle'=>""
+                        ])
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>

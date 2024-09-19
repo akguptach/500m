@@ -25,17 +25,27 @@ class OrderService
 {
 
 
-    private function addStausCondition($query, $type){
+    private function addStausCondition($query, $status){
 
 
-        if($type == 'Failed'){
+        if($status == 'Failed'){
             $query->where(function($q) {
                 $q->where('orders.payment_status', 'Failed');
                 $q->orWhereNull('orders.payment_status');
             });
         }
-        else if ($type) {
-            $query->where('orders.payment_status', $type);
+        else if ($status == 'Success') {
+            $query->where('orders.payment_status', $status);
+        }
+
+        else if ($status == 'New') {
+            $query->doesntHave('teacherAssigned')->where('orders.payment_status', 'Success');;
+        }
+        else if ($status == 'OnGoing') {
+            $query->whereHas('teacherAssigned')->where('orders.status','INPROCESS');
+        }
+        else if ($status == 'Completed') {
+            $query->where('orders.status','DELIVERED');
         }
 
        /* if ($type) {
@@ -44,7 +54,7 @@ class OrderService
         return $query;
     }
 
-    public function getOrders($studentId = '', $type='')
+    public function getOrders($studentId = '', $status='')
     {
 
         $req_record['data'] = array();
@@ -53,8 +63,10 @@ class OrderService
 
             
 
-
-            $query = Orders::join('student', 'student.id', '=', 'orders.student_id')
+            $query = Orders::with(['teacherAssigned','qcAssigned'])
+            ->join('student', function($q) {
+                $q->whereNull('student.deleted_at')->whereRaw("student.id = orders.student_id");
+            })
                 ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
                 ->join('websites', 'websites.id', '=', 'orders.website_id')
                 ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
@@ -74,7 +86,7 @@ class OrderService
             /*if ($type) {
                 $query->where('orders.payment_status', $type);
             }*/
-            $query = $this->addStausCondition($query, $type);
+            $query = $this->addStausCondition($query, $status);
             
 
             if (!empty($_GET['search']['value'])) {
@@ -92,15 +104,35 @@ class OrderService
                 $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc');
             }
             $arrD = $query->get();
+
+            foreach($arrD as $i=>$row){
+                
+                if(isset($row['qcAssigned']) && $row['qcAssigned']['status'] == 'COMPLETED'){
+                    $arrD[$i]['row_color'] = 'green-bg';
+                }
+                else if(isset($row['teacherAssigned']) && $row['teacherAssigned']['status'] == 'COMPLETED'){
+                    $arrD[$i]['row_color'] = 'red-bg';
+                }
+                
+                else{
+                    $arrD[$i]['row_color'] = '';
+                }
+            }
+
             $req_record['data'] = json_decode(json_encode($arrD), true);
 
             //$req_record['data'] = Orders::orderBy('id', 'desc')->skip($_GET['start'])->take($_GET['length'])->get()->toArray();
             //$pages = Orders::orderBy('id', 'desc')->get()->toArray();
             $pages = $arrD;
 
+            
             $pages = Orders::query();
             // $pages = DB::table('orders');
-            $pages = Orders::join('student', 'student.id', '=', 'orders.student_id')
+            $pages = Orders::with(['teacherAssigned','qcAssigned'])
+            ->join('student', function($q) {
+                $q->whereNull('student.deleted_at')->whereRaw("student.id = orders.student_id");
+            })
+            //->join('student', 'student.id', '=', 'orders.student_id')
             ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
             ->join('websites', 'websites.id', '=', 'orders.website_id')
             ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
@@ -118,7 +150,7 @@ class OrderService
             /*if ($type) {
                 $query->where('orders.payment_status', $type);
             }*/
-            $query = $this->addStausCondition($query, $type);
+            $query = $this->addStausCondition($query, $status);
 
             if (!empty($_GET['search']['value'])) {
                 $pages->where(function ($q) {
@@ -133,13 +165,15 @@ class OrderService
             /*if ($type) {
                 $query->where('orders.payment_status', $type);
             }*/
-            $pages = $this->addStausCondition($pages, $type);
+            $pages = $this->addStausCondition($pages, $status);
             $pages = $pages->get();
         } else {
 
-            
-            $query = DB::table('orders')
-                ->join('student', 'student.id', '=', 'orders.student_id')
+            $query = Orders::with(['teacherAssigned','qcAssigned'])
+            //$query = DB::table('orders')
+            ->join('student', function($q) {
+                $q->whereNull('student.deleted_at')->whereRaw("student.id = orders.student_id");
+            })
                 ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
                 ->join('websites', 'websites.id', '=', 'orders.website_id')
                 ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
@@ -156,7 +190,7 @@ class OrderService
                 $query->where('orders.payment_status', $type);
             }*/
 
-            $query = $this->addStausCondition($query, $type);
+            $query = $this->addStausCondition($query, $status);
 
             if (isset($_GET['start']) && isset($_GET['length'])) {
                 $query->skip($_GET['start'])->take($_GET['length'])->orderBy('id', 'desc');
@@ -165,13 +199,29 @@ class OrderService
 
             $arrD = $query->get();
 
+            foreach($arrD as $i=>$row){
+                
+                if(isset($row['qcAssigned']) && $row['qcAssigned']['status'] == 'COMPLETED'){
+                    $arrD[$i]['row_color'] = 'green-bg';
+                }
+                else if(isset($row['teacherAssigned']) && $row['teacherAssigned']['status'] == 'COMPLETED'){
+                    $arrD[$i]['row_color'] = 'red-bg';
+                }
+                
+                else{
+                    $arrD[$i]['row_color'] = '';
+                }
+            }
+
             $req_record['data'] = json_decode(json_encode($arrD), true);
 
 
             //count 
-            $pages = Orders::query();
-            $pages = DB::table('orders')
-            ->join('student', 'student.id', '=', 'orders.student_id')
+            $pages = Orders::with(['teacherAssigned','qcAssigned'])
+            //$pages = DB::table('orders')
+            ->join('student', function($q) {
+                $q->whereNull('student.deleted_at')->whereRaw("student.id = orders.student_id");
+            })
             ->join('subjects', 'subjects.id', '=', 'orders.subject_id')
             ->join('websites', 'websites.id', '=', 'orders.website_id')
             ->join('task_types', 'task_types.id', '=', 'orders.task_type_id')
@@ -184,7 +234,7 @@ class OrderService
             /*if ($type) {
                 $pages->where('orders.payment_status', $type);
             }*/
-            $pages = $this->addStausCondition($pages, $type);
+            $pages = $this->addStausCondition($pages, $status);
 
             $pages = $pages->get();
             //    echo "<pre>".var_export($pages,true);die();
@@ -262,7 +312,7 @@ class OrderService
 
         $result['orderAssign'] = OrderAssign::where('order_id', $id)->first();
         $result['qcAssign'] = QcAssign::where('order_id', $id)->first();
-        $result['studentMessages'] = StudentOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
+        $result['studentMessages'] = StudentOrderMessage::whereHas('sendertable')->with(['sendertable', 'receivertable'])->where('order_id', $id)->get();
 
         DB::table('qc_order_messages')
             ->where('order_id', $id)
@@ -428,6 +478,7 @@ class OrderService
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
                 $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
             }
+            $url = env('TUTOR_URL', 'https://mywriters.in') . '/request/details/' . $request->request_id;
             OrderRequestMessage::Create([
                 'request_id' => $request->request_id,
                 'sendertable_id' => Auth::user()->id,
@@ -435,7 +486,8 @@ class OrderService
                 'receivertable_id' => $request->receiver_id,
                 'receivertable_type' => Tutor::class,
                 'message' => $request->message,
-                'attachment' => $attachment
+                'attachment' => $attachment,
+                'url'=>$url
             ]);
 
             $tutor = Tutor::find($request->receiver_id);

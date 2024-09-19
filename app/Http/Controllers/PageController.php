@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Response;
 use App\Models\Website;
 use App\Models\Pages;
 use App\Models\PageFaq;
@@ -12,7 +12,8 @@ use App\Http\Requests\PageRequest;
 use App\Services\PageService;
 use App\Http\Requests\FaqPageRequest;
 use App\Http\Requests\PageRatingRequest;
-
+use Illuminate\Http\Request;
+use App\Models\ContactUs;
 class PageController extends Controller
 {
 
@@ -121,12 +122,68 @@ class PageController extends Controller
         $page = Pages::where('seo_url_slug', $seo_url_slug)->first();
         return view('pages/show_page', compact('page'));
     }
-    public function dataStore()
+
+    public function dataStore($type)
     {
         if (isset($_GET) && !empty($_GET['columns'])) {
-            return response($this->pageService->getReferencingStyle1());
+            return $this->pageService->contactUsEnquiry($type);
         } else {
-            return view('style/form');
+            return view('style/form',compact('type'));
         }
     }
+
+    public function customerAttendant($id){
+        try{
+        $contactUs = ContactUs::find($id);
+        $contactUs->customer_attendant=1;
+        $contactUs->save();
+        return redirect(route('contact.form.store','pending'))->with('success', 'Customer Attendanted successfully');
+        }catch(\Exception $e){
+            return redirect(route('contact.form.store','pending'))->with('error', 'There is an error');
+        }
+    }
+
+
+public function EnqueryExport(Request $request, $type)
+{
+
+    $from = $request->from;
+    $to = $request->to;
+    
+
+    $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$type Enquery Form List.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    );
+
+    $customerAttendant = 0;
+    if($type == 'completed'){
+        $customerAttendant = 1;
+    }
+    $query = ContactUs::where('customer_attendant',$customerAttendant);
+    if($from && $to)
+        $query->whereBetween('created_at', [$from, $to]);
+    elseif($from)
+        $query->whereDate('created_at', '>=', $from);
+    elseif($to)
+        $query->whereDate('created_at', '<=', $to);
+    
+    
+    $enquery = $query->get();
+    $columns = array('Name', 'Email', 'Mobile Number', 'Service', 'Date');
+    $callback = function() use ($enquery, $columns)
+    {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columns);
+        foreach($enquery as $row) {
+            $mobileNumber = (string) '+'.$row->mobile_number;
+            fputcsv($file, array($row->name, $row->email, $mobileNumber, $row->service, $row->created_at));
+        }
+        fclose($file);
+    };
+    return Response::stream($callback, 200, $headers);
+}
 }

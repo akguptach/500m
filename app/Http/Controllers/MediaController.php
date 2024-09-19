@@ -13,6 +13,7 @@ use App\Models\Media;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Services\FaqService;
+use Illuminate\Support\Facades\Response;
 
 class MediaController extends Controller
 {
@@ -83,4 +84,44 @@ class MediaController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to delete subscription.']);
         }
     }
+
+
+    public function subscriptionExport(Request $request)
+{
+
+    $from = $request->from;
+    $to = $request->to;
+
+    $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=subscription.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    );
+
+    if($from && $to)
+        $enquery = Subscription::whereBetween('created_at', [$from, $to])->get();
+    elseif($from)
+        $enquery = Subscription::whereDate('created_at', '>=', $from)->get();
+    elseif($to)
+        $enquery = Subscription::whereDate('created_at', '<=', $to)->get();
+    else
+        $enquery = Subscription::get();
+    
+
+    $columns = array('Email','Created');
+    $callback = function() use ($enquery, $columns)
+    {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columns);
+        foreach($enquery as $row) {
+            fputcsv($file, array($row->email, $row->created_at));
+        }
+        fclose($file);
+    };
+    return Response::stream($callback, 200, $headers);
+}
+
+
 }

@@ -63,7 +63,7 @@
 
 <div class="mb-3 row">
     <label>Referal Link</label>
-    <input type="text" name="referal_link" class="form-control {{ $errors->has('referal_link') ? ' is-invalid' : '' }}" placeholder="Enter referal link"
+    <input type="text" disabled name="referal_link" class="form-control {{ $errors->has('referal_link') ? ' is-invalid' : '' }}" placeholder="Enter referal link"
         value="{{ old('referal_link', optional($user)->referal_link) }}"">
             {!! $errors->first('referal_link', '<div class=" invalid-feedback">:message
 </div>') !!}
