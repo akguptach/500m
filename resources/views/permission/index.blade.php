@@ -81,7 +81,7 @@ table td {
         <?php foreach ($permissionsLabels as $label => $permissions) {
         ?>
         <tr style="background: #6a73fa;color: #fff;height:40px;" class="permission-label" id="<?php echo $label; ?>">
-            <th style="color: #fff;" ><?php echo $label; ?></th>
+            <th style="color: #fff;" ><?php echo str_replace('_',' ',$label); ?></th>
         </tr>
         <tr  class="permission-route permission-<?php echo $label; ?>" >
             <td style="padding: 0px;">

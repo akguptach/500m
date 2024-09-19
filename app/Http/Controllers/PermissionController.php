@@ -26,7 +26,9 @@ class PermissionController extends Controller
         $roleId = $id;
         $permissions = Permission::withCount(['rolePermission' => function ($q) use ($roleId) {
             $q->where('role_id', '=', $roleId);
-        }])->get();
+        }])
+        ->where('by_pass', 0)
+        ->get();
 
         $permissionsLabels = [];
         if ($roleId)
@@ -71,7 +73,9 @@ class PermissionController extends Controller
 
         $permissions = Permission::withCount(['userPermission' => function ($q) use ($id) {
             $q->where('user_id', '=', $id);
-        }])->get();
+        }])
+        ->where('by_pass', 0)
+        ->get();
         if ($id) {
             foreach ($permissions as $permission) {
                 $permissionsLabels[$permission['label']][] = $permission;
